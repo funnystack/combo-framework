@@ -9,7 +9,7 @@
 	http://www.springframework.org/schema/util 
 	http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-	<bean id="propertyConfigurer" class="com.auto.mybatis.code.util.PropertyConfigurer">
+	<bean id="propertyConfigurer" class="com.funny.autocode.util.PropertyConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath:*.properties</value>
@@ -17,7 +17,7 @@
 		</property>
 	</bean>
 
-	<context:component-scan base-package="com.auto">
+	<context:component-scan base-package="com.funny">
 		<context:include-filter type="annotation"	expression="org.springframework.stereotype.Service" />
 	</context:component-scan>
 </beans>

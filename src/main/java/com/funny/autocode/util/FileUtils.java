@@ -1,4 +1,4 @@
-package com.auto.mybatis.code.util;
+package com.funny.autocode.util;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;

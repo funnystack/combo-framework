@@ -1,4 +1,4 @@
-package com.auto.mybatis.code.service;
+package com.funny.autocode.service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,8 +10,8 @@ import java.util.List;
 import org.mybatis.generator.config.JDBCConnectionConfiguration;
 import org.mybatis.generator.internal.db.ConnectionFactory;
 
-import com.auto.mybatis.code.po.Table;
-import com.auto.mybatis.code.util.ContextUtils;
+import com.funny.autocode.po.Table;
+import com.funny.autocode.util.ContextUtils;
 import com.google.common.collect.Lists;
 
 public class GeneralCodeService {

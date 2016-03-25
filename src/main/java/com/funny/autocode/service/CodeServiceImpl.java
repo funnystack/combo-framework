@@ -1,4 +1,4 @@
-package com.auto.mybatis.code.service;
+package com.funny.autocode.service;
 
 import java.io.File;
 import java.sql.Connection;
@@ -26,8 +26,8 @@ import org.mybatis.generator.internal.db.ConnectionFactory;
 import org.mybatis.generator.internal.db.DatabaseIntrospector;
 import org.springframework.stereotype.Service;
 
-import com.auto.mybatis.code.po.Table;
-import com.auto.mybatis.code.util.ContextUtils;
+import com.funny.autocode.po.Table;
+import com.funny.autocode.util.ContextUtils;
 import com.google.common.collect.Lists;
 
 @Service

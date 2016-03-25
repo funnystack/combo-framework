@@ -13,7 +13,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript" src="js/jquery-1.10.0.js"></script>
 <script type="text/javascript" src="js/jquery.validate-1.13.1.js"></script>
-<title>汽车之家电商</title>
+<title>Autocode Factory</title>
 
 <script type="text/javascript">
 	$(document).ready(function () {
@@ -205,7 +205,7 @@ label.error {
 </style>
 </head>
 <body>
-	<h1>汽车之家mybatis代码生成器</h1>
+	<h1>Autocode Factory</h1>
 	<form id="connectionform">
 		<label>db url:</label> <input type="text" id="url" name="url"
 			value="jdbc:mysql://10.168.66.173:3306/erpmall" size="45">

@@ -1,4 +1,4 @@
-package com.auto.mybatis.code.service;
+package com.funny.autocode.service;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -8,7 +8,7 @@ import java.util.Map;
 import org.mybatis.generator.config.Context;
 import org.springframework.stereotype.Service;
 
-import com.auto.mybatis.code.po.Table;
+import com.funny.autocode.po.Table;
 
 @Service
 public interface CodeService {

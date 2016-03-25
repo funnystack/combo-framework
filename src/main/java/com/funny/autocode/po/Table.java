@@ -1,4 +1,4 @@
-package com.auto.mybatis.code.po;
+package com.funny.autocode.po;
 
 public class Table {
     private String tableName;

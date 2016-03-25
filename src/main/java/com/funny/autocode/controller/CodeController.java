@@ -1,4 +1,4 @@
-package com.auto.mybatis.code.controller;
+package com.funny.autocode.controller;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,12 +21,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.auto.mybatis.code.po.Table;
-import com.auto.mybatis.code.service.CodeService;
-import com.auto.mybatis.code.util.ContextUtils;
-import com.auto.mybatis.code.util.FileUtils;
-import com.auto.mybatis.code.util.PropertyConfigurer;
-import com.auto.mybatis.code.util.ZipUtil;
+import com.funny.autocode.po.Table;
+import com.funny.autocode.service.CodeService;
+import com.funny.autocode.util.ContextUtils;
+import com.funny.autocode.util.FileUtils;
+import com.funny.autocode.util.PropertyConfigurer;
+import com.funny.autocode.util.ZipUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 

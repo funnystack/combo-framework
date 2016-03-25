@@ -32,7 +32,7 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.AbstractJavaMa
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.XMLMapperGenerator;
 import org.mybatis.generator.config.PropertyRegistry;
 
-import com.auto.mybatis.code.util.PropertyConfigurer;
+import com.funny.autocode.util.PropertyConfigurer;
 
 /**
  * @author Jeff Butler

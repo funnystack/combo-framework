@@ -33,7 +33,7 @@ import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
 import org.mybatis.generator.config.PropertyRegistry;
 
-import com.auto.mybatis.code.util.PropertyConfigurer;
+import com.funny.autocode.util.PropertyConfigurer;
 
 /**
  * 
