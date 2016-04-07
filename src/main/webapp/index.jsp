@@ -227,7 +227,7 @@ label.error {
 		<table>
 			<tr>
 				<td><label>package:</label></td>
-				<td><input type="text" id="packagename" name="packagename" value="cn.com.autohome"></td>
+				<td><input type="text" id="packagename" name="packagename" value="cn.com.autohome.mall.erp"></td>
 				<td><label>module:</label></td>
 				<td><input type="text" id="modelname" name="modelname"></td>
 				<td><input type="submit" value="获取CODE" id="getcode" /></td>
