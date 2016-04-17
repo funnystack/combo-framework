@@ -761,8 +761,9 @@ public abstract class IntrospectedTable {
 
     protected String calculateBasicMyBatis3XmlMapperFileName() {
         StringBuilder sb = new StringBuilder();
-        sb.append(fullyQualifiedTable.getDomainObjectName());
-        sb.append("Mapper.generated.xml"); //$NON-NLS-1$
+        sb.append("Basic"); //$NON-NLS-1$
+        sb.append(fullyQualifiedTable.getBasicDomainObjectName());
+        sb.append("Mapper..xml"); //$NON-NLS-1$
         return sb.toString();
     }
     
@@ -776,14 +777,14 @@ public abstract class IntrospectedTable {
     protected String calculateReadMyBatis3XmlMapperFileName() {
         StringBuilder sb = new StringBuilder();
         sb.append(fullyQualifiedTable.getDomainObjectName());
-        sb.append("ReadDao.xml"); //$NON-NLS-1$
+        sb.append("ReadMapper.xml"); //$NON-NLS-1$
         return sb.toString();
     }
     
     protected String calculateWriteMyBatis3XmlMapperFileName() {
         StringBuilder sb = new StringBuilder();
         sb.append(fullyQualifiedTable.getDomainObjectName());
-        sb.append("WriteDao.xml"); //$NON-NLS-1$
+        sb.append("WriteMapper.xml"); //$NON-NLS-1$
         return sb.toString();
     }
 
