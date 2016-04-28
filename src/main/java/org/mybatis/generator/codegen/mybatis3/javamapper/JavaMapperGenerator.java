@@ -59,13 +59,15 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         FullyQualifiedJavaType type = new FullyQualifiedJavaType(introspectedTable.getMyBatis3JavaMapperType());
         Interface interfaze = new Interface(type);
         interfaze.setVisibility(JavaVisibility.PUBLIC);
-        //interfaze.addAnnotation("@ReadWriteRepository");
+        // interfaze.addAnnotation("@ReadWriteRepository");
         commentGenerator.addJavaFileComment(interfaze);
 
-        String allname = introspectedTable.getBaseRecordType();
-        String modelname = allname.substring(allname.lastIndexOf(".") + 1);
+        String fullName = introspectedTable.getRecordType();
+        String lastName = fullName.substring(fullName.lastIndexOf(".") + 1);
+        String keyType = introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().toString();
+        String rootInterface = PropertyConfigurer.config.getString("parent.dao") + "<" + lastName + ", "
+                + keyType + ">";
 
-        String rootInterface = PropertyConfigurer.config.getString("parent.dao")+"<" + modelname + ", Long>";
         if (!stringHasValue(rootInterface)) {
             rootInterface =
                     context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
@@ -77,11 +79,12 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
             interfaze.addImportedType(fqjt);
         }
 
-        FullyQualifiedJavaType modeltype = new FullyQualifiedJavaType(allname);
+        FullyQualifiedJavaType modeltype = new FullyQualifiedJavaType(fullName);
         // 引入model
         interfaze.addImportedType(modeltype);
         // 引入 com.un.general.common.utils.stereotype.WriterRepository
-        //interfaze.addImportedType(new FullyQualifiedJavaType("com.un.general.common.stereotype.ReadWriteRepository"));
+        // interfaze.addImportedType(new
+        // FullyQualifiedJavaType("com.un.general.common.stereotype.ReadWriteRepository"));
 
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
 

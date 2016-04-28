@@ -32,8 +32,7 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ResultMapWithou
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectAllElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByPrimaryKeyElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeySelectiveElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyWithBLOBsElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyWithoutBLOBsElementGenerator;
+import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyElementGenerator;
 
 /**
  * 
@@ -109,8 +108,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
         if (introspectedTable.getPrimaryKeyColumns().size() == 1) {
             addUpdateByPrimaryKeySelectiveElement(roornode);
-            //addUpdateByPrimaryKeyWithBLOBsElement(roornode);
-            //addUpdateByPrimaryKeyWithoutBLOBsElement(roornode);
+            addUpdateByPrimaryKeyElementGenerator(roornode);
             addDeleteByPrimaryKeyElement(roornode);
             addSelectByPrimaryKeyElement(roornode);
         }
@@ -192,16 +190,9 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         initializeAndExecuteGenerator(elementGenerator, parentElement);
     }
 
-    protected void addUpdateByPrimaryKeyWithBLOBsElement(XmlElement parentElement) {
+    protected void addUpdateByPrimaryKeyElementGenerator(XmlElement parentElement) {
         if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {
-            AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyWithBLOBsElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
-        }
-    }
-
-    protected void addUpdateByPrimaryKeyWithoutBLOBsElement(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithoutBLOBs()) {
-            AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyWithoutBLOBsElementGenerator(false);
+            AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyElementGenerator();
             initializeAndExecuteGenerator(elementGenerator, parentElement);
         }
     }

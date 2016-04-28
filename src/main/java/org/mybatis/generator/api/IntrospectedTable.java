@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.funny.autocode.util.PropertyConfigurer;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
 import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
@@ -82,7 +83,6 @@ public abstract class IntrospectedTable {
         ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID,
         ATTR_UPDATE_BY_PRIMARY_KEY_STATEMENT_ID,
         ATTR_UPDATE_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID,
-        ATTR_UPDATE_BY_PRIMARY_KEY_WITH_BLOBS_STATEMENT_ID,
         ATTR_BASE_RESULT_MAP_ID,
         ATTR_RESULT_MAP_WITH_BLOBS_ID,
         ATTR_BASE_COLUMN_LIST_ID,
@@ -503,11 +503,10 @@ public abstract class IntrospectedTable {
         setBaseColumnListId("Base_Column_List"); //$NON-NLS-1$
         setBlobColumnListId("Blob_Column_List"); //$NON-NLS-1$
         setInsertStatementId("insert"); //$NON-NLS-1$
-        setSelectByPrimaryKeyStatementId("findById"); //$NON-NLS-1$
-        setUpdateByPrimaryKeyStatementId("updateByPrimaryKey"); //$NON-NLS-1$
-        setUpdateByPrimaryKeySelectiveStatementId("updateByIdSelective"); //$NON-NLS-1$
-        //setUpdateByPrimaryKeyWithBLOBsStatementId("updateByPrimaryKeyWithBLOBs"); //$NON-NLS-1$
-        setDeleteByPrimaryKeyStatementId("deleteById"); //$NON-NLS-1$
+        setSelectByPrimaryKeyStatementId(PropertyConfigurer.config.getString("find.id")); //$NON-NLS-1$
+        setUpdateByPrimaryKeyStatementId(PropertyConfigurer.config.getString("update.id")); //$NON-NLS-1$
+        setUpdateByPrimaryKeySelectiveStatementId(PropertyConfigurer.config.getString("update.id.selected")); //$NON-NLS-1$
+        setDeleteByPrimaryKeyStatementId(PropertyConfigurer.config.getString("delete.id")); //$NON-NLS-1$
         setCountStatementId("count"); //$NON-NLS-1$
         setSelectAllStatementId("findAll"); //$NON-NLS-1$
     }
@@ -530,12 +529,6 @@ public abstract class IntrospectedTable {
         internalAttributes.put(InternalAttribute.ATTR_BASE_RESULT_MAP_ID, s);
     }
 
-    public void setUpdateByPrimaryKeyWithBLOBsStatementId(String s) {
-        internalAttributes
-                .put(
-                        InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_WITH_BLOBS_STATEMENT_ID,
-                        s);
-    }
 
     public void setUpdateByPrimaryKeySelectiveStatementId(String s) {
         internalAttributes
@@ -605,11 +598,6 @@ public abstract class IntrospectedTable {
     public String getBaseResultMapId() {
         return internalAttributes
                 .get(InternalAttribute.ATTR_BASE_RESULT_MAP_ID);
-    }
-
-    public String getUpdateByPrimaryKeyWithBLOBsStatementId() {
-        return internalAttributes
-                .get(InternalAttribute.ATTR_UPDATE_BY_PRIMARY_KEY_WITH_BLOBS_STATEMENT_ID);
     }
 
     public String getUpdateByPrimaryKeySelectiveStatementId() {
@@ -763,7 +751,7 @@ public abstract class IntrospectedTable {
         StringBuilder sb = new StringBuilder();
         sb.append("Basic"); //$NON-NLS-1$
         sb.append(fullyQualifiedTable.getBasicDomainObjectName());
-        sb.append("Mapper..xml"); //$NON-NLS-1$
+        sb.append("Mapper.xml"); //$NON-NLS-1$
         return sb.toString();
     }
     
@@ -819,8 +807,6 @@ public abstract class IntrospectedTable {
      * This method is called after all the setX methods, but before
      * getNumberOfSubtasks(), getGeneratedJavaFiles, and getGeneratedXmlFiles.
      * 
-     * @param warnings
-     * @param progressCallback
      */
     public abstract void calculateGenerators();
 

@@ -43,7 +43,7 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends AbstractXmlElem
         if (introspectedTable.getRules().generateRecordWithBLOBsClass()) {
             parameterType = introspectedTable.getRecordWithBLOBsType();
         } else {
-            parameterType = introspectedTable.getBaseRecordType();
+            parameterType = introspectedTable.getRecordType();
         }
 
         answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
@@ -60,7 +60,7 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends AbstractXmlElem
         XmlElement dynamicElement = new XmlElement("set"); //$NON-NLS-1$
         answer.addElement(dynamicElement);
         int length = introspectedTable.getNonPrimaryKeyColumns().size();
-        int count = 1;
+        int count = 0;
         for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
             XmlElement isNotNullElement = new XmlElement("if"); //$NON-NLS-1$
             sb.setLength(0);

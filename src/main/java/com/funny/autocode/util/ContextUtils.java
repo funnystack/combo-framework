@@ -70,7 +70,6 @@ public class ContextUtils {
      * 
      * @param name
      * @param password
-     * @param tablenames
      * @param project
      * @param packagename
      * @param targetpath
@@ -86,18 +85,19 @@ public class ContextUtils {
         tabconfig.setTableName(table);
         tabconfig.setDomainObjectName(domainObjectName);
         String type = getDatabaseType(url);
-        if (null != keyid && !"".equals(keyid)) {
-            String column = keyid;
-            boolean identity = false;
-            String sqlStatement = null;
-            if (type.equals("oracle")) {
-                sqlStatement = "select SEQ_" + table.toUpperCase() + ".nextval from dual";
-            } else if (type.equals("mysql")) {
-                sqlStatement = "MySQL";
-            }
-            GeneratedKey gk = new GeneratedKey(column, sqlStatement, identity, type);
-            tabconfig.setGeneratedKey(gk);
-        }
+        // 设置回写主键
+//        if (null != keyid && !"".equals(keyid)) {
+//            String column = keyid;
+//            boolean identity = false;
+//            String sqlStatement = null;
+//            if (type.equals("oracle")) {
+//                sqlStatement = "select SEQ_" + table.toUpperCase() + ".nextval from dual";
+//            } else if (type.equals("mysql")) {
+//                sqlStatement = "MySQL";
+//            }
+//            GeneratedKey gk = new GeneratedKey(column, sqlStatement, identity, type);
+//            tabconfig.setGeneratedKey(gk);
+//        }
         context.addTableConfiguration(tabconfig);
 
         CommentGeneratorConfiguration commentGeneratorConfiguration = new CommentGeneratorConfiguration();

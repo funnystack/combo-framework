@@ -50,7 +50,7 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
         FullyQualifiedJavaType parameterType;
         if (isSimple) {
-            parameterType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
+            parameterType = new FullyQualifiedJavaType(introspectedTable.getRecordType());
         } else {
             parameterType = introspectedTable.getRules().calculateAllFieldsClass();
         }

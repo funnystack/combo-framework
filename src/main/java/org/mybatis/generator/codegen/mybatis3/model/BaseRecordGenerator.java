@@ -55,8 +55,6 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         TopLevelClass topLevelClass = new TopLevelClass(type);
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
-        
-       
 
         List<IntrospectedColumn> introspectedColumns = getColumnsInThisClass();
 
@@ -71,7 +69,7 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         String rootClass = getRootClass();
         // add serialVersionUID
         topLevelClass.addField(getSerialVersionUIDField());
-        
+
         for (IntrospectedColumn introspectedColumn : introspectedColumns) {
             if (RootClassInfo.getInstance(rootClass, warnings).containsProperty(introspectedColumn)) {
                 continue;
@@ -86,28 +84,23 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
             Method getmethod = getJavaBeansGetter(introspectedColumn);
             topLevelClass.addMethod(getmethod);
         }
-        
-        FullyQualifiedJavaType superClass = getSuperClass(introspectedColumns.get(0).getIntrospectedTable().getPrimaryKeyType());
+
+        String keyType = introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().toString();
+        FullyQualifiedJavaType superClass = getSuperClass(keyType);
         if (superClass != null) {
             topLevelClass.setSuperClass(superClass);
             topLevelClass.addImportedType(superClass);
         }
-        
-        
+
         List<CompilationUnit> answer = new ArrayList<CompilationUnit>();
         answer.add(topLevelClass);
         return answer;
     }
 
     private FullyQualifiedJavaType getSuperClass(String keyType) {
-        String parentclassname = PropertyConfigurer.config.getString("parent.model")+"<"+ keyType+">";
+        String parentclassname = PropertyConfigurer.config.getString("parent.model") + "<" + keyType + ">";
         return new FullyQualifiedJavaType(parentclassname);
     }
-
-    // private boolean includePrimaryKeyColumns() {
-    // return !introspectedTable.getRules().generatePrimaryKeyClass()
-    // && introspectedTable.hasPrimaryKeyColumns();
-    // }
 
     private boolean includeBLOBColumns() {
         return !introspectedTable.getRules().generateRecordWithBLOBsClass() && introspectedTable.hasBLOBColumns();
@@ -124,8 +117,8 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
                 includeBLOBColumns() ? introspectedTable.getAllColumns() : introspectedTable.getNonBLOBColumns();
 
         for (IntrospectedColumn introspectedColumn : constructorColumns) {
-            method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(), introspectedColumn
-                    .getJavaProperty()));
+            method.addParameter(new Parameter(introspectedColumn.getFullyQualifiedJavaType(),
+                    introspectedColumn.getJavaProperty()));
         }
 
         StringBuilder sb = new StringBuilder();
@@ -177,11 +170,14 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
         // }
         // 去除CREATE_USER_ID CREATE_DATE UPDATE_USER_ID UPDATE_DATE IS_VALID
         for (IntrospectedColumn column : introspectedTable.getAllColumns()) {
-            if (!column.getActualColumnName().equalsIgnoreCase("ID") && !column.getActualColumnName().equalsIgnoreCase("CREATED_TIME")
-                    && !column.getActualColumnName().equalsIgnoreCase("CREATED_BY")
-                    && !column.getActualColumnName().equalsIgnoreCase("MODIFIED_TIME")
-                    && !column.getActualColumnName().equalsIgnoreCase("MODIFIED_BY")
-                    && !column.getActualColumnName().equalsIgnoreCase("IS_VALID")) {
+            if (!column.getActualColumnName().equalsIgnoreCase(PropertyConfigurer.config.getString("key.id"))
+                    && !column.getActualColumnName().equalsIgnoreCase(PropertyConfigurer.config.getString("is.valid"))
+                    && !column.getActualColumnName()
+                            .equalsIgnoreCase(PropertyConfigurer.config.getString("modify.date"))
+                    && !column.getActualColumnName().equalsIgnoreCase(PropertyConfigurer.config.getString("modify.id"))
+                    && !column.getActualColumnName().equalsIgnoreCase(PropertyConfigurer.config.getString("create.id"))
+                    && !column.getActualColumnName()
+                            .equalsIgnoreCase(PropertyConfigurer.config.getString("create.date"))) {
                 introspectedColumns.add(column);
             }
         }

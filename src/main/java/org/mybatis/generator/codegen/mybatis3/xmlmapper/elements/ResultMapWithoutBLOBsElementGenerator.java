@@ -49,7 +49,7 @@ public class ResultMapWithoutBLOBsElementGenerator extends AbstractXmlElementGen
             returnType = introspectedTable.getBaseRecordType();
         } else {
             if (introspectedTable.getRules().generateBaseRecordClass()) {
-                returnType = introspectedTable.getBaseRecordType();
+                returnType = introspectedTable.getRecordType();
             } else {
                 returnType = introspectedTable.getPrimaryKeyType();
             }

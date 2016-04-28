@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
+import com.funny.autocode.util.PropertyConfigurer;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
@@ -36,8 +37,9 @@ public class DeleteByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
     @Override
     public XmlElement addElements() {
         XmlElement answer = new XmlElement("delete"); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("id", introspectedTable.getDeleteByPrimaryKeyStatementId())); //$NON-NLS-1$
-        String parameterClass = introspectedTable.getPrimaryKeyType();;
+        answer.addAttribute(new Attribute("id", introspectedTable.getDeleteByPrimaryKeyStatementId())); //
+
+        String parameterClass = introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().toString();
         
         answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
                 parameterClass));
@@ -45,25 +47,24 @@ public class DeleteByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
         context.getCommentGenerator().addComment(answer);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("delete from "); //$NON-NLS-1$
+        sb.append("update "); //$NON-NLS-1$
         sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
-        
-        boolean and = false;
+
+        sb.setLength(0);
+        sb.append("set ");
+        sb.append(PropertyConfigurer.config.getString("is.valid"));
+        sb.append(" = 0");
+        answer.addElement(new TextElement(sb.toString()));
+
         for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {
             sb.setLength(0);
-            if (and) {
-                sb.append("  and "); //$NON-NLS-1$
-            } else {
-                sb.append("where "); //$NON-NLS-1$
-                and = true;
-            }
-            sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
+            sb.append("where "); //$NON-NLS-1$
+            sb.append(MyBatis3FormattingUtilities.getAliasedEscapedColumnName(introspectedColumn));
             sb.append(" = "); //$NON-NLS-1$
             sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
             answer.addElement(new TextElement(sb.toString()));
         }
-        
         return answer;
     }
 }

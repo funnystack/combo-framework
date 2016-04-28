@@ -46,7 +46,7 @@ public class ResultMapWithBLOBsElementGenerator extends AbstractXmlElementGenera
         } else {
             // table has BLOBs, but no BLOB class - BLOB fields must be
             // in the base class
-            returnType = introspectedTable.getBaseRecordType();
+            returnType = introspectedTable.getRecordType();
         }
 
         answer.addAttribute(new Attribute("type", //$NON-NLS-1$
