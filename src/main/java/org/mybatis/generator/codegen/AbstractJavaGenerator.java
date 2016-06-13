@@ -19,6 +19,7 @@ import static org.mybatis.generator.internal.util.JavaBeansUtil.getGetterMethodN
 import static org.mybatis.generator.internal.util.JavaBeansUtil.getSetterMethodName;
 import static org.mybatis.generator.internal.util.StringUtility.isTrue;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
@@ -95,7 +96,7 @@ public abstract class AbstractJavaGenerator extends AbstractGenerator {
     public Field getSerialVersionUIDField() {
 
         FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType("long");
-        String property = "serialVersionUID = " + new Random(1000000000).nextLong() + "L";
+        String property = "serialVersionUID = " + new Date().getTime()+ "L";
         Field field = new Field();
         field.addFormattedJavadoc(new StringBuilder(), 1);
         field.setVisibility(JavaVisibility.PRIVATE);
