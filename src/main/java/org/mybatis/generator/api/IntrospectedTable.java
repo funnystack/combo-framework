@@ -749,7 +749,6 @@ public abstract class IntrospectedTable {
 
     protected String calculateBasicMyBatis3XmlMapperFileName() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Basic"); //$NON-NLS-1$
         sb.append(fullyQualifiedTable.getBasicDomainObjectName());
         sb.append("Mapper.xml"); //$NON-NLS-1$
         return sb.toString();

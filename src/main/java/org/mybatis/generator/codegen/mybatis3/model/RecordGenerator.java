@@ -46,9 +46,7 @@ public class RecordGenerator extends AbstractJavaGenerator {
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
 
-        String keyType = introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().toString();
-
-        FullyQualifiedJavaType superClass = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()+"<"+ keyType +">");
+        FullyQualifiedJavaType superClass = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
         if (superClass != null) {
             topLevelClass.setSuperClass(superClass);
             topLevelClass.addImportedType(superClass);
