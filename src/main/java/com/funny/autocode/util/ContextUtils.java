@@ -59,10 +59,10 @@ public class ContextUtils {
 
         String sql = "SELECT t.TABLE_NAME,ta.TABLE_COMMENT,c.COLUMN_NAME FROM "
                 + " information_schema.TABLES ta  LEFT JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS t ON ta.TABLE_NAME = t.TABLE_NAME "
-                + " AND ta.TABLE_SCHEMA=t.TABLE_SCHEMA  AND t.CONSTRAINT_NAME='PRIMARY' AND t.TABLE_SCHEMA='" + arrs[1] 
+                + " AND ta.TABLE_SCHEMA=t.TABLE_SCHEMA  AND t.CONSTRAINT_NAME='PRIMARY' AND t.TABLE_SCHEMA='" + arrs[1]
                 + "' LEFT JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE  c ON  t.TABLE_NAME = c.TABLE_NAME AND t.TABLE_SCHEMA=c.TABLE_SCHEMA "
-                + " AND c.CONSTRAINT_NAME='PRIMARY' AND t.TABLE_SCHEMA='" +arrs[1]
-                + "' WHERE t.TABLE_SCHEMA ='"+ arrs[1]+"' AND t.CONSTRAINT_TYPE='PRIMARY KEY'";
+                + " AND c.CONSTRAINT_NAME='PRIMARY' AND t.TABLE_SCHEMA='" + arrs[1] + "' WHERE t.TABLE_SCHEMA ='"
+                + arrs[1] + "' AND t.CONSTRAINT_TYPE='PRIMARY KEY'";
         return sql;
     }
 
@@ -86,18 +86,19 @@ public class ContextUtils {
         tabconfig.setDomainObjectName(domainObjectName);
         String type = getDatabaseType(url);
         // 设置回写主键
-//        if (null != keyid && !"".equals(keyid)) {
-//            String column = keyid;
-//            boolean identity = false;
-//            String sqlStatement = null;
-//            if (type.equals("oracle")) {
-//                sqlStatement = "select SEQ_" + table.toUpperCase() + ".nextval from dual";
-//            } else if (type.equals("mysql")) {
-//                sqlStatement = "MySQL";
-//            }
-//            GeneratedKey gk = new GeneratedKey(column, sqlStatement, identity, type);
-//            tabconfig.setGeneratedKey(gk);
-//        }
+        if (null != keyid && !"".equals(keyid)) {
+            String column = keyid;
+            String sqlStatement = null;
+            boolean identity = false;
+            if (type.equals("oracle")) {
+                sqlStatement = "select SEQ_" + table.toUpperCase() + ".nextval from dual";
+            } else if (type.equals("mysql")) {
+                sqlStatement = "MySQL";
+                identity = true;
+            }
+            GeneratedKey gk = new GeneratedKey(column, sqlStatement, identity, type);
+            tabconfig.setGeneratedKey(gk);
+        }
         context.addTableConfiguration(tabconfig);
 
         CommentGeneratorConfiguration commentGeneratorConfiguration = new CommentGeneratorConfiguration();
