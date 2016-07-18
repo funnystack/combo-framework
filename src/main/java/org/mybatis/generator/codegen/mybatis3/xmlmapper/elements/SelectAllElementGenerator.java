@@ -81,6 +81,7 @@ public class SelectAllElementGenerator extends AbstractXmlElementGenerator {
         sb.setLength(0);
         sb.append("from "); //$NON-NLS-1$
         sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(" where yn =1 ");
         answer.addElement(new TextElement(sb.toString()));
 
         String orderByClause =

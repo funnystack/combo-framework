@@ -42,6 +42,7 @@ public class CountElementGenerator extends AbstractXmlElementGenerator {
         StringBuilder sb = new StringBuilder();
         sb.append("select count(*) from "); //$NON-NLS-1$
         sb.append(introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime());
+        sb.append(" where yn =1 ");
         answer.addElement(new TextElement(sb.toString()));
         return answer;
     }
