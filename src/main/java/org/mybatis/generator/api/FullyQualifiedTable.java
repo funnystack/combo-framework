@@ -214,7 +214,7 @@ public class FullyQualifiedTable {
 
     public String getBasicDomainObjectName() {
         if (stringHasValue(domainObjectName)) {
-            return domainObjectName;
+            return domainObjectName + "Entity";
         } else if (stringHasValue(runtimeTableName)) {
             return getCamelCaseString(runtimeTableName, true) + "Entity";
         } else {

@@ -2,12 +2,13 @@ package cn.com.autohome.mall.erp.soa.po;
 
 import java.io.Serializable;
 import java.util.Date;
+
 /**
  * 
  * @author fangli@autohome.com.cn
  * 
  */
-public class BaseEntity<T> implements Cloneable,Serializable{
+public class BaseEntity<T> implements Cloneable, Serializable {
 
     /**
      * 
@@ -16,8 +17,8 @@ public class BaseEntity<T> implements Cloneable,Serializable{
     private T id;
     private Date createdTime;
     private Long createdBy;
-    private Date modifyedTime;
-    private Long modifyedBy;
+    private Date updateTime;
+    private Long updateBy;
     private Integer yn;
 
     public T getId() {
@@ -31,27 +32,35 @@ public class BaseEntity<T> implements Cloneable,Serializable{
     public Date getCreatedTime() {
         return createdTime;
     }
+
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
     }
+
     public Long getCreatedBy() {
         return createdBy;
     }
+
     public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
-    public Date getModifyedTime() {
-        return modifyedTime;
+
+    public Date getUpdateTime() {
+        return updateTime;
     }
-    public void setModifyedTime(Date modifyedTime) {
-        this.modifyedTime = modifyedTime;
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
-    public Long getModifyedBy() {
-        return modifyedBy;
+
+    public Long getUpdateBy() {
+        return updateBy;
     }
-    public void setModifyedBy(Long modifyedBy) {
-        this.modifyedBy = modifyedBy;
+
+    public void setUpdateBy(Long updateBy) {
+        this.updateBy = updateBy;
     }
+
     public Integer getYn() {
         return yn;
     }
