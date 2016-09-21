@@ -15,6 +15,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.funny.autocode.common.JsonResult;
+import com.funny.autocode.common.SystemConstants;
+import com.funny.autocode.util.FileUtils;
 import org.mybatis.generator.config.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +27,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.funny.autocode.po.Table;
 import com.funny.autocode.service.CodeService;
 import com.funny.autocode.util.ContextUtils;
-import com.funny.autocode.util.FileUtils;
 import com.funny.autocode.util.PropertyConfigurer;
 import com.funny.autocode.util.ZipUtil;
 import com.google.common.collect.Lists;
@@ -32,37 +34,39 @@ import com.google.common.collect.Maps;
 
 @Controller
 public class CodeController {
-    private static final String SUCCESS = "success";
-    private static final String MESSAGE = "message";
-    private static final String RESULT = "result";
 
     @Autowired
     private CodeService codeService;
 
     @RequestMapping("/getTargetDatabaseTables")
     @ResponseBody
-    public Map<String, Object> getConnection(HttpServletRequest request, String url, String usr, String pas)
+    public JsonResult getConnection(HttpServletRequest request, String url, String usr, String pas)
             throws ClassNotFoundException, SQLException {
-        Map<String, Object> result = Maps.newHashMap();
+        JsonResult jsonResult = new JsonResult();
         if (!ContextUtils.checkDataBase(url)) {
-            result.put(SUCCESS, false);
-            result.put(MESSAGE, "目前只支持oracle和mysql数据库！");
-            return result;
+            jsonResult.setFail("目前只支持oracle和mysql数据库！");
+            return jsonResult;
         }
 
-        String db = ContextUtils.getDatabaseType(url);
+        String databaseType = ContextUtils.getDatabaseType(url);
         List<Table> tablelist = Lists.newArrayList();
-        if (db.equals("oracle") && ContextUtils.checkOracleUrl(url)) {
+        if (databaseType.equals(SystemConstants.DB_ORACLE)) {
+            if(!ContextUtils.checkOracleUrl(url)){
+                jsonResult.setFail("请检查oracle数据库连接错误");
+                return jsonResult;
+            }
             tablelist = codeService.getOracleTables(url, usr, pas);
-            result.put(SUCCESS, true);
-            result.put(RESULT, tablelist);
+            jsonResult.setSuccess(tablelist);
         }
-        if (db.equals("mysql") && ContextUtils.checkMysqlUrl(url)) {
+        if (databaseType.equals(SystemConstants.DB_MYSQL)) {
+            if(!ContextUtils.checkMysqlUrl(url)){
+                jsonResult.setFail("请检查mysql数据库连接");
+                return jsonResult;
+            }
             tablelist = codeService.getMysqlTables(url, usr, pas);
-            result.put(SUCCESS, true);
-            result.put(RESULT, tablelist);
+            jsonResult.setSuccess(tablelist);
         }
-        return result;
+        return jsonResult;
 
     }
 
@@ -84,7 +88,7 @@ public class CodeController {
     @ResponseBody
     public void getCode(HttpServletRequest request, HttpServletResponse response, String c_url, String c_user,
             String c_pass, String packagename, String modelname, String c_table, String c_style, String c_id)
-            throws ClassNotFoundException, SQLException, IOException {
+                    throws ClassNotFoundException, SQLException, IOException {
         String targetpath = PropertyConfigurer.config.getString("temp_path");
         Context context =
                 ContextUtils.initContext(c_url, c_user, c_pass, c_table, packagename, modelname, targetpath, c_id);

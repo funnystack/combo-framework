@@ -87,7 +87,7 @@
 			var usr = $("#username").val();
 			$.post('<%=basePath%>getTargetDatabaseTables.do',{url:url,usr:usr,pas:pas},function(data){
 				$("#label_table").html('<tr><td class="width_50">序号</td><td class="width_140">表名</td><td class="width_140">备注</td><td class="width_140">主键</td></tr>');
-				if(data.success){
+				if(data.returncode==0){
 					$.each(data.result,function(i,n){
 						$("#label_table").append('<tr><td class="width_50"><input type="radio" name="tableid" style="min-width:50px;" id="'+i +'" value="'+n.tableName+'"/></td><td class="width_140"><label>'
 								+ n.tableName+'</label></td><td class="width_140"><label>'
@@ -227,10 +227,12 @@ label.error {
 		<table>
 			<tr>
 				<td><label>package:</label></td>
-				<td><input type="text" id="packagename" name="packagename" value="cn.com.autohome.mall.erp"></td>
+				<td><input type="text" id="packagename" name="packagename" value="cn.com.autohome.mall.erp.soa" size="40"></td>
+			</tr>
+			<tr>
 				<td><label>module:</label></td>
-				<td><input type="text" id="modelname" name="modelname"></td>
-				<td><input type="submit" value="获取CODE" id="getcode" /></td>
+				<td><input type="text" id="modelname" name="modelname" size="20">
+					<input type="submit" value="获取CODE" id="getcode" /></td>
 			</tr>
 		</table>
 		<input type="hidden" id="c_url" name="c_url"> 

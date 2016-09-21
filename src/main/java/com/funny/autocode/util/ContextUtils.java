@@ -2,6 +2,7 @@ package com.funny.autocode.util;
 
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
+import com.funny.autocode.common.SystemConstants;
 import org.mybatis.generator.config.CommentGeneratorConfiguration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.GeneratedKey;
@@ -19,17 +20,21 @@ public class ContextUtils {
      * @return funny 2016年3月4日 上午11:11:12
      */
     public static boolean checkDataBase(String url) {
-        if (url.contains("oracle") || url.contains("mysql")) {
+        String dbType = getDatabaseType(url);
+        if (dbType == null) {
+            return false;
+        }
+        if (dbType.equals(SystemConstants.DB_ORACLE) || dbType.contains(SystemConstants.DB_MYSQL)) {
             return true;
         }
         return false;
     }
 
     public static String getDatabaseType(String url) {
-        if (url.contains("oracle")) {
-            return "oracle";
-        } else if (url.contains("mysql")) {
-            return "mysql";
+        if (url.contains(SystemConstants.DB_ORACLE)) {
+            return SystemConstants.DB_ORACLE;
+        } else if (url.contains(SystemConstants.DB_MYSQL)) {
+            return SystemConstants.DB_MYSQL;
         }
         return null;
     }

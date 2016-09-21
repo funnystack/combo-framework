@@ -16,11 +16,7 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 public class PropertyConfigurer extends PropertyPlaceholderConfigurer {
     
     public static ResourceBundle config = ResourceBundle.getBundle("config");
-    
-    
-    
-    
-    
+
     private static Map<String,Object> properties = null;
 
     @Override

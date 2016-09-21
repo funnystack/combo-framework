@@ -1,5 +1,8 @@
 package com.funny.autocode.util;
 
+
+import org.apache.commons.lang.StringUtils;
+
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

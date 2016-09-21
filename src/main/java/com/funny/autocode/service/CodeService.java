@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.funny.autocode.po.Table;
 
-@Service
 public interface CodeService {
     /**
      * 根据数据库连接，用户名，密码查询数据库的表
