@@ -51,7 +51,7 @@ public class CodeController {
         String databaseType = ContextUtils.getDatabaseType(url);
         List<Table> tablelist = Lists.newArrayList();
         if (databaseType.equals(SystemConstants.DB_ORACLE)) {
-            if(!ContextUtils.checkOracleUrl(url)){
+            if (!ContextUtils.checkOracleUrl(url)) {
                 jsonResult.setFail("请检查oracle数据库连接错误");
                 return jsonResult;
             }
@@ -59,7 +59,7 @@ public class CodeController {
             jsonResult.setSuccess(tablelist);
         }
         if (databaseType.equals(SystemConstants.DB_MYSQL)) {
-            if(!ContextUtils.checkMysqlUrl(url)){
+            if (!ContextUtils.checkMysqlUrl(url)) {
                 jsonResult.setFail("请检查mysql数据库连接");
                 return jsonResult;
             }
@@ -92,15 +92,7 @@ public class CodeController {
         String targetpath = PropertyConfigurer.config.getString("temp_path");
         Context context =
                 ContextUtils.initContext(c_url, c_user, c_pass, c_table, packagename, modelname, targetpath, c_id);
-        Map<File, String> files = null;
-        if ("1".equals(c_style)) {
-            files = codeService.generateCommonFiles(context);
-        } else if ("2".equals(c_style)) {
-            files = codeService.generateReadWriteFiles(context);
-        } else {
-            System.out.println("未选择生产代码方式");
-            return;
-        }
+        Map<File, String> files = codeService.generateCommonFiles(context);
         writeFile(files);
         try {
             downloadFile(modelname, targetpath, request, response);
