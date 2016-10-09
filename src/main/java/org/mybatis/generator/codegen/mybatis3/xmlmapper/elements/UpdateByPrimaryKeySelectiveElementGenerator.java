@@ -64,6 +64,10 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends AbstractXmlElem
         IntrospectedColumn column = null;
         for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
             String columnName = introspectedColumn.getActualColumnName();
+            if (columnName.equalsIgnoreCase(PropertyConfigurer.config.getString("create.date"))||
+                    columnName.equalsIgnoreCase(PropertyConfigurer.config.getString("create.id"))) {
+                continue;
+            }
             if (columnName.equalsIgnoreCase(PropertyConfigurer.config.getString("modify.date"))) {
                 column= introspectedColumn;
                 continue;

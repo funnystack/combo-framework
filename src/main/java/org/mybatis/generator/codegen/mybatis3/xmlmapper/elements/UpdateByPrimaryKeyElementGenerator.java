@@ -69,6 +69,11 @@ public class UpdateByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
             String columnName = introspectedColumn.getActualColumnName();
+            if (columnName.equalsIgnoreCase(PropertyConfigurer.config.getString("create.date"))||
+                    columnName.equalsIgnoreCase(PropertyConfigurer.config.getString("create.id"))) {
+                continue;
+            }
+
             sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
             if (columnName.equalsIgnoreCase(PropertyConfigurer.config.getString("modify.date"))) {
                 if (context.getDatabaseType().equals(SystemConstants.DB_MYSQL)) {
