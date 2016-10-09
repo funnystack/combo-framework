@@ -85,6 +85,7 @@ public class Context extends PropertyHolder {
     private XmlFormatter xmlFormatter;
     
     private TableConfiguration tabconfig;
+    private String databaseType;
 
     /**
      * Constructs a Context object.
@@ -458,6 +459,14 @@ public class Context extends PropertyHolder {
                 ;
             }
         }
+    }
+
+    public String getDatabaseType() {
+        return databaseType;
+    }
+
+    public void setDatabaseType(String databaseType) {
+        this.databaseType = databaseType;
     }
 
     public boolean autoDelimitKeywords() {

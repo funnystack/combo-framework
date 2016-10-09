@@ -17,6 +17,8 @@ package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
 import java.util.Iterator;
 
+import com.funny.autocode.common.SystemConstants;
+import com.funny.autocode.util.PropertyConfigurer;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.xml.Attribute;
@@ -66,10 +68,21 @@ public class UpdateByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
         Iterator<IntrospectedColumn> iter = introspectedTable.getNonPrimaryKeyColumns().iterator();
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
-
+            String columnName = introspectedColumn.getActualColumnName();
             sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
+            if (columnName.equalsIgnoreCase(PropertyConfigurer.config.getString("modify.date"))) {
+                if (context.getDatabaseType().equals(SystemConstants.DB_MYSQL)) {
+                    sb.append(" = now()");
+                } else if (context.getDatabaseType().equals(SystemConstants.DB_ORACLE)) {
+                    sb.append(" = sysdate()");
+                } else {
+                    sb.append(" = ");
+                    sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
+                }
+            } else {
+                sb.append(" = ");
+                sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
+            }
 
             if (iter.hasNext()) {
                 sb.append(',');
@@ -77,7 +90,6 @@ public class UpdateByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
 
             answer.addElement(new TextElement(sb.toString()));
 
-            // set up for the next column
             if (iter.hasNext()) {
                 sb.setLength(0);
                 OutputUtilities.xmlIndent(sb, 1);

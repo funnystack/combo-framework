@@ -15,6 +15,8 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
+import com.funny.autocode.common.SystemConstants;
+import com.funny.autocode.util.PropertyConfigurer;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
@@ -59,27 +61,37 @@ public class UpdateByPrimaryKeySelectiveElementGenerator extends AbstractXmlElem
 
         XmlElement dynamicElement = new XmlElement("set"); //$NON-NLS-1$
         answer.addElement(dynamicElement);
-        int length = introspectedTable.getNonPrimaryKeyColumns().size();
-        int count = 0;
+        IntrospectedColumn column = null;
         for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
+            String columnName = introspectedColumn.getActualColumnName();
+            if (columnName.equalsIgnoreCase(PropertyConfigurer.config.getString("modify.date"))) {
+                column= introspectedColumn;
+                continue;
+            }
             XmlElement isNotNullElement = new XmlElement("if"); //$NON-NLS-1$
             sb.setLength(0);
             sb.append(introspectedColumn.getJavaProperty());
             sb.append(" != null"); //$NON-NLS-1$
             isNotNullElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
             dynamicElement.addElement(isNotNullElement);
-
             sb.setLength(0);
             sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
-            sb.append(" = "); //$NON-NLS-1$
+            sb.append(" = ");
             sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
-            count++;
-            if (count != length) {
-                sb.append(',');
-            }
-
+            sb.append(',');
             isNotNullElement.addElement(new TextElement(sb.toString()));
         }
+        sb.setLength(0);
+        sb.append(PropertyConfigurer.config.getString("modify.date"));
+        sb.append(" = ");
+        if (context.getDatabaseType().equals(SystemConstants.DB_MYSQL)) {
+            sb.append(" now()");
+        } else if (context.getDatabaseType().equals(SystemConstants.DB_ORACLE)) {
+            sb.append(" sysdate()");
+        } else {
+            sb.append(MyBatis3FormattingUtilities.getParameterClause(column));
+        }
+        dynamicElement.addElement(new TextElement(sb.toString()));
 
         boolean and = false;
         for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {

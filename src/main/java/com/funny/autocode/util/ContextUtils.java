@@ -90,6 +90,7 @@ public class ContextUtils {
         tabconfig.setTableName(table);
         tabconfig.setDomainObjectName(domainObjectName);
         String type = getDatabaseType(url);
+        context.setDatabaseType(type);
         // 设置回写主键
         if (null != keyid && !"".equals(keyid)) {
             String column = keyid;

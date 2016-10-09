@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.funny.autocode.common.SystemConstants;
+import com.funny.autocode.util.PropertyConfigurer;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -89,15 +91,31 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
         while (iter.hasNext()) {
             IntrospectedColumn introspectedColumn = iter.next();
             if (introspectedColumn.isIdentity()) {
-                // cannot set values on identity fields
                 continue;
             }
 
             insertClause.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
-            valuesClause.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
+
+            String columnName = introspectedColumn.getActualColumnName();
+            if (columnName.equalsIgnoreCase(PropertyConfigurer.config.getString("create.date"))
+                    || columnName.equalsIgnoreCase(PropertyConfigurer.config.getString("modify.date"))) {
+                if (context.getDatabaseType().equals(SystemConstants.DB_MYSQL)) {
+                    valuesClause.append("now()");
+                } else if (context.getDatabaseType().equals(SystemConstants.DB_ORACLE)) {
+                    valuesClause.append("sysdate()");
+                } else {
+                    valuesClause.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
+                }
+            }else if (columnName.equalsIgnoreCase(PropertyConfigurer.config.getString("is.valid"))) {
+                valuesClause.append("1");
+            } else {
+                valuesClause.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
+            }
+
+
             if (iter.hasNext()) {
-                insertClause.append(", "); //$NON-NLS-1$
-                valuesClause.append(", "); //$NON-NLS-1$
+                insertClause.append(", ");
+                valuesClause.append(", ");
             }
 
             if (valuesClause.length() > 80) {

@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
+import com.funny.autocode.common.SystemConstants;
 import com.funny.autocode.util.PropertyConfigurer;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.dom.xml.Attribute;
@@ -41,8 +42,7 @@ public class DeleteByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
 
         String parameterClass = introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().toString();
         
-        answer.addAttribute(new Attribute("parameterType", //$NON-NLS-1$
-                parameterClass));
+        answer.addAttribute(new Attribute("parameterType", parameterClass));
 
         context.getCommentGenerator().addComment(answer);
 
@@ -55,6 +55,16 @@ public class DeleteByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
         sb.append("set ");
         sb.append(PropertyConfigurer.config.getString("is.valid"));
         sb.append(" = 0");
+        if (context.getDatabaseType().equals(SystemConstants.DB_MYSQL)) {
+            sb.append(",");
+            sb.append(PropertyConfigurer.config.getString("modify.date"));
+            sb.append(" = now() ");
+        } else if (context.getDatabaseType().equals(SystemConstants.DB_ORACLE)) {
+            sb.append(",");
+            sb.append(PropertyConfigurer.config.getString("modify.date"));
+            sb.append(" = sysdate()");
+        }
+
         answer.addElement(new TextElement(sb.toString()));
 
         for (IntrospectedColumn introspectedColumn : introspectedTable.getPrimaryKeyColumns()) {

@@ -191,10 +191,8 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
     }
 
     protected void addUpdateByPrimaryKeyElementGenerator(XmlElement parentElement) {
-        if (introspectedTable.getRules().generateUpdateByPrimaryKeyWithBLOBs()) {
-            AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyElementGenerator();
-            initializeAndExecuteGenerator(elementGenerator, parentElement);
-        }
+        AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyElementGenerator();
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
     }
 
     protected void initializeAndExecuteGenerator(AbstractXmlElementGenerator elementGenerator, XmlElement parentElement) {
