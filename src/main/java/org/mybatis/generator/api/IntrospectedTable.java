@@ -80,6 +80,7 @@ public abstract class IntrospectedTable {
         ATTR_INSERT_STATEMENT_ID,
         ATTR_INSERT_SELECTIVE_STATEMENT_ID,
         ATTR_SELECT_ALL_STATEMENT_ID,
+        ATTR_FIND_CONDITION_STATEMENT_ID,
         ATTR_SELECT_BY_PRIMARY_KEY_STATEMENT_ID,
         ATTR_UPDATE_BY_PRIMARY_KEY_STATEMENT_ID,
         ATTR_UPDATE_BY_PRIMARY_KEY_SELECTIVE_STATEMENT_ID,
@@ -506,9 +507,11 @@ public abstract class IntrospectedTable {
         setSelectByPrimaryKeyStatementId(PropertyConfigurer.config.getString("find.id")); //$NON-NLS-1$
         setUpdateByPrimaryKeyStatementId(PropertyConfigurer.config.getString("update.id")); //$NON-NLS-1$
         setUpdateByPrimaryKeySelectiveStatementId(PropertyConfigurer.config.getString("update.id.selected")); //$NON-NLS-1$
-        setDeleteByPrimaryKeyStatementId(PropertyConfigurer.config.getString("delete.id")); //$NON-NLS-1$
+        //setDeleteByPrimaryKeyStatementId(PropertyConfigurer.config.getString("delete.id")); //$NON-NLS-1$
         setCountStatementId("count"); //$NON-NLS-1$
         setSelectAllStatementId("findAll"); //$NON-NLS-1$
+        setFindConditionStatementId(PropertyConfigurer.config.getString("find.condition")); //$NON-NLS-1$
+
     }
 
     public void setBlobColumnListId(String s) {
@@ -573,6 +576,15 @@ public abstract class IntrospectedTable {
                 InternalAttribute.ATTR_DELETE_BY_PRIMARY_KEY_STATEMENT_ID, s);
     }
 
+    public String getFindConditionStatementId() {
+        return internalAttributes
+                .get(InternalAttribute.ATTR_FIND_CONDITION_STATEMENT_ID);
+    }
+
+    public String setFindConditionStatementId(String s) {
+        return internalAttributes
+                .put(InternalAttribute.ATTR_FIND_CONDITION_STATEMENT_ID, s);
+    }
    
     public void setCountStatementId(String s) {
         internalAttributes.put(

@@ -15,23 +15,14 @@
  */
 package org.mybatis.generator.codegen.mybatis3.model;
 
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.generator.api.CommentGenerator;
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.java.CompilationUnit;
-import org.mybatis.generator.api.dom.java.Field;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.Method;
-import org.mybatis.generator.api.dom.java.Parameter;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
-import org.mybatis.generator.config.PropertyRegistry;
 
 import com.funny.autocode.util.PropertyConfigurer;
 
@@ -74,6 +65,8 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
             if (RootClassInfo.getInstance(rootClass, warnings).containsProperty(introspectedColumn)) {
                 continue;
             }
+            // 93 timestamp
+
             Field field = getJavaBeansField(introspectedColumn);
             topLevelClass.addField(field);
             topLevelClass.addImportedType(field.getType());
@@ -98,7 +91,11 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
     }
 
     private FullyQualifiedJavaType getSuperClass(String keyType) {
-        String parentclassname = PropertyConfigurer.config.getString("parent.model") + "<" + keyType + ">";
+        boolean open = Boolean.parseBoolean(PropertyConfigurer.config.getString("parent.model"));
+        String parentclassname = PropertyConfigurer.config.getString("parent.model");
+        if (open) {
+            parentclassname += "<" + keyType + ">";
+        }
         return new FullyQualifiedJavaType(parentclassname);
     }
 

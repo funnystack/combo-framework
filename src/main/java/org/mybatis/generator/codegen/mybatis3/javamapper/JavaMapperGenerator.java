@@ -65,8 +65,13 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         String fullName = introspectedTable.getRecordType();
         String lastName = fullName.substring(fullName.lastIndexOf(".") + 1);
         String keyType = introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().toString();
-        String rootInterface = PropertyConfigurer.config.getString("parent.dao") + "<" + lastName + ", "
-                + keyType + ">";
+        boolean open = Boolean.parseBoolean(PropertyConfigurer.config.getString("parent.model"));
+        String rootInterface = PropertyConfigurer.config.getString("parent.dao") + "<" + lastName;
+        if (open) {
+            rootInterface += ", " + keyType + ">";
+        } else {
+            rootInterface += ">";
+        }
 
         if (!stringHasValue(rootInterface)) {
             rootInterface =

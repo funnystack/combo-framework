@@ -54,6 +54,18 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
 
         return answer;
     }
+    protected XmlElement getIfNotNullElement() {
+        XmlElement answer = new XmlElement("if"); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("test", "fields!=null and fields!=''"));
+        answer.addElement(new TextElement("${fields}"));
+        return answer;
+    }
+    protected XmlElement getIfNullElement() {
+        XmlElement answer = new XmlElement("if"); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("test", "fields==null or fields==''"));
+        answer.addElement(getBaseColumnListElement());
+        return answer;
+    }
 
     protected XmlElement getBaseColumnListElement() {
         XmlElement answer = new XmlElement("include"); //$NON-NLS-1$

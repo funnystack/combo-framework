@@ -21,18 +21,7 @@ import org.mybatis.generator.api.dom.xml.Element;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.XmlConstants;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.BaseColumnListElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.BlobColumnListElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.CountElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.DeleteByPrimaryKeyElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ResultMapWithBLOBsElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ResultMapWithoutBLOBsElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectAllElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByPrimaryKeyElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeySelectiveElementGenerator;
-import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.UpdateByPrimaryKeyElementGenerator;
+import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.*;
 
 /**
  * 
@@ -109,11 +98,12 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         if (introspectedTable.getPrimaryKeyColumns().size() == 1) {
             addUpdateByPrimaryKeySelectiveElement(roornode);
             addUpdateByPrimaryKeyElementGenerator(roornode);
-            addDeleteByPrimaryKeyElement(roornode);
+            //addDeleteByPrimaryKeyElement(roornode);
             addSelectByPrimaryKeyElement(roornode);
         }
-        addCountElement(roornode);
-        addSelectAllElement(roornode);
+        addFindByConditionElement(roornode);
+        //addCountElement(roornode);
+        //addSelectAllElement(roornode);
 
         return roornode;
     }
@@ -192,6 +182,12 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 
     protected void addUpdateByPrimaryKeyElementGenerator(XmlElement parentElement) {
         AbstractXmlElementGenerator elementGenerator = new UpdateByPrimaryKeyElementGenerator();
+        initializeAndExecuteGenerator(elementGenerator, parentElement);
+    }
+
+
+    protected void addFindByConditionElement(XmlElement parentElement) {
+        AbstractXmlElementGenerator elementGenerator = new FindByConditionElementGenerator();
         initializeAndExecuteGenerator(elementGenerator, parentElement);
     }
 

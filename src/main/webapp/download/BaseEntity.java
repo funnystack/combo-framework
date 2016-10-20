@@ -1,56 +1,64 @@
-package cn.com.autohome.mall.erp.soa.po;
+package com.funny.admin.common.domain;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.annotation.JSONField;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 
- * @author fangli@autohome.com.cn
- * 
+ * Created by fangli@autohome.com.cn on 2016/6/29.
  */
-public class BaseEntity<T> implements Cloneable, Serializable {
-
+public class BaseEntity implements Serializable{
     /**
-     * 
+     * 主键id
      */
-    private static final long serialVersionUID = 1L;
-    private T id;
-    private Date createdTime;
-    private Long createdBy;
-    private Date updateTime;
-    private Long updateBy;
-    private Integer yn;
+    protected Long id;
+    /**
+     * 创建人
+     */
+    protected Long createBy;
+    /**
+     * 创建时间
+     */
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    protected Date createTime;
+    /**
+     * 更新人
+     */
+    protected Long updateBy;
+    /**
+     * 更新时间
+     */
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    protected Date updateTime;
+    /**
+     * 是否有效 1 有效 0 无效
+     */
+    protected Integer yn;
 
-    public T getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(T id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Date getCreatedTime() {
-        return createdTime;
+    public Long getCreateBy() {
+        return createBy;
     }
 
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
+    public void setCreateBy(Long createBy) {
+        this.createBy = createBy;
     }
 
-    public Long getCreatedBy() {
-        return createdBy;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatedBy(Long createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Long getUpdateBy() {
@@ -61,11 +69,24 @@ public class BaseEntity<T> implements Cloneable, Serializable {
         this.updateBy = updateBy;
     }
 
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     public Integer getYn() {
         return yn;
     }
 
     public void setYn(Integer yn) {
         this.yn = yn;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 }
