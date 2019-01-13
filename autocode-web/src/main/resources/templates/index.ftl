@@ -1,272 +1,356 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script type="text/javascript" src="/js/jquery-1.10.0.js"></script>
-    <script type="text/javascript" src="/js/jquery.validate-1.13.1.js"></script>
-    <title>Autocode Factory</title>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#connectionform").validate({
-                rules: {
-                    url: {
-                        required: true
-                    },
-                    username: {
-                        required: true
-                    },
-                    password: {
-                        required: true
-                    }
-                },
-                messages: {
-                    url: {
-                        required: '请输入数据库地址'
-                    },
-                    username: {
-                        required: '请输入用户名'
-                    },
-                    password: {
-                        required: '请输入密码',
-                    }
-                },
-                highlight: function (element, errorClass, validClass) {
-                    $(element).addClass(errorClass).removeClass(validClass);
-                    $(element).fadeOut().fadeIn();
-                },
-                unhighlight: function (element, errorClass, validClass) {
-                    $(element).removeClass(errorClass).addClass(validClass);
-                },
-                submitHandler: function (form) {
-                    //console.log($(form).serialize());
-                }
-            });
-
-            $("#codeform").validate({
-                rules: {
-                    packagename: {
-                        required: true
-                    },
-                    modelname: {
-                        required: true
-                    }
-                },
-                messages: {
-                    packagename: {
-                        required: '请输入packagename'
-                    },
-                    modelname: {
-                        required: '请输入modelname'
-                    },
-                },
-                highlight: function (element, errorClass, validClass) {
-                    $(element).addClass(errorClass).removeClass(validClass);
-                    $(element).fadeOut().fadeIn();
-                },
-                unhighlight: function (element, errorClass, validClass) {
-                    $(element).removeClass(errorClass).addClass(validClass);
-                },
-                submitHandler: function (form) {
-                    form.submit();
-                }
-            });
-
-            $("#getTables").click(function () {
-                var url = $("#url").val();
-                var pas = $("#password").val();
-                var usr = $("#username").val();
-                $.post('<%=basePath%>getTargetDatabaseTables.do', {url: url, usr: usr, pas: pas}, function (data) {
-                    $("#label_table").html('<tr><td class="width_50">序号</td><td class="width_140">表名</td><td class="width_140">备注</td><td class="width_140">主键</td></tr>');
-                    if (data.returncode == 0) {
-                        $.each(data.result, function (i, n) {
-                            $("#label_table").append('<tr><td class="width_50"><input type="checkbox" name="tableid" style="min-width:50px;" id="' + i + '" value="' + n.tableName + '"/></td><td class="width_140"><label>'
-                                + n.tableName + '</label></td><td class="width_140"><label>'
-                                + n.tableDesc + '</label></td><td class="width_140"><label>'
-                                + n.key + '</label></td></tr>');
-                        });
-                    } else {
-                        alert(data.message);
-                        return;
-                    }
-
-                });
-            });
-
-            $("#getcode").click(function () {
-                var tablename = "";
-                var selected_tables = $("input[type=checkbox]:checked");
-                $(selected_tables).each(function () {
-                    if (tablename == "") {
-                        tablename = $(this).val();
-                    } else {
-                        tablename = tablename + "," + $(this).val();
-                    }
-                })
-
-                if (tablename == '' || tablename == null || tablename == 'undefined') {
-                    alert('请选择一张表');
-                    return false;
-                }
-                $("#c_table").val(tablename);
-                $("#c_url").val($("#url").val());
-                $("#c_user").val($("#username").val());
-                $("#c_pass").val($("#password").val());
-                $("#codeform").submit();
-            });
-
-            $("#packagename").keyup(function () {
-                getNames($(this).val(), $("#modelname").val());
-            });
-
-            $("#modelname").keyup(function () {
-                getNames($("#packagename").val(), $(this).val());
-            });
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-        });
+    <title>H+ 后台主题UI框架 - 联系人</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
 
-        function getNames(packagename, modelname) {
-            if (packagename != '' && packagename != null && packagename != 'undefined' &&
-                modelname != '' && modelname != null && modelname != 'undefined') {
-                $.post('<%=basePath%>getNames.do', {
-                    packagename: packagename,
-                    modelname: modelname
-                }, function (data) {
-                    $("#modelName").text(data.modelName);
-                    $("#daoName").text(data.daoName);
-                });
-            }
+    <link rel="shortcut icon" href="favicon.ico"> <link href="/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
 
-        }
-    </script>
-    <style type="text/css">
-        body {
-            background-color: #ccc;
-            line-height: 1.6;
-            margin-left: 80px;
-        }
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/style.min862f.css?v=4.1.0" rel="stylesheet">
 
-        input {
-            font-size: 25px;
-            line-height: 35px;
-            border: 1px solid #999;
-            min-width: 180px;
-        }
-
-        button {
-            margin-top: 20px;
-            font-size: 20px;
-            padding: 5px;
-        }
-
-        label.error {
-            margin-left: 10px;
-            color: red;
-        }
-
-        .showname {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .showname span {
-            color: red;
-        }
-
-        .tablediv {
-            float: left;
-            width: 60%;
-        }
-
-        .tablediv table {
-            border-collapse: collapse;
-            border: 1px solid #000;
-            font-size: 13px;
-        }
-
-        .tablediv table tr td {
-            border: 1px solid #000;
-            margin: 5px;
-        }
-
-        .width_50 {
-            width: 50px;
-        }
-
-        .width_140 {
-            width: 200px;
-        }
-
-    </style>
 </head>
-<body>
-<h1>Autocode Factory</h1>
 
-<form id="connectionform">
-    <label>db url:</label><input type="text" id="url" name="url"
-                                 value="jdbc:mysql://10.168.0.90:3306/automall_data" size="45">
-    <input type="submit" value="获取TABLE" id="getTables"/>
-    <table>
-        <tr>
-            <td><label>username:</label></td>
-            <td><input type="text" id="username" name="username"
-                       value="root" size="10"></td>
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="profile.html">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a2.jpg">
+                                <div class="m-t-xs font-bold">CTO</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>奔波儿灞</strong></h3>
+                            <p><i class="fa fa-map-marker"></i> 甘肃·兰州</p>
+                            <address>
+                            <strong>Baidu, Inc.</strong><br>
+                            E-mail:xxx@baidu.com<br>
+                            Weibo:<a href="#">http://weibo.com/xxx</a><br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="profile.html">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a1.jpg">
+                                <div class="m-t-xs font-bold">营销总监</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>灞波儿奔</strong></h3>
+                            <p><i class="fa fa-map-marker"></i> 四川·成都</p>
+                            <address>
+                            <strong>Taobao, Inc.</strong><br>
+                            E-mail:xxx@taobao.com<br>
+                            Weibo:<a href="#">http://weibo.com/xxx</a><br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="profile.html">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a3.jpg">
+                                <div class="m-t-xs font-bold">Marketing manager</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>Monica Smith</strong></h3>
+                            <p><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</p>
+                            <address>
+                            <strong>Baidu, Inc.</strong><br>
+                            E-mail:xxx@baidu.com<br>
+                            Weibo:<a href="#">http://weibo.com/xxx</a><br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="profile.html">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a4.jpg">
+                                <div class="m-t-xs font-bold">攻城师</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>Michael Zimber</strong></h3>
+                            <p><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</p>
+                            <address>
+                            <strong>Baidu, Inc.</strong><br>
+                            E-mail:xxx@baidu.com<br>
+                            Weibo:<a href="#">http://weibo.com/xxx</a><br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="profile.html">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a5.jpg">
+                                <div class="m-t-xs font-bold">射鸡师</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>作家崔成浩</strong></h3>
+                            <p><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</p>
+                            <address>
+                            <strong>Baidu, Inc.</strong><br>
+                            E-mail:xxx@baidu.com<br>
+                            Weibo:<a href="#">http://weibo.com/xxx</a><br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="profile.html">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a6.jpg">
+                                <div class="m-t-xs font-bold">射鸡师</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>韩寒</strong></h3>
+                            <p><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</p>
+                            <address>
+                            <strong>Baidu, Inc.</strong><br>
+                            E-mail:xxx@baidu.com<br>
+                            Weibo:<a href="#">http://weibo.com/xxx</a><br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="profile.html">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a1.jpg">
+                                <div class="m-t-xs font-bold">CEO</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>郭敬明</strong></h3>
+                            <p><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</p>
+                            <address>
+                            <strong>Baidu, Inc.</strong><br>
+                            E-mail:xxx@baidu.com<br>
+                            Weibo:<a href="#">http://weibo.com/xxx</a><br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="profile.html">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a2.jpg">
+                                <div class="m-t-xs font-bold">射鸡师</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>马云</strong></h3>
+                            <p><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</p>
+                            <address>
+                            <strong>Baidu, Inc.</strong><br>
+                            E-mail:xxx@baidu.com<br>
+                            Weibo:<a href="#">http://weibo.com/xxx</a><br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="profile.html">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a3.jpg">
+                                <div class="m-t-xs font-bold">市场总监</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>范爷</strong></h3>
+                            <p><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</p>
+                            <address>
+                            <strong>Baidu, Inc.</strong><br>
+                            E-mail:xxx@baidu.com<br>
+                            Weibo:<a href="#">http://weibo.com/xxx</a><br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="profile.html">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a4.jpg">
+                                <div class="m-t-xs font-bold">攻城师</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>李彦宏</strong></h3>
+                            <p><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</p>
+                            <address>
+                            <strong>Baidu, Inc.</strong><br>
+                            E-mail:xxx@baidu.com<br>
+                            Weibo:<a href="#">http://weibo.com/xxx</a><br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="profile.html">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a5.jpg">
+                                <div class="m-t-xs font-bold">射鸡师</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>小马哥</strong></h3>
+                            <p><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</p>
+                            <address>
+                            <strong>Baidu, Inc.</strong><br>
+                            E-mail:xxx@baidu.com<br>
+                            Weibo:<a href="#">http://weibo.com/xxx</a><br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="profile.html">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a6.jpg">
+                                <div class="m-t-xs font-bold">射鸡师</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>乔峰</strong></h3>
+                            <p><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</p>
+                            <address>
+                            <strong>Baidu, Inc.</strong><br>
+                            E-mail:xxx@baidu.com<br>
+                            Weibo:<a href="#">http://weibo.com/xxx</a><br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
 
-            <td><label>password:</label></td>
-            <td><input type="text" id="password" name="password"
-                       value="123456" size="10"></td>
-
-        </tr>
-    </table>
-</form>
-<form id="codeform" action="<%=basePath%>getCode.do" method="post">
-    <table>
-        <tr>
-            <td><label>package:</label></td>
-            <td><input type="text" id="packagename" name="packagename" value="com.funny.mall" size="40">
-            </td>
-        </tr>
-        <tr>
-            <td><label>module:</label></td>
-            <td><input type="text" id="modelname" name="modelname" size="20">
-                <input type="submit" value="获取CODE" id="getcode"/></td>
-        </tr>
-    </table>
-    <input type="hidden" id="c_url" name="c_url">
-    <input type="hidden" id="c_user" name="c_user">
-    <input type="hidden" id="c_pass" name="c_pass">
-    <input type="hidden" id="c_table" name="c_table">
-</form>
-
-<div>
-    <a href="/download/BaseMapper.java"
-       title="查看BaseMapper" target="_blank">
-        查看BaseMapper
-    </a>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="/download/BaseEntity.java"
-       title="查看BaseEntity" target="_blank">
-        查看BaseEntity
-    </a>
-
-    <br>
-    <label class="showname">Model Class：<span id="modelName"></span></label>
-    <br>
-    <label class="showname">Dao Class：<span id="daoName"></span></label>
-</div>
-
-<div class="tablediv">
-    <table id="label_table">
-        <tr>
-            <td class="width_50">序号</td>
-            <td class="width_140">表名</td>
-            <td class="width_140">备注</td>
-            <td class="width_140">主键</td>
-        </tr>
-    </table>
-</div>
-
-
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="profile.html">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a1.jpg">
+                                <div class="m-t-xs font-bold">CEO</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>慕容晓晓</strong></h3>
+                            <p><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</p>
+                            <address>
+                            <strong>Baidu, Inc.</strong><br>
+                            E-mail:xxx@baidu.com<br>
+                            Weibo:<a href="#">http://weibo.com/xxx</a><br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="contact-box">
+                    <a href="profile.html">
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img alt="image" class="img-circle m-t-xs img-responsive" src="img/a2.jpg">
+                                <div class="m-t-xs font-bold">射鸡师</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3><strong>高圆圆</strong></h3>
+                            <p><i class="fa fa-map-marker"></i> 上海市闵行区绿地科技岛广场A座2606室</p>
+                            <address>
+                            <strong>Baidu, Inc.</strong><br>
+                            E-mail:xxx@baidu.com<br>
+                            Weibo:<a href="#">http://weibo.com/xxx</a><br>
+                            <abbr title="Phone">Tel:</abbr> (123) 456-7890
+                        </address>
+                        </div>
+                        <div class="clearfix"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/js/content.min.js?v=1.0.0"></script>
+    <script>
+        $(document).ready(function(){$(".contact-box").each(function(){animationHover(this,"pulse")})});
+    </script>
 </body>
 </html>
