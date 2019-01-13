@@ -67,7 +67,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
     /**
      * packageName
      */
-    @Parameter(property = "mybatis.generator.packageName", defaultValue = "cn.com.autohome.mall")
+    @Parameter(property = "mybatis.generator.packageName", defaultValue = "cn.com.funny.mall")
     private String packageName;
 
     /**
@@ -187,7 +187,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
             log.warn(error);
         }
         String baseDaoFile = daoModuleDir + File.separator + "src" + File.separator + "main" + File.separator + "java" +
-                File.separator + "cn" + File.separator + "com" + File.separator + "autohome" + File.separator + "mall"
+                File.separator + "cn" + File.separator + "com" + File.separator + "funny" + File.separator + "mall"
                 + File.separator + "dao" + File.separator + "BaseMapper.java";
         File basicDaoFile = new File(baseDaoFile);
         if (!basicDaoFile.exists()) {
@@ -195,7 +195,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         }
 
         String baseDomainFile = domainModuleDir + File.separator + "src" + File.separator + "main" + File.separator + "java" +
-                File.separator + "cn" + File.separator + "com" + File.separator + "autohome" + File.separator + "mall"
+                File.separator + "cn" + File.separator + "com" + File.separator + "funny" + File.separator + "mall"
                 + File.separator + "entity" + File.separator + "BaseEntity.java";
         File basicDomainFile = new File(baseDomainFile);
         if (!basicDomainFile.exists()) {
@@ -203,7 +203,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         }
 
         String baseConditionFile = domainModuleDir + File.separator + "src" + File.separator + "main" + File.separator + "java" +
-                File.separator + "cn" + File.separator + "com" + File.separator + "autohome" + File.separator + "mall"
+                File.separator + "cn" + File.separator + "com" + File.separator + "funny" + File.separator + "mall"
                 + File.separator + "entity" + File.separator + "PageCondition.java";
         File basicConditionFile = new File(baseConditionFile);
         if (!basicConditionFile.exists()) {

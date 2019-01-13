@@ -46,7 +46,7 @@ public class AutoCodeJavaMapperGenerator extends JavaMapperGenerator {
             FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(rootInterface);
             interfaze.addImportedType(fqjt);
             interfaze.addImportedType(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()));
-            interfaze.addImportedType(new FullyQualifiedJavaType("cn.com.autohome.mall.base.BaseMapper"));
+            interfaze.addImportedType(new FullyQualifiedJavaType("cn.com.funny.mall.base.BaseMapper"));
             interfaze.addSuperInterface(fqjt);
         }
 

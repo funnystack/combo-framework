@@ -76,7 +76,7 @@ public class AutoCodeJavaEntityGenerator extends AutoCodeJavaGenerator {
 //        String keyType = introspectedTable.getPrimaryKeyColumns().get(0).getFullyQualifiedJavaType().toString();
         FullyQualifiedJavaType superClass = new FullyQualifiedJavaType("BaseEntity");
         if (superClass != null) {
-            topLevelClass.addImportedType(new FullyQualifiedJavaType("cn.com.autohome.mall.entity.BaseEntity"));
+            topLevelClass.addImportedType(new FullyQualifiedJavaType("cn.com.funny.mall.entity.BaseEntity"));
             topLevelClass.setSuperClass(superClass);
         }
 

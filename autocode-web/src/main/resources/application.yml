@@ -26,8 +26,8 @@ name:
 
 
 parent:
-  model: cn.com.autohome.mall.base.BaseEntity
-  dao: cn.com.autohome.mall.base.BaseMapper
+  model: cn.com.funny.mall.base.BaseEntity
+  dao: cn.com.funny.mall.base.BaseMapper
 
 ignored:
   prefix: SYS,ERP,CRM,CC

@@ -47,7 +47,7 @@ public class AutoCodeJavaQueryGenerator extends AutoCodeJavaGenerator {
         topLevelClass.addImportedType(rootClass);
         topLevelClass.setSuperClass(rootClass);
         topLevelClass.addField(getSerialVersionUIDField());
-        topLevelClass.addImportedType("cn.com.autohome.mall.entity.PageCondition");
+        topLevelClass.addImportedType("cn.com.funny.mall.entity.PageCondition");
 
 
 

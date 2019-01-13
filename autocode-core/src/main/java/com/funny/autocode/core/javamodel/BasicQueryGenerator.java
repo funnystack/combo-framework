@@ -38,7 +38,7 @@ public class BasicQueryGenerator extends AutoCodeJavaGenerator {
 
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType("cn.com.autohome.mall.entity.PageCondition");
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType("cn.com.funny.mall.entity.PageCondition");
         TopLevelClass topLevelClass = new TopLevelClass(type);
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
 

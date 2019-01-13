@@ -30,7 +30,7 @@ public class BasicJavaMapperGenerator extends JavaMapperGenerator {
                 introspectedTable.getFullyQualifiedTable().toString()));
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType("cn.com.autohome.mall.base.BaseMapper<T extends BaseEntity>");
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType("cn.com.funny.mall.base.BaseMapper<T extends BaseEntity>");
         Interface interfaze = new Interface(type);
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(interfaze);
@@ -39,7 +39,7 @@ public class BasicJavaMapperGenerator extends JavaMapperGenerator {
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.Date"));
         interfaze.addImportedType(new FullyQualifiedJavaType("java.util.List"));
         interfaze.addImportedType(new FullyQualifiedJavaType("java.io.Serializable"));
-        interfaze.addImportedType(new FullyQualifiedJavaType("cn.com.autohome.mall.base.BaseEntity"));
+        interfaze.addImportedType(new FullyQualifiedJavaType("cn.com.funny.mall.base.BaseEntity"));
 
         insert(interfaze);
         updateById(interfaze);

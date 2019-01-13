@@ -38,7 +38,7 @@ public class BasicJavaRecordGenerator extends AutoCodeJavaGenerator {
 
         CommentGenerator commentGenerator = context.getCommentGenerator();
 
-        FullyQualifiedJavaType type = new FullyQualifiedJavaType("cn.com.autohome.mall.base.BaseEntity");
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType("cn.com.funny.mall.base.BaseEntity");
         TopLevelClass topLevelClass = new TopLevelClass(type);
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
 
