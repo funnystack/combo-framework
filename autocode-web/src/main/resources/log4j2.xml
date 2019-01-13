@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+    <properties>
+        <!-- APP_NAME 严禁使用 - 符号，影响日志切分-->
+        <property name="APP_NAME">autocode</property>
+        <property name="LOG_HOME">/data/logs/admin</property>
+        <property name="LOG_PATTERN">%d{YYYY/MM/dd-HH:mm:ss.SSS} %thread %level %X{unique} %class %method %m%n
+        </property>
+    </properties>
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout charset="UTF-8" pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <RollingFile name="errorFile" fileName="${LOG_HOME}/${APP_NAME}-error.log"
+                     filePattern="${LOG_HOME}/${APP_NAME}-error-%d{yyyy-MM-dd}-%i.log.gz" ignoreExceptions="false">
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout charset="UTF-8" pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+
+        <RollingFile name="infoFile" fileName="${LOG_HOME}/${APP_NAME}-info.log"
+                     filePattern="${LOG_HOME}/${APP_NAME}-info-%d{yyyy-MM-dd}-%i.log.gz" ignoreExceptions="false">
+            <Filters>
+                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout charset="UTF-8" pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+    </appenders>
+    <loggers>
+        <root level="INFO">
+            <appender-ref ref="Console"/>
+        </root>
+        <logger name="com.funny.admin" additivity="false">
+            <appender-ref ref="errorFile"/>
+            <appender-ref ref="infoFile"/>
+        </logger>
+    </loggers>
+</configuration>
