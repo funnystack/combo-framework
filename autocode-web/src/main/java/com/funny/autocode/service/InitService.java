@@ -26,7 +26,7 @@ public class InitService implements ApplicationContextAware {
     @Value("${parent.dao}")
     private String parentDao;
 
-    @Value("${parent.domain}")
+    @Value("${parent.model}")
     private String parentDomain;
 
     @Value("${ignored.prefix}")

@@ -3,14 +3,16 @@ package com.funny.autocode;
 import com.alibaba.fastjson.PropertyNamingStrategy;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
  * @author fangli
  */
-@SpringBootApplication(scanBasePackages = "com.funny.autocode")
+@SpringBootApplication(scanBasePackages = "com.funny.autocode", exclude = {DataSourceAutoConfiguration.class})
 public class AutoCodeApplication extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

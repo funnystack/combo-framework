@@ -2,8 +2,6 @@ server:
   port: 8080
 
 spring:
-  profiles:
-    active: "@activatedProperties@"
   freemarker:
     template-loader-path: classpath:/templates
     cache: false
