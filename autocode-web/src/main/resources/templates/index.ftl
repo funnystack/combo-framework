@@ -224,7 +224,7 @@
     <table>
         <tr>
             <td><label>package:</label></td>
-            <td><input type="text" id="packagename" name="packagename" value="cn.com.autohome.mall" size="40">
+            <td><input type="text" id="packagename" name="packagename" value="com.funny.mall" size="40">
             </td>
         </tr>
         <tr>
