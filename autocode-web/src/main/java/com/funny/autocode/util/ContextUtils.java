@@ -1,5 +1,7 @@
 package com.funny.autocode.util;
 
+import static com.funny.autocode.common.SystemConstants.*;
+import static com.funny.autocode.service.InitService.propMap;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 import com.funny.autocode.common.SystemConstants;
@@ -15,7 +17,6 @@ import org.mybatis.generator.config.TableConfiguration;
 
 public class ContextUtils {
     /**
-     * 
      * @param url
      * @return funny 2016年3月4日 上午11:11:12
      */
@@ -72,7 +73,6 @@ public class ContextUtils {
     }
 
     /**
-     * 
      * @param name
      * @param password
      * @param project
@@ -81,18 +81,18 @@ public class ContextUtils {
      * @return
      */
     public static Context initContext(String url, String name, String password, String table, String project,
-            String packagename, String targetpath) {
+                                      String packagename, String targetpath) {
         Context context = new Context(null);
         context.setTargetRuntime("AutoCodeIntrospectedTableMyBatis3Impl");
         context.setId("MySQLTables");
-        if (table.equals(",")){
+        if (table.equals(",")) {
             String[] tables = table.split(",");
-            for (String table_name:tables){
-                TableConfiguration tc = getTableConfiguration(context,table_name);
+            for (String table_name : tables) {
+                TableConfiguration tc = getTableConfiguration(context, table_name);
                 context.addTableConfiguration(tc);
             }
-        }else{
-            TableConfiguration tc = getTableConfiguration(context,table);
+        } else {
+            TableConfiguration tc = getTableConfiguration(context, table);
             context.addTableConfiguration(tc);
         }
 
@@ -125,7 +125,7 @@ public class ContextUtils {
 
         JavaModelGeneratorConfiguration config = new JavaModelGeneratorConfiguration();
         config.setTargetPackage(
-                project + "." + PropertyConfigurer.config.getString("domain.name") + "." + packagename.toLowerCase()); // com.un.general.domain.account
+                project + "." + propMap.get(NAME_DOMAIN) + "." + packagename.toLowerCase()); // com.un.general.domain.account
         config.setTargetProject(targetpath);// 存放地址
         config.addProperty("enableSubPackages", "true");
         config.addProperty("trimStrings", "true");
@@ -134,21 +134,21 @@ public class ContextUtils {
         JavaClientGeneratorConfiguration javaClientGeneratorConfiguration = new JavaClientGeneratorConfiguration();
         javaClientGeneratorConfiguration.setConfigurationType("XMLMAPPER");
         javaClientGeneratorConfiguration.setTargetPackage(
-                project + "." + PropertyConfigurer.config.getString("dao.name") + "." + packagename.toLowerCase());
+                project + "." + propMap.get(NAME_DAO) + "." + packagename.toLowerCase());
         javaClientGeneratorConfiguration.setTargetProject(targetpath);
         javaClientGeneratorConfiguration.addProperty("enableSubPackages", "true");
         context.setJavaClientGeneratorConfiguration(javaClientGeneratorConfiguration);
 
         SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();
         sqlMapGeneratorConfiguration.setTargetPackage(
-                project + "." + PropertyConfigurer.config.getString("mapper.name") + "." + packagename.toLowerCase());
+                project + "." + propMap.get(NAME_MAPPER) + "." + packagename.toLowerCase());
         sqlMapGeneratorConfiguration.setTargetProject(targetpath);
         sqlMapGeneratorConfiguration.addProperty("enableSubPackages", "true");
         context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration);
         return context;
     }
 
-    public static TableConfiguration getTableConfiguration(Context context,String tableName){
+    public static TableConfiguration getTableConfiguration(Context context, String tableName) {
         String domainObjectName = getDomainObjectName(tableName);
         TableConfiguration tabconfig = new TableConfiguration(context);
         tabconfig.setTableName(tableName);
@@ -160,7 +160,7 @@ public class ContextUtils {
     }
 
     public static String getDomainObjectName(String table) {
-        String suffixes = PropertyConfigurer.config.getString("suffixes");
+        String suffixes = propMap.get(PREFIX);
         String[] tabs = suffixes.split(",");
         for (int i = 0; i < tabs.length; i++) {
             if (table.toUpperCase().contains(tabs[i])) {

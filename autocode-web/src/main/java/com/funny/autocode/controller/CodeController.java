@@ -29,8 +29,10 @@ import com.funny.autocode.po.Table;
 import com.funny.autocode.service.CodeService;
 import com.funny.autocode.util.ContextUtils;
 import com.funny.autocode.util.FileUtils;
-import com.funny.autocode.util.PropertyConfigurer;
 import com.funny.autocode.util.ZipUtil;
+
+import static com.funny.autocode.common.SystemConstants.*;
+import static com.funny.autocode.service.InitService.propMap;
 
 @Controller
 public class CodeController {
@@ -74,9 +76,9 @@ public class CodeController {
     public Map<String, Object> getNames(HttpServletRequest request, String packagename, String modelname) {
         Map<String, Object> res = Maps.newHashMap();
         String modelName =
-                packagename + "." + PropertyConfigurer.config.getString("domain.name") + "." + modelname + ".XXXX";
+                packagename + "." + propMap.get(NAME_DOMAIN) + "." + modelname + ".XXXX";
         String daoName =
-                packagename + "." + PropertyConfigurer.config.getString("dao.name") + "." + modelname + ".XXXX";
+                packagename + "." + propMap.get(NAME_DAO) + "." + modelname + ".XXXX";
         res.put("modelName", modelName);
         res.put("daoName", daoName);
         return res;
@@ -88,7 +90,7 @@ public class CodeController {
     public void getCode(HttpServletRequest request, HttpServletResponse response, String c_url, String c_user,
                         String c_pass, String packagename, String modelname, String c_table) throws ClassNotFoundException,
             SQLException, IOException, XMLParserException, InterruptedException, InvalidConfigurationException {
-        String targetpath = PropertyConfigurer.config.getString("temp_path");
+        String targetpath = propMap.get(TEMP_PATH);
         File targetPathFile = new File(targetpath);
         if (!targetPathFile.exists()) {
             targetPathFile.mkdir();
@@ -150,7 +152,8 @@ public class CodeController {
             zippathFile.mkdir();
         }
 
-        String zipfilepath = PropertyConfigurer.config.getString("temp_zip_file");
+        //todo
+        String zipfilepath = propMap.get(TEMP_PATH);
         ZipUtil.zip(zippath, zipfilepath);
 
         // response读取压缩文件

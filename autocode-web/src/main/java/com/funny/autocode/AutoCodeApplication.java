@@ -10,16 +10,16 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 /**
  * @author fangli
  */
-@SpringBootApplication(scanBasePackages = "cn.com.autohome.mall.autocode")
-public class AutocodeApplication extends SpringBootServletInitializer {
+@SpringBootApplication(scanBasePackages = "com.funny.autocode")
+public class AutoCodeApplication extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         SerializeConfig config = SerializeConfig.globalInstance;
         config.propertyNamingStrategy = PropertyNamingStrategy.CamelCase;
-        return application.sources(AutocodeApplication.class);
+        return application.sources(AutoCodeApplication.class);
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(AutocodeApplication.class, args);
+        SpringApplication.run(AutoCodeApplication.class, args);
     }
 }

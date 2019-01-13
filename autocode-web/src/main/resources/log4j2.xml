@@ -41,7 +41,8 @@
         <root level="INFO">
             <appender-ref ref="Console"/>
         </root>
-        <logger name="com.funny.admin" additivity="false">
+        <logger name="com.funny.autocode" additivity="false">
+            <appender-ref ref="Console"/>
             <appender-ref ref="errorFile"/>
             <appender-ref ref="infoFile"/>
         </logger>
