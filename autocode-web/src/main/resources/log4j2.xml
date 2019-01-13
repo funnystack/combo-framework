@@ -3,7 +3,7 @@
     <properties>
         <!-- APP_NAME 严禁使用 - 符号，影响日志切分-->
         <property name="APP_NAME">autocode</property>
-        <property name="LOG_HOME">/data/logs/admin</property>
+        <property name="LOG_HOME">/data/logs/autocode</property>
         <property name="LOG_PATTERN">%d{YYYY/MM/dd-HH:mm:ss.SSS} %thread %level %X{unique} %class %method %m%n
         </property>
     </properties>
@@ -38,7 +38,7 @@
         </RollingFile>
     </appenders>
     <loggers>
-        <root level="INFO">
+        <root level="DEBUG">
             <appender-ref ref="Console"/>
         </root>
         <logger name="com.funny.autocode" additivity="false">
