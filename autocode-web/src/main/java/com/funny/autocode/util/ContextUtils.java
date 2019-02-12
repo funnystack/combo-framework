@@ -106,7 +106,7 @@ public class ContextUtils {
         if ("oracle".equals(dbtype)) {
             jdbcConnectionConfiguration.setDriverClass("oracle.jdbc.driver.OracleDriver");// oracle.jdbc.driver.OracleDriver
         } else if ("mysql".equals(dbtype)) {
-            jdbcConnectionConfiguration.setDriverClass("com.mysql.jdbc.Driver");// oracle.jdbc.driver.OracleDriver
+            jdbcConnectionConfiguration.setDriverClass("com.mysql.cj.jdbc.Driver");// oracle.jdbc.driver.OracleDriver
         }
         jdbcConnectionConfiguration.setConnectionURL(url); // jdbc:oracle:thin:@127.0.0.1:1521:ETD
         if (stringHasValue(name)) {

@@ -18,14 +18,14 @@ logging:
 
 
 name:
-  domain: entity
+  domain: model
   dao: dao
   mapper: mapper
 
 
 parent:
-  model: cn.com.funny.mall.base.BaseEntity
-  dao: cn.com.funny.mall.base.BaseMapper
+  model: com.funny.mall.base.BaseEntity
+  dao: com.funny.mall.base.BaseMapper
 
 ignored:
   prefix: SYS,ERP,CRM,CC

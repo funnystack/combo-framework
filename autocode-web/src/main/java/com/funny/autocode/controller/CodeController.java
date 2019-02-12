@@ -1,15 +1,17 @@
 package com.funny.autocode.controller;
 
-import java.io.*;
-import java.sql.SQLException;
-import java.util.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.funny.autocode.core.AutoCodeMybatisGenerator;
+import com.funny.autocode.common.JsonResult;
+import com.funny.autocode.common.SystemConstants;
 import com.funny.autocode.core.AutoCodeConfigurationParser;
+import com.funny.autocode.core.AutoCodeMybatisGenerator;
 import com.funny.autocode.core.config.GlobalConfig;
+import com.funny.autocode.po.Table;
+import com.funny.autocode.service.CodeService;
+import com.funny.autocode.util.ContextUtils;
+import com.funny.autocode.util.FileUtils;
+import com.funny.autocode.util.ZipUtil;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
 import org.mybatis.generator.config.Configuration;
@@ -17,19 +19,17 @@ import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.exception.XMLParserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-
-import com.funny.autocode.common.JsonResult;
-import com.funny.autocode.common.SystemConstants;
-import com.funny.autocode.po.Table;
-import com.funny.autocode.service.CodeService;
-import com.funny.autocode.util.ContextUtils;
-import com.funny.autocode.util.FileUtils;
-import com.funny.autocode.util.ZipUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static com.funny.autocode.common.SystemConstants.*;
 import static com.funny.autocode.service.InitService.propMap;
@@ -73,13 +73,13 @@ public class CodeController {
 
     @RequestMapping("/getNames")
     @ResponseBody
-    public Map<String, Object> getNames(HttpServletRequest request, String packagename, String modelname) {
+    public Map<String, Object> getNames(String packageName, String moduleName) {
         Map<String, Object> res = Maps.newHashMap();
-        String modelName =
-                packagename + "." + propMap.get(NAME_DOMAIN) + "." + modelname + ".XXXX";
+        String entityName =
+                packageName + "." + propMap.get(NAME_DOMAIN) + "." + moduleName + ".XXXX";
         String daoName =
-                packagename + "." + propMap.get(NAME_DAO) + "." + modelname + ".XXXX";
-        res.put("modelName", modelName);
+                packageName + "." + propMap.get(NAME_DAO) + "." + moduleName + ".XXXX";
+        res.put("entityName", entityName);
         res.put("daoName", daoName);
         return res;
 
@@ -87,18 +87,20 @@ public class CodeController {
 
     @RequestMapping("/getCode")
     @ResponseBody
-    public void getCode(HttpServletRequest request, HttpServletResponse response, String c_url, String c_user,
-                        String c_pass, String packagename, String modelname, String c_table) throws ClassNotFoundException,
+    public void getCode(HttpServletRequest request, HttpServletResponse response, GlobalConfig globalConfig) throws ClassNotFoundException,
             SQLException, IOException, XMLParserException, InterruptedException, InvalidConfigurationException {
-        String targetpath = propMap.get(TEMP_PATH);
-        File targetPathFile = new File(targetpath);
-        if (!targetPathFile.exists()) {
-            targetPathFile.mkdir();
-        }
-        Set<String> fullyqualifiedTables = AutoCodeConfigurationParser.getTables(c_table);
 
-        GlobalConfig globalConfig = new GlobalConfig(targetpath, null, null, true, true, "com.mysql.jdbc.Driver",
-                c_url, c_user, c_pass, c_table, "ERP,CC", packagename, modelname);
+        File path = new File(ResourceUtils.getURL("classpath:").getPath());
+        System.out.println(path.getAbsolutePath());
+        String targetpath = path.getAbsolutePath();
+
+        Set<String> fullyqualifiedTables = AutoCodeConfigurationParser.getTables(globalConfig.getTableNames());
+
+        globalConfig.setJdbcDriver("com.mysql.cj.jdbc.Driver");
+        globalConfig.setVerbose(true);
+        globalConfig.setOverwrite(true);
+        globalConfig.setTargetDirectory(targetpath);
+
 
         AutoCodeConfigurationParser cp = new AutoCodeConfigurationParser(globalConfig);
         Configuration config = cp.getConfiguration();
@@ -124,7 +126,7 @@ public class CodeController {
         }
         try {
             writeFile(files);
-            downloadFile(modelname, targetpath, request, response);
+            downloadFile(globalConfig.getModuleName(), targetpath, request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

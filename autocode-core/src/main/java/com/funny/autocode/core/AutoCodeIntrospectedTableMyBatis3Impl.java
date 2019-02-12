@@ -35,13 +35,13 @@ public class AutoCodeIntrospectedTableMyBatis3Impl extends IntrospectedTableMyBa
     @Override
     protected void calculateXmlAttributes() {
         super.calculateXmlAttributes();
-        setInsertSelectiveStatementId("insert"); //$NON-NLS-1$
-        setSelectAllStatementId("findList"); //$NON-NLS-1$
-        setSelectByPrimaryKeyStatementId("findById"); //$NON-NLS-1$
-        setUpdateByPrimaryKeySelectiveStatementId("updateById"); //$NON-NLS-1$
-        setBaseResultMapId("BaseResultMap"); //$NON-NLS-1$
-        setBaseColumnListId("Base_Column_List"); //$NON-NLS-1$
-        setBlobColumnListId("Blob_Column_List"); //$NON-NLS-1$
+        setInsertSelectiveStatementId("insert");
+        setSelectAllStatementId("findList");
+        setSelectByPrimaryKeyStatementId("findById");
+        setUpdateByPrimaryKeySelectiveStatementId("updateById");
+        setBaseResultMapId("BaseResultMap");
+        setBaseColumnListId("Base_Column_List");
+        setBlobColumnListId("Blob_Column_List");
     }
 
     @Override

@@ -43,7 +43,7 @@ public class CodeServiceImpl implements CodeService {
         List<Table> tables = Lists.newArrayList();
 
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(url, usr, pas);
             PreparedStatement st = con.prepareStatement(ContextUtils.getMysqlSql(url));
             // 查询，得出结果集

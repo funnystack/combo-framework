@@ -8,17 +8,12 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <artifactId>autocode-web</artifactId>
-
+    <version>${autocode.version}</version>
 
     <dependencies>
-        <dependency>
-            <groupId>com.funny</groupId>
-            <artifactId>autocode-core</artifactId>
-            <version>${autocode.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -70,6 +65,12 @@
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.funny</groupId>
+            <artifactId>autocode-core</artifactId>
+            <version>${autocode.version}</version>
         </dependency>
     </dependencies>
 

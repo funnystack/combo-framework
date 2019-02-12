@@ -1,39 +1,40 @@
 package com.funny.autocode.core.config;
 
+import java.io.Serializable;
+
 /**
  * Created by funny on 2017/1/16.
  */
-public class GlobalConfig {
+public class GlobalConfig implements Serializable {
     private String targetDirectory;
     private String daoDirectory;
     private String domainDirectory;
-    private boolean verbose;
-    private boolean overwrite;
+    private boolean verbose = true;
+    private boolean overwrite = true;
     private String jdbcDriver;
     private String jdbcURL;
     private String jdbcUserId;
     private String jdbcPassword;
     private String tableNames;
-    private String ignorePeffix;
+    private String ignorePrefix;
     private String packageName;
     private String moduleName;
 
-    public GlobalConfig(String targetDirectory, String daoDirectory, String domainDirectory, boolean verbose,
-                        boolean overwrite, String jdbcDriver, String jdbcURL, String jdbcUserId, String jdbcPassword,
-                        String tableNames, String ignorePeffix, String packageName, String moduleName) {
-        this.targetDirectory = targetDirectory;
-        this.daoDirectory = daoDirectory;
-        this.domainDirectory = domainDirectory;
-        this.verbose = verbose;
-        this.overwrite = overwrite;
-        this.jdbcDriver = jdbcDriver;
-        this.jdbcURL = jdbcURL;
-        this.jdbcUserId = jdbcUserId;
-        this.jdbcPassword = jdbcPassword;
-        this.tableNames = tableNames;
-        this.ignorePeffix = ignorePeffix;
-        this.packageName = packageName;
-        this.moduleName = moduleName;
+    private String entityName;
+    private String daoName;
+
+    public GlobalConfig(String absolutePath, String daoDirectory, String domainDirectory,String jdbcDriver, String jdbcURL, String jdbcUserId, String jdbcPassword, String tableNames, String ignorePeffix, String packageName, String moduleName) {
+       this.targetDirectory = absolutePath;
+       this.jdbcDriver = jdbcDriver;
+       this.jdbcPassword = jdbcPassword;
+       this.jdbcURL = jdbcURL;
+       this.jdbcUserId = jdbcUserId;
+       this.tableNames = tableNames;
+       this.ignorePrefix = ignorePeffix;
+       this.packageName = packageName;
+       this.moduleName = moduleName;
+       this.daoDirectory = daoDirectory;
+       this.domainDirectory = domainDirectory;
     }
 
     public String getTargetDirectory() {
@@ -116,12 +117,12 @@ public class GlobalConfig {
         this.tableNames = tableNames;
     }
 
-    public String getIgnorePeffix() {
-        return ignorePeffix;
+    public String getIgnorePrefix() {
+        return ignorePrefix;
     }
 
-    public void setIgnorePeffix(String ignorePeffix) {
-        this.ignorePeffix = ignorePeffix;
+    public void setIgnorePrefix(String ignorePrefix) {
+        this.ignorePrefix = ignorePrefix;
     }
 
     public String getPackageName() {
@@ -138,5 +139,21 @@ public class GlobalConfig {
 
     public void setModuleName(String moduleName) {
         this.moduleName = moduleName;
+    }
+
+    public String getEntityName() {
+        return entityName;
+    }
+
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
+    }
+
+    public String getDaoName() {
+        return daoName;
+    }
+
+    public void setDaoName(String daoName) {
+        this.daoName = daoName;
     }
 }

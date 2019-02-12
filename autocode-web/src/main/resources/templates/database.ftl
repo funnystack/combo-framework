@@ -2,271 +2,218 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script type="text/javascript" src="/js/jquery-1.10.0.js"></script>
-    <script type="text/javascript" src="/js/jquery.validate-1.13.1.js"></script>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <link href="/css/animate.min.css" rel="stylesheet">
+    <link href="/css/style.min862f.css?v=4.1.0" rel="stylesheet">
     <title>Autocode Factory</title>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#connectionform").validate({
-                rules: {
-                    url: {
-                        required: true
-                    },
-                    username: {
-                        required: true
-                    },
-                    password: {
-                        required: true
-                    }
-                },
-                messages: {
-                    url: {
-                        required: '请输入数据库地址'
-                    },
-                    username: {
-                        required: '请输入用户名'
-                    },
-                    password: {
-                        required: '请输入密码',
-                    }
-                },
-                highlight: function (element, errorClass, validClass) {
-                    $(element).addClass(errorClass).removeClass(validClass);
-                    $(element).fadeOut().fadeIn();
-                },
-                unhighlight: function (element, errorClass, validClass) {
-                    $(element).removeClass(errorClass).addClass(validClass);
-                },
-                submitHandler: function (form) {
-                    //console.log($(form).serialize());
-                }
-            });
-
-            $("#codeform").validate({
-                rules: {
-                    packagename: {
-                        required: true
-                    },
-                    modelname: {
-                        required: true
-                    }
-                },
-                messages: {
-                    packagename: {
-                        required: '请输入packagename'
-                    },
-                    modelname: {
-                        required: '请输入modelname'
-                    },
-                },
-                highlight: function (element, errorClass, validClass) {
-                    $(element).addClass(errorClass).removeClass(validClass);
-                    $(element).fadeOut().fadeIn();
-                },
-                unhighlight: function (element, errorClass, validClass) {
-                    $(element).removeClass(errorClass).addClass(validClass);
-                },
-                submitHandler: function (form) {
-                    form.submit();
-                }
-            });
-
-            $("#getTables").click(function () {
-                var url = $("#url").val();
-                var pas = $("#password").val();
-                var usr = $("#username").val();
-                $.post('<%=basePath%>getTargetDatabaseTables.do', {url: url, usr: usr, pas: pas}, function (data) {
-                    $("#label_table").html('<tr><td class="width_50">序号</td><td class="width_140">表名</td><td class="width_140">备注</td><td class="width_140">主键</td></tr>');
-                    if (data.returncode == 0) {
-                        $.each(data.result, function (i, n) {
-                            $("#label_table").append('<tr><td class="width_50"><input type="checkbox" name="tableid" style="min-width:50px;" id="' + i + '" value="' + n.tableName + '"/></td><td class="width_140"><label>'
-                                + n.tableName + '</label></td><td class="width_140"><label>'
-                                + n.tableDesc + '</label></td><td class="width_140"><label>'
-                                + n.key + '</label></td></tr>');
-                        });
-                    } else {
-                        alert(data.message);
-                        return;
-                    }
-
-                });
-            });
-
-            $("#getcode").click(function () {
-                var tablename = "";
-                var selected_tables = $("input[type=checkbox]:checked");
-                $(selected_tables).each(function () {
-                    if (tablename == "") {
-                        tablename = $(this).val();
-                    } else {
-                        tablename = tablename + "," + $(this).val();
-                    }
-                })
-
-                if (tablename == '' || tablename == null || tablename == 'undefined') {
-                    alert('请选择一张表');
-                    return false;
-                }
-                $("#c_table").val(tablename);
-                $("#c_url").val($("#url").val());
-                $("#c_user").val($("#username").val());
-                $("#c_pass").val($("#password").val());
-                $("#codeform").submit();
-            });
-
-            $("#packagename").keyup(function () {
-                getNames($(this).val(), $("#modelname").val());
-            });
-
-            $("#modelname").keyup(function () {
-                getNames($("#packagename").val(), $(this).val());
-            });
-
-
-        });
-
-        function getNames(packagename, modelname) {
-            if (packagename != '' && packagename != null && packagename != 'undefined' &&
-                modelname != '' && modelname != null && modelname != 'undefined') {
-                $.post('<%=basePath%>getNames.do', {
-                    packagename: packagename,
-                    modelname: modelname
-                }, function (data) {
-                    $("#modelName").text(data.modelName);
-                    $("#daoName").text(data.daoName);
-                });
-            }
-
-        }
-    </script>
     <style type="text/css">
         body {
             background-color: #ccc;
             line-height: 1.6;
             margin-left: 80px;
+            margin-right: 80px;
         }
-
-        input {
-            font-size: 25px;
-            line-height: 35px;
-            border: 1px solid #999;
-            min-width: 180px;
-        }
-
-        button {
-            margin-top: 20px;
-            font-size: 20px;
-            padding: 5px;
-        }
-
-        label.error {
-            margin-left: 10px;
-            color: red;
-        }
-
-        .showname {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .showname span {
-            color: red;
-        }
-
-        .tablediv {
-            float: left;
-            width: 60%;
-        }
-
-        .tablediv table {
-            border-collapse: collapse;
-            border: 1px solid #000;
-            font-size: 13px;
-        }
-
-        .tablediv table tr td {
-            border: 1px solid #000;
-            margin: 5px;
-        }
-
-        .width_50 {
-            width: 50px;
-        }
-
-        .width_140 {
-            width: 200px;
-        }
-
     </style>
 </head>
-<body>
-<h1>Autocode Factory</h1>
+<body class="gray-bg">
 
-<form id="connectionform">
-    <label>db url:</label><input type="text" id="url" name="url"
-                                 value="jdbc:mysql://10.168.0.90:3306/automall_data" size="45">
-    <input type="submit" value="获取TABLE" id="getTables"/>
-    <table>
-        <tr>
-            <td><label>username:</label></td>
-            <td><input type="text" id="username" name="username"
-                       value="root" size="10"></td>
-
-            <td><label>password:</label></td>
-            <td><input type="text" id="password" name="password"
-                       value="123456" size="10"></td>
-
-        </tr>
-    </table>
-</form>
-<form id="codeform" action="<%=basePath%>getCode.do" method="post">
-    <table>
-        <tr>
-            <td><label>package:</label></td>
-            <td><input type="text" id="packagename" name="packagename" value="com.funny.mall" size="40">
-            </td>
-        </tr>
-        <tr>
-            <td><label>module:</label></td>
-            <td><input type="text" id="modelname" name="modelname" size="20">
-                <input type="submit" value="获取CODE" id="getcode"/></td>
-        </tr>
-    </table>
-    <input type="hidden" id="c_url" name="c_url">
-    <input type="hidden" id="c_user" name="c_user">
-    <input type="hidden" id="c_pass" name="c_pass">
-    <input type="hidden" id="c_table" name="c_table">
-</form>
-
-<div>
-    <a href="/download/BaseMapper.java"
-       title="查看BaseMapper" target="_blank">
-        查看BaseMapper
-    </a>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="/download/BaseEntity.java"
-       title="查看BaseEntity" target="_blank">
-        查看BaseEntity
-    </a>
-
-    <br>
-    <label class="showname">Model Class：<span id="modelName"></span></label>
-    <br>
-    <label class="showname">Dao Class：<span id="daoName"></span></label>
+<div class="row border-bottom white-bg">
+    <h1 style="margin-left: 40px">Mybatis Code Factory</h1>
 </div>
 
-<div class="tablediv">
-    <table id="label_table">
-        <tr>
-            <td class="width_50">序号</td>
-            <td class="width_140">表名</td>
-            <td class="width_140">备注</td>
-            <td class="width_140">主键</td>
-        </tr>
-    </table>
+<div class="row">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <div class="row">
+                <form class="form-horizontal" id="codeform" method="post" action="/getCode">
+                    <div class="col-sm-4">
+                        <input type="hidden" id="c_url" name="jdbcURL">
+                        <input type="hidden" id="c_user" name="jdbcUserId">
+                        <input type="hidden" id="c_pass" name="jdbcPassword">
+                        <input type="hidden" id="c_table" name="tableNames">
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">URL</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="url" name="url" placeholder="db url " class="form-control"
+                                       value="jdbc:mysql://10.168.0.90:3306/automall_data">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">username</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="username" name="username" placeholder="db username" value="root"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">password</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="password" name="password" placeholder="db password"
+                                       value="123456"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">包名</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="package_name" name="packageName" value="com.funny.mall"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">模块</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="module_name" name="moduleName" value="user"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <a class="btn btn-primary" id="tableBtn">获取TABLE</a>
+                        </div>
+
+
+                        <div class="form-group">
+                            <a class="btn btn-info" id="codeBtn">生成代码</a>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">忽略的表名前缀</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="ignorePrefix" name="ignorePrefix" class="form-control" value="ERP,CC">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Entity Class</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="entityName" name="entityName" class="form-control" value="com.funny.mall.model.user.XXXX">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Dao Class</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="daoName" name="daoName" class="form-control" value="com.funny.mall.dao.user.XXXX">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="ibox-content ">
+            <div class="row">
+                <div class="col-sm-8">
+                    <table class="table table-bordered" id="label_table">
+                        <tr>
+                            <td class="width_50">序号</td>
+                            <td class="width_140">表名</td>
+                            <td class="width_140">备注</td>
+                            <td class="width_140">主键</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="col-sm-4">
+                    <a href="/download/BaseMapper.java"
+                       title="查看BaseMapper" target="_blank">
+                        查看BaseMapper
+                    </a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="/download/BaseEntity.java"
+                       title="查看BaseEntity" target="_blank">
+                        查看BaseEntity
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/content.min.js?v=1.0.0"></script>
+<script src="/js/jquery.validate-1.13.1.js"></script>
+<script type="text/javascript">
+    $("#tableBtn").click(function () {
+        var url = $("#url").val();
+        var pas = $("#password").val();
+        var usr = $("#username").val();
+        $.post('/getTargetDatabaseTables', {url: url, usr: usr, pas: pas}, function (data) {
+            $("#label_table").html('<tr><td>序号</td><td class="width_140">表名</td><td>备注</td><td>主键</td></tr>');
+            if (data.returncode == 0) {
+                $.each(data.result, function (i, n) {
+                    $("#label_table").append('<tr><td><input type="checkbox" name="tableid" style="min-width:50px;" id="' + i + '" value="' + n.tableName + '"/></td><td class="width_140"><label>'
+                        + n.tableName + '</label></td><td ><label>'
+                        + n.tableDesc + '</label></td><td ><label>'
+                        + n.key + '</label></td></tr>');
+                });
+            } else {
+                alert(data.message);
+                return;
+            }
+
+        });
+    });
+
+    $("#codeBtn").click(function () {
+        var tablename = "";
+        var selected_tables = $("input[type=checkbox]:checked");
+        $(selected_tables).each(function () {
+            if (tablename == "") {
+                tablename = $(this).val();
+            } else {
+                tablename = tablename + "," + $(this).val();
+            }
+        })
+
+        if (tablename == '' || tablename == null || tablename == 'undefined') {
+            alert('请选择一张表');
+            return false;
+        }
+        $("#c_table").val(tablename);
+        $("#c_url").val($("#url").val());
+        $("#c_user").val($("#username").val());
+        $("#c_pass").val($("#password").val());
+        $("#codeform").submit();
+    });
+
+    $("#package_name").keyup(function () {
+        getNames($(this).val(), $("#module_name").val());
+    });
+
+    $("#module_name").keyup(function () {
+        getNames($("#package_name").val(), $(this).val());
+    });
+
+    function getNames(package_name, module_name) {
+        if (package_name != '' && package_name != null && package_name != 'undefined' &&
+            module_name != '' && module_name != null && module_name != 'undefined') {
+            $.post('/getNames', {
+                packageName: package_name,
+                moduleName: module_name
+            }, function (data) {
+                $("#entityName").val(data.entityName);
+                $("#daoName").val(data.daoName);
+            });
+        }
+
+    }
+</script>
 </body>
 </html>

@@ -71,5 +71,8 @@ public class InitService implements ApplicationContextAware {
         propMap.put(SQL_COUNT, sqlCount);
         propMap.put(SQL_DELETE, sqlDelete);
 
+
+        propMap.put(TEMP_PATH, sqlDelete);
+
     }
 }

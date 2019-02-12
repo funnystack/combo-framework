@@ -1,31 +1,3 @@
-/**
- *    Copyright 2006-2016 the original author or authors.
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- */
-/*
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
 package com.funny.autocode.core;
 
 import java.io.IOException;
@@ -54,8 +26,8 @@ public class AutoCodeConfigurationParser {
     }
 
     private void addContext(Configuration configuration) {
-        String targetRuntime = "AutoCodeIntrospectedTableMyBatis3Impl"; //$NON-NLS-1$
-        String id = "MySQLTables"; //$NON-NLS-1$
+        String targetRuntime = "AutoCodeIntrospectedTableMyBatis3Impl";
+        String id = "MySQLTables";
         Context context = new Context(null);
         context.setId(id);
 
@@ -109,8 +81,8 @@ public class AutoCodeConfigurationParser {
 
     private String getDomainObject(String table_name) {
         String name = "";
-        if (StringUtility.stringHasValue(globalConfig.getIgnorePeffix())) {
-            StringTokenizer st = new StringTokenizer(globalConfig.getIgnorePeffix(), ","); //$NON-NLS-1$
+        if (StringUtility.stringHasValue(globalConfig.getIgnorePrefix())) {
+            StringTokenizer st = new StringTokenizer(globalConfig.getIgnorePrefix(), ","); //$NON-NLS-1$
             while (st.hasMoreTokens()) {
                 String s = st.nextToken().trim();
                 if (table_name.toUpperCase().contains(s.toUpperCase())) {

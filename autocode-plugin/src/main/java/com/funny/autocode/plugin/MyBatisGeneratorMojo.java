@@ -151,7 +151,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         List<String> warnings = new ArrayList<String>();
         Set<String> fullyqualifiedTables = AutoCodeConfigurationParser.getTables(tableNames);
         GlobalConfig globalConfig = new GlobalConfig(project.getBasedir().getAbsolutePath(), daoDirectory,
-                domainDirectory, verbose, overwrite, jdbcDriver, jdbcURL, jdbcUserId, jdbcPassword, tableNames,
+                domainDirectory,jdbcDriver, jdbcURL, jdbcUserId, jdbcPassword, tableNames,
                 ignorePeffix, packageName, moduleName);
         try {
             AutoCodeConfigurationParser cp = new AutoCodeConfigurationParser(globalConfig);

@@ -11,4 +11,9 @@ public class IndexController {
     public String index() {
         return "database";
     }
+
+    @RequestMapping("/index")
+    public String indexnew() {
+        return "index";
+    }
 }
