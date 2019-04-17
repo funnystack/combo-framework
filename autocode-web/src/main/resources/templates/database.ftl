@@ -39,7 +39,7 @@
                             <label class="col-sm-3 control-label">URL</label>
                             <div class="col-sm-8">
                                 <input type="text" id="url" name="url" placeholder="db url " class="form-control"
-                                       value="jdbc:mysql://10.168.0.90:3306/automall_data">
+                                       value="jdbc:mysql://127.0.0.1:3306/admin">
                             </div>
                         </div>
 
@@ -55,7 +55,7 @@
                             <label class="col-sm-3 control-label">password</label>
                             <div class="col-sm-8">
                                 <input type="text" id="password" name="password" placeholder="db password"
-                                       value="123456"
+                                       value="root"
                                        class="form-control">
                             </div>
                         </div>

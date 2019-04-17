@@ -58,7 +58,6 @@ public class ZipUtil {
                 f.createNewFile();
                 in = new FileInputStream(f);
             }
-            System.out.println(f.getPath());
             int length = 0;
             while ((length = in.read()) != -1) {
                 out.write(length);

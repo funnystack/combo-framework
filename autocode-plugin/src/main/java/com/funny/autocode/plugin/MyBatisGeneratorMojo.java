@@ -15,11 +15,9 @@
  */
 package com.funny.autocode.plugin;
 
-import java.io.*;
-import java.sql.SQLException;
-import java.util.*;
-
+import com.funny.autocode.core.AutoCodeConfigurationParser;
 import com.funny.autocode.core.AutoCodeMybatisGenerator;
+import com.funny.autocode.core.config.GlobalConfig;
 import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -36,8 +34,12 @@ import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.util.ClassloaderUtility;
 import org.mybatis.generator.logging.LogFactory;
 
-import com.funny.autocode.core.AutoCodeConfigurationParser;
-import com.funny.autocode.core.config.GlobalConfig;
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Goal which generates MyBatis/iBATIS artifacts.
@@ -51,6 +53,12 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
      */
     @Parameter(property = "project", required = true, readonly = true)
     private MavenProject project;
+
+    /**
+     * projectDirectory
+     */
+    @Parameter(property = "mybatis.generator.projectDirectory", defaultValue = "${project.basedir}")
+    private String projectDirectory;
 
     /**
      * dao Directory.
@@ -135,14 +143,15 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         }
         ClassLoader cl = ClassloaderUtility.getCustomClassloader(resourceDirectories);
         ObjectFactory.addResourceClassLoader(cl);
-        String daoModuleDir = project.getBasedir().getAbsolutePath() + File.separator + daoDirectory;
+
+        String daoModuleDir = projectDirectory + File.separator + daoDirectory;
 
         File daoModule = new File(daoModuleDir);
         if (!daoModule.exists()) {
             createSubMoudle(daoDirectory);
         }
 
-        String domainModuleDir = project.getBasedir().getAbsolutePath() + File.separator + domainDirectory;
+        String domainModuleDir = projectDirectory + File.separator + domainDirectory;
         File domainModule = new File(domainModuleDir);
         if (!domainModule.exists()) {
             createSubMoudle(domainDirectory);
@@ -150,7 +159,7 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
 
         List<String> warnings = new ArrayList<String>();
         Set<String> fullyqualifiedTables = AutoCodeConfigurationParser.getTables(tableNames);
-        GlobalConfig globalConfig = new GlobalConfig(project.getBasedir().getAbsolutePath(), daoDirectory,
+        GlobalConfig globalConfig = new GlobalConfig(projectDirectory, daoDirectory,
                 domainDirectory,jdbcDriver, jdbcURL, jdbcUserId, jdbcPassword, tableNames,
                 ignorePeffix, packageName, moduleName);
         try {
@@ -186,30 +195,14 @@ public class MyBatisGeneratorMojo extends AbstractMojo {
         for (String error : warnings) {
             log.warn(error);
         }
-        String baseDaoFile = daoModuleDir + File.separator + "src" + File.separator + "main" + File.separator + "java" +
-                File.separator + "cn" + File.separator + "com" + File.separator + "funny" + File.separator + "mall"
-                + File.separator + "dao" + File.separator + "BaseMapper.java";
-        File basicDaoFile = new File(baseDaoFile);
-        if (!basicDaoFile.exists()) {
-            log.warn("need create BaseMapper" + baseDaoFile);
-        }
+    }
 
-        String baseDomainFile = domainModuleDir + File.separator + "src" + File.separator + "main" + File.separator + "java" +
-                File.separator + "cn" + File.separator + "com" + File.separator + "funny" + File.separator + "mall"
-                + File.separator + "entity" + File.separator + "BaseEntity.java";
-        File basicDomainFile = new File(baseDomainFile);
-        if (!basicDomainFile.exists()) {
-            log.warn("need create BaseEntity");
-        }
+    public String getProjectDirectory() {
+        return projectDirectory;
+    }
 
-        String baseConditionFile = domainModuleDir + File.separator + "src" + File.separator + "main" + File.separator + "java" +
-                File.separator + "cn" + File.separator + "com" + File.separator + "funny" + File.separator + "mall"
-                + File.separator + "entity" + File.separator + "PageCondition.java";
-        File basicConditionFile = new File(baseConditionFile);
-        if (!basicConditionFile.exists()) {
-            log.warn("need create PageCondition");
-        }
-
+    public void setProjectDirectory(String projectDirectory) {
+        this.projectDirectory = projectDirectory;
     }
 
     public MavenProject getProject() {

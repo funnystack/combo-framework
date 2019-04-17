@@ -34,5 +34,4 @@ public class JavaTypeResolverImpl extends JavaTypeResolverDefaultImpl {
 
 
 
-
 }

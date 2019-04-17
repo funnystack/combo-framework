@@ -35,8 +35,11 @@ public class AutoCodeJavaMapperGenerator extends JavaMapperGenerator {
         interfaze.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(interfaze);
 
-        String baseObject = introspectedTable.getBaseRecordType()+"Entity";
-        String rootInterface = "BaseMapper<" + baseObject + ">";
+        String name = introspectedTable.getBaseRecordType();
+        String packageName = name.substring(0,name.lastIndexOf("."));
+        String entity = name.substring(name.lastIndexOf(".") + 1,name.length()) + "Entity";
+
+        String rootInterface = "BaseMapper<" + entity + ">";
         if (!StringUtility.stringHasValue(rootInterface)) {
             rootInterface =
                     context.getJavaClientGeneratorConfiguration().getProperty(PropertyRegistry.ANY_ROOT_INTERFACE);
@@ -45,7 +48,7 @@ public class AutoCodeJavaMapperGenerator extends JavaMapperGenerator {
         if (StringUtility.stringHasValue(rootInterface)) {
             FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(rootInterface);
             interfaze.addImportedType(fqjt);
-            interfaze.addImportedType(new FullyQualifiedJavaType(introspectedTable.getBaseRecordType()));
+            interfaze.addImportedType(new FullyQualifiedJavaType(packageName +"."+ entity));
             interfaze.addImportedType(new FullyQualifiedJavaType("cn.com.funny.mall.base.BaseMapper"));
             interfaze.addSuperInterface(fqjt);
         }

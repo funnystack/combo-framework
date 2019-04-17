@@ -72,6 +72,12 @@
             <artifactId>autocode-core</artifactId>
             <version>${autocode.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-core</artifactId>
+            <version>${mybatis.plugin.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

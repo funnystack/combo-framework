@@ -1,19 +1,6 @@
 package com.funny.autocode.util;
 
-import static com.funny.autocode.common.SystemConstants.*;
-import static com.funny.autocode.service.InitService.propMap;
-import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
-
 import com.funny.autocode.common.SystemConstants;
-import org.mybatis.generator.config.CommentGeneratorConfiguration;
-import org.mybatis.generator.config.Context;
-import org.mybatis.generator.config.GeneratedKey;
-import org.mybatis.generator.config.JDBCConnectionConfiguration;
-import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
-import org.mybatis.generator.config.JavaModelGeneratorConfiguration;
-import org.mybatis.generator.config.JavaTypeResolverConfiguration;
-import org.mybatis.generator.config.SqlMapGeneratorConfiguration;
-import org.mybatis.generator.config.TableConfiguration;
 
 public class ContextUtils {
     /**
@@ -72,114 +59,6 @@ public class ContextUtils {
         return sql;
     }
 
-    /**
-     * @param name
-     * @param password
-     * @param project
-     * @param packagename
-     * @param targetpath
-     * @return
-     */
-    public static Context initContext(String url, String name, String password, String table, String project,
-                                      String packagename, String targetpath) {
-        Context context = new Context(null);
-        context.setTargetRuntime("AutoCodeIntrospectedTableMyBatis3Impl");
-        context.setId("MySQLTables");
-        if (table.equals(",")) {
-            String[] tables = table.split(",");
-            for (String table_name : tables) {
-                TableConfiguration tc = getTableConfiguration(context, table_name);
-                context.addTableConfiguration(tc);
-            }
-        } else {
-            TableConfiguration tc = getTableConfiguration(context, table);
-            context.addTableConfiguration(tc);
-        }
 
-        CommentGeneratorConfiguration commentGeneratorConfiguration = new CommentGeneratorConfiguration();
-        commentGeneratorConfiguration.addProperty("suppressDate", "true");
-        commentGeneratorConfiguration.addProperty("suppressAllComments", "true");
-        context.setCommentGeneratorConfiguration(commentGeneratorConfiguration);
-
-        JDBCConnectionConfiguration jdbcConnectionConfiguration = new JDBCConnectionConfiguration();
-        String dbtype = ContextUtils.getDatabaseType(url);
-        if ("oracle".equals(dbtype)) {
-            jdbcConnectionConfiguration.setDriverClass("oracle.jdbc.driver.OracleDriver");// oracle.jdbc.driver.OracleDriver
-        } else if ("mysql".equals(dbtype)) {
-            jdbcConnectionConfiguration.setDriverClass("com.mysql.cj.jdbc.Driver");// oracle.jdbc.driver.OracleDriver
-        }
-        jdbcConnectionConfiguration.setConnectionURL(url); // jdbc:oracle:thin:@127.0.0.1:1521:ETD
-        if (stringHasValue(name)) {
-            jdbcConnectionConfiguration.setUserId(name);
-        }
-        if (stringHasValue(password)) {
-            jdbcConnectionConfiguration.setPassword(password);
-        }
-        context.setJdbcConnectionConfiguration(jdbcConnectionConfiguration);
-
-        JavaTypeResolverConfiguration javaTypeResolverConfiguration = new JavaTypeResolverConfiguration();
-        javaTypeResolverConfiguration.addProperty("forceBigDecimals", "false");
-        context.setJavaTypeResolverConfiguration(javaTypeResolverConfiguration);
-        javaTypeResolverConfiguration
-                .setConfigurationType("JavaTypeResolverImpl");
-
-        JavaModelGeneratorConfiguration config = new JavaModelGeneratorConfiguration();
-        config.setTargetPackage(
-                project + "." + propMap.get(NAME_DOMAIN) + "." + packagename.toLowerCase()); // com.un.general.domain.account
-        config.setTargetProject(targetpath);// 存放地址
-        config.addProperty("enableSubPackages", "true");
-        config.addProperty("trimStrings", "true");
-        context.setJavaModelGeneratorConfiguration(config);
-
-        JavaClientGeneratorConfiguration javaClientGeneratorConfiguration = new JavaClientGeneratorConfiguration();
-        javaClientGeneratorConfiguration.setConfigurationType("XMLMAPPER");
-        javaClientGeneratorConfiguration.setTargetPackage(
-                project + "." + propMap.get(NAME_DAO) + "." + packagename.toLowerCase());
-        javaClientGeneratorConfiguration.setTargetProject(targetpath);
-        javaClientGeneratorConfiguration.addProperty("enableSubPackages", "true");
-        context.setJavaClientGeneratorConfiguration(javaClientGeneratorConfiguration);
-
-        SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();
-        sqlMapGeneratorConfiguration.setTargetPackage(
-                project + "." + propMap.get(NAME_MAPPER) + "." + packagename.toLowerCase());
-        sqlMapGeneratorConfiguration.setTargetProject(targetpath);
-        sqlMapGeneratorConfiguration.addProperty("enableSubPackages", "true");
-        context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration);
-        return context;
-    }
-
-    public static TableConfiguration getTableConfiguration(Context context, String tableName) {
-        String domainObjectName = getDomainObjectName(tableName);
-        TableConfiguration tabconfig = new TableConfiguration(context);
-        tabconfig.setTableName(tableName);
-        tabconfig.setDomainObjectName(domainObjectName);
-        context.addTableConfiguration(tabconfig);
-        GeneratedKey gk = new GeneratedKey("id", "MySQL", true, "mysql");
-        tabconfig.setGeneratedKey(gk);
-        return tabconfig;
-    }
-
-    public static String getDomainObjectName(String table) {
-        String suffixes = propMap.get(PREFIX);
-        String[] tabs = suffixes.split(",");
-        for (int i = 0; i < tabs.length; i++) {
-            if (table.toUpperCase().contains(tabs[i])) {
-                table = table.substring(tabs[i].length() + 1, table.length());
-            }
-        }
-
-        String[] names = table.split("_");
-        StringBuffer sb = new StringBuffer();
-        for (String name : names) {
-            sb.append(captureName(name.toLowerCase()));
-        }
-        return sb.toString();
-    }
-
-    public static String captureName(String name) {
-        name = name.substring(0, 1).toUpperCase() + name.substring(1);
-        return name;
-
-    }
 
 }

@@ -16,7 +16,7 @@
 
 
     <properties>
-        <autocode.version>1.0.3-SNAPSHOT</autocode.version>
+        <autocode.version>1.0.4-SNAPSHOT</autocode.version>
         <mybatis.plugin.version>1.3.5</mybatis.plugin.version>
         <druid.version>1.1.9</druid.version>
     </properties>

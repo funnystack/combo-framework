@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import com.funny.autocode.core.resolver.JavaTypeResolverImpl;
 import org.mybatis.generator.config.*;
 import org.mybatis.generator.exception.XMLParserException;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
@@ -26,15 +27,9 @@ public class AutoCodeConfigurationParser {
     }
 
     private void addContext(Configuration configuration) {
-        String targetRuntime = "AutoCodeIntrospectedTableMyBatis3Impl";
-        String id = "MySQLTables";
         Context context = new Context(null);
-        context.setId(id);
-
-        if (StringUtility.stringHasValue(targetRuntime)) {
-            context.setTargetRuntime(targetRuntime);
-        }
-
+        context.setId("MySQLTables");
+        context.setTargetRuntime(AutoCodeIntrospectedTableMyBatis3Impl.class.getName());
         configuration.addContext(context);
 
         addJavaFileEnCoding(context);
@@ -98,8 +93,7 @@ public class AutoCodeConfigurationParser {
     protected void parseJavaTypeResolver(Context context) {
         JavaTypeResolverConfiguration javaTypeResolverConfiguration = new JavaTypeResolverConfiguration();
         context.setJavaTypeResolverConfiguration(javaTypeResolverConfiguration);
-        javaTypeResolverConfiguration
-                .setConfigurationType("JavaTypeResolverImpl");
+        javaTypeResolverConfiguration.setConfigurationType(JavaTypeResolverImpl.class.getName());
         javaTypeResolverConfiguration.addProperty("forceBigDecimals", "false");
     }
 

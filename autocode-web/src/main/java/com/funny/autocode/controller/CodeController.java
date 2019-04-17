@@ -90,8 +90,7 @@ public class CodeController {
     public void getCode(HttpServletRequest request, HttpServletResponse response, GlobalConfig globalConfig) throws ClassNotFoundException,
             SQLException, IOException, XMLParserException, InterruptedException, InvalidConfigurationException {
 
-        File path = new File(ResourceUtils.getURL("classpath:").getPath());
-        System.out.println(path.getAbsolutePath());
+        File path = new File(ResourceUtils.getURL("").getPath() + File.separator+ "tmp");
         String targetpath = path.getAbsolutePath();
 
         Set<String> fullyqualifiedTables = AutoCodeConfigurationParser.getTables(globalConfig.getTableNames());
@@ -154,8 +153,7 @@ public class CodeController {
             zippathFile.mkdir();
         }
 
-        //todo
-        String zipfilepath = propMap.get(TEMP_PATH);
+        String zipfilepath = "code";
         ZipUtil.zip(zippath, zipfilepath);
 
         // response读取压缩文件
