@@ -19,26 +19,28 @@
 
 
 4，引入插件，并配置
-
+```xml
 <plugin>
- <groupId>com.funny</groupId>
- <artifactId>autocode-plugin</artifactId>
-<version>1.0.3-SNAPSHOT</version>
- <configuration>
- <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
- <jdbcURL>jdbc:mysql://127.0.0.1:3306/data?useUnicode=true&amp;characterEncoding=UTF-8</jdbcURL>
- <jdbcUserId>root</jdbcUserId>
- <jdbcPassword>123456</jdbcPassword>
+    <groupId>com.funny</groupId>
+    <artifactId>autocode-plugin</artifactId>
+    <version>1.0.3-SNAPSHOT</version>
+    <configuration>
+        <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
+        <jdbcURL>jdbc:mysql://127.0.0.1:3306/data?useUnicode=true&amp;characterEncoding=UTF-8</jdbcURL>
+        <jdbcUserId>root</jdbcUserId>
+        <jdbcPassword>123456</jdbcPassword>
 
-
- 
-<domainPackage>com.funny.autocode.model.entity</domainPackage>
-<domainProject>ttx-domain</domainProject>
-
-<daoPackage>com.funny.autocode.dao.stat</daoPackage>
-<daoProject>ttx-domain</daoProject>
-<tableNames>chat</tableNames>
-
- </configuration>
+        <domainPackage>com.funny.autocode.model.entity</domainPackage>
+        <domainProject>ttx-domain</domainProject>
+    
+        <daoPackage>com.funny.autocode.dao.stat</daoPackage>
+        <daoProject>ttx-domain</daoProject>
+        <tableNames>chat</tableNames>
+    </configuration>
 </plugin>
-5，运行 mvn mall-autocode:generate
+```
+
+5，运行
+```
+mvn mall-autocode:generate
+```
