@@ -19,7 +19,7 @@
 		<spring-version>5.1.2.RELEASE</spring-version>
 		<spring-boot.version>2.1.0.RELEASE</spring-boot.version>
 		<spring-test.version>5.1.2.RELEASE</spring-test.version>
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<slf4j.version>1.7.22</slf4j.version>
 		<combo.framework.version>1.0.0-SNAPSHOT</combo.framework.version>
 		<toolkit.common.lang.version>1.0</toolkit.common.lang.version>
