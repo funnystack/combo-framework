@@ -57,4 +57,16 @@ public class BizScenario {
     public static BizScenario newDefault(){
         return BizScenario.valueOf(DEFAULT_BIZ_ID, DEFAULT_USE_CASE, DEFAULT_SCENARIO);
     }
+
+
+    public String getIdentityWithDefaultScenario(){
+        this.scenario = DEFAULT_SCENARIO;
+        return getUniqueIdentity();
+    }
+
+    public String getIdentityWithDefaultUseCase(){
+        this.scenario = DEFAULT_SCENARIO;
+        this.useCase = DEFAULT_USE_CASE;
+        return getUniqueIdentity();
+    }
 }

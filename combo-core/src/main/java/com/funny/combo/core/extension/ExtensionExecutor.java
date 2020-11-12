@@ -1,7 +1,6 @@
 package com.funny.combo.core.extension;
 
 import com.funny.combo.core.boot.AbstractComponentExecutor;
-import com.funny.combo.core.common.ColaConstant;
 import com.funny.combo.core.exception.ColaException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExtensionExecutor extends AbstractComponentExecutor {
 
-    private Logger logger = LoggerFactory.getLogger(ExtensionExecutor.class);
+
+    private static Logger logger = LoggerFactory.getLogger(ExtensionExecutor.class);
 
     @Autowired
     private ExtensionRepository extensionRepository;
@@ -23,7 +23,7 @@ public class ExtensionExecutor extends AbstractComponentExecutor {
     @Override
     protected <C> C locateComponent(Class<C> targetClz, BizScenario bizScenario) {
         C extension = locateExtension(targetClz, bizScenario);
-        logger.debug("[Located Extension]: "+extension.getClass().getSimpleName());
+        logger.debug("[Located Extension]: " + extension.getClass().getSimpleName());
         return extension;
     }
 
@@ -41,45 +41,65 @@ public class ExtensionExecutor extends AbstractComponentExecutor {
         checkNull(bizScenario);
 
         Ext extension;
-        String bizScenarioUniqueIdentity = bizScenario.getUniqueIdentity();
-        logger.debug("BizScenario in locateExtension is : " + bizScenarioUniqueIdentity);
 
-        // first try
-        extension = firstTry(targetClz, bizScenarioUniqueIdentity);
+        logger.debug("BizScenario in locateExtension is : " + bizScenario.getUniqueIdentity());
+
+        // first try with full namespace
+        extension = firstTry(targetClz, bizScenario);
         if (extension != null) {
             return extension;
         }
 
-        // loop try
-        extension = loopTry(targetClz, bizScenarioUniqueIdentity);
+        // second try with default scenario
+        extension = secondTry(targetClz, bizScenario);
         if (extension != null) {
             return extension;
         }
 
-        throw new ColaException("Can not find extension with ExtensionPoint: "+targetClz+" BizScenario:"+bizScenarioUniqueIdentity);
-    }
-
-    private  <Ext> Ext firstTry(Class<Ext> targetClz, String bizScenario) {
-        return (Ext)extensionRepository.getExtensionRepo().get(new ExtensionCoordinate(targetClz.getName(), bizScenario));
-    }
-
-    private <Ext> Ext loopTry(Class<Ext> targetClz, String bizScenario){
-        Ext extension;
-        if (bizScenario == null){
-            return null;
+        // third try with default use case + default scenario
+        extension = defaultUseCaseTry(targetClz, bizScenario);
+        if (extension != null) {
+            return extension;
         }
-        int lastDotIndex = bizScenario.lastIndexOf(ColaConstant.DOT_SEPARATOR);
-        while(lastDotIndex != -1){
-            bizScenario = bizScenario.substring(0, lastDotIndex);
-            extension =(Ext)extensionRepository.getExtensionRepo().get(new ExtensionCoordinate(targetClz.getName(), bizScenario));
-            if (extension != null) {
-                return extension;
-            }
-            lastDotIndex = bizScenario.lastIndexOf(ColaConstant.DOT_SEPARATOR);
-        }
-        return null;
+
+        throw new ColaException("Can not find extension with ExtensionPoint: "+targetClz+" BizScenario:"+bizScenario.getUniqueIdentity());
     }
 
+    /**
+     * first try with full namespace
+     *
+     * example:  biz1.useCase1.scenario1
+     */
+    private  <Ext> Ext firstTry(Class<Ext> targetClz, BizScenario bizScenario) {
+        logger.debug("First trying with " + bizScenario.getUniqueIdentity());
+        return locate(targetClz.getName(), bizScenario.getUniqueIdentity());
+    }
+
+    /**
+     * second try with default scenario
+     *
+     * example:  biz1.useCase1.#defaultScenario#
+     */
+    private <Ext> Ext secondTry(Class<Ext> targetClz, BizScenario bizScenario){
+        logger.debug("Second trying with " + bizScenario.getIdentityWithDefaultScenario());
+        return locate(targetClz.getName(), bizScenario.getIdentityWithDefaultScenario());
+    }
+
+    /**
+     * third try with default use case + default scenario
+     *
+     * example:  biz1.#defaultUseCase#.#defaultScenario#
+     */
+    private <Ext> Ext defaultUseCaseTry(Class<Ext> targetClz, BizScenario bizScenario){
+        logger.debug("Third trying with " + bizScenario.getIdentityWithDefaultUseCase());
+        return locate(targetClz.getName(), bizScenario.getIdentityWithDefaultUseCase());
+    }
+
+    private <Ext> Ext locate(String name, String uniqueIdentity) {
+        final Ext ext = (Ext) extensionRepository.getExtensionRepo().
+                get(new ExtensionCoordinate(name, uniqueIdentity));
+        return ext;
+    }
 
     private void checkNull(BizScenario bizScenario){
         if(bizScenario == null){
