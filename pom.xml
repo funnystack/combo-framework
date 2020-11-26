@@ -21,6 +21,8 @@
 		<spring-test.version>5.1.2.RELEASE</spring-test.version>
 		<junit.version>4.12</junit.version>
 		<slf4j.version>1.7.22</slf4j.version>
+		<log4j.version>2.8.2</log4j.version>
+		<dubbo.version>2.7.7</dubbo.version>
 		<combo.framework.version>1.0.0-SNAPSHOT</combo.framework.version>
 		<toolkit.common.lang.version>1.0</toolkit.common.lang.version>
 		<jakarta.commons.beanutils.version>1.8.3</jakarta.commons.beanutils.version>
@@ -33,6 +35,7 @@
 		<module>combo-codegen-plugin</module>
 		<module>combo-codegen-web</module>
 		<module>combo-encrypt</module>
+		<module>combo-trace</module>
 		<module>combo-encrypt-starter</module>
 	</modules>
 
