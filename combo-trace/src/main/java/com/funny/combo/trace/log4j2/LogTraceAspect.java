@@ -1,6 +1,6 @@
 package com.funny.combo.trace.log4j2;
 
-import com.funny.combo.trace.LogTraceUtil;
+import com.funny.combo.trace.util.LogTraceUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.MDC;
 

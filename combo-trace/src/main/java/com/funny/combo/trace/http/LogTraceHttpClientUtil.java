@@ -1,6 +1,6 @@
 package com.funny.combo.trace.http;
 
-import com.funny.combo.trace.LogTraceUtil;
+import com.funny.combo.trace.util.LogTraceUtil;
 import org.apache.http.Consts;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;

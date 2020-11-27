@@ -1,6 +1,6 @@
 package com.funny.combo.trace.dubbo;
 
-import com.funny.combo.trace.LogTraceUtil;
+import com.funny.combo.trace.util.LogTraceUtil;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 import org.slf4j.MDC;

@@ -1,6 +1,6 @@
-package com.funny.combo.trace.threadpool;
+package com.funny.combo.trace.util;
 
-import com.funny.combo.trace.LogTraceUtil;
+import com.funny.combo.trace.util.LogTraceUtil;
 import org.slf4j.MDC;
 
 /**

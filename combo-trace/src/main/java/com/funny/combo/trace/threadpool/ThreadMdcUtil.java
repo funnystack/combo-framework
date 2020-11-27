@@ -1,17 +1,17 @@
 package com.funny.combo.trace.threadpool;
 
-import com.funny.combo.trace.LogTraceUtil;
+import com.funny.combo.trace.util.LogTraceUtil;
 import org.slf4j.MDC;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import static com.auto.mall.logtrace.LogTraceUtil.traceIdKey;
+import static com.funny.combo.trace.util.LogTraceUtil.LOG_SESSION_ID;
 
 public class ThreadMdcUtil {
     public static void setTraceIdIfAbsent() {
-        if (MDC.get(traceIdKey) == null) {
-            MDC.put(traceIdKey, LogTraceUtil.getNewTraceId());
+        if (MDC.get(LOG_SESSION_ID) == null) {
+            MDC.put(LOG_SESSION_ID, LogTraceUtil.getNewTraceId());
         }
     }
 
