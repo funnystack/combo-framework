@@ -58,13 +58,13 @@ public class EncryptUtils {
 	 * @return
 	 * @throws EncryptException
 	 */
-	public Map<String, String> encryption(List<String> originalList) throws EncryptException {
-		Map<String, String> resultMap = new HashMap<>();
+	public Map<String, EncryptEntity> encryption(List<String> originalList) throws EncryptException {
+		Map<String, EncryptEntity> resultMap = new HashMap<>();
 		if (CollectionUtils.isNotEmpty(originalList)) {
 			List<EncryptEntity> encryptResponseList = getEncryptResponses(originalList);
 			if (CollectionUtils.isNotEmpty(encryptResponseList)) {
 				for (EncryptEntity en : encryptResponseList) {
-					resultMap.put(en.getOrigin(), en.getEncrypted());
+					resultMap.put(en.getOrigin(), en);
 				}
 			}
 		}
