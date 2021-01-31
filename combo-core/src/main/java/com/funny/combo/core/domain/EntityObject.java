@@ -1,8 +1,6 @@
 package com.funny.combo.core.domain;
 
 
-import com.funny.combo.core.extension.BizScenario;
-
 /**
  * Entity Object
  *
@@ -11,14 +9,6 @@ import com.funny.combo.core.extension.BizScenario;
  */
 
 public abstract class EntityObject {
-    public BizScenario getBizScenario() {
-        return bizScenario;
-    }
 
-    public void setBizScenario(BizScenario bizScenario) {
-        this.bizScenario = bizScenario;
-    }
-
-    private BizScenario bizScenario;
 
 }

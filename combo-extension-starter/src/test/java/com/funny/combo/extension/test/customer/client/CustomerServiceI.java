@@ -1,7 +1,8 @@
 package com.funny.combo.extension.test.customer.client;
 
-import com.alibaba.cola.dto.Response;
-import com.alibaba.cola.dto.SingleResponse;
+
+import com.funny.combo.core.result.Response;
+import com.funny.combo.core.result.SingleResponse;
 
 /**
  * CustomerServiceI
@@ -9,6 +10,6 @@ import com.alibaba.cola.dto.SingleResponse;
  * @author Frank Zhang 2018-01-06 7:24 PM
  */
 public interface CustomerServiceI {
-    public Response addCustomer(AddCustomerCmd addCustomerCmd);
-    public SingleResponse<CustomerDTO> getCustomer(GetOneCustomerQry getOneCustomerQry);
+     Response addCustomer(AddCustomerCmd addCustomerCmd);
+     SingleResponse<CustomerDTO> getCustomer(GetOneCustomerQry getOneCustomerQry);
 }

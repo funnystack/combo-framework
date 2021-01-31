@@ -1,6 +1,6 @@
 package com.funny.combo.extension.test.customer.app;
 
-import com.alibaba.cola.dto.SingleResponse;
+import com.funny.combo.core.result.SingleResponse;
 import com.funny.combo.extension.test.customer.client.GetOneCustomerQry;
 import org.springframework.stereotype.Component;
 

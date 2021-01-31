@@ -1,6 +1,6 @@
 package com.funny.combo.extension.test.customer.app.extension;
 
-import com.alibaba.cola.domain.ApplicationContextHelper;
+import com.funny.combo.core.common.ApplicationContextHelper;
 import com.funny.combo.extension.test.customer.client.AddCustomerCmd;
 import com.funny.combo.extension.test.customer.client.CustomerDTO;
 import com.funny.combo.extension.test.customer.domain.CustomerEntity;

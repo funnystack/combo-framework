@@ -1,6 +1,6 @@
 package com.funny.combo.extension.test;
 
-import com.alibaba.cola.dto.Response;
+import com.funny.combo.core.result.Response;
 import com.funny.combo.extension.BizScenario;
 import com.funny.combo.extension.test.customer.client.AddCustomerCmd;
 import com.funny.combo.extension.test.customer.client.Constants;

@@ -1,10 +1,10 @@
 package com.funny.combo.extension.test.customer.app.extension;
 
-import com.alibaba.cola.exception.BizException;
+import com.funny.combo.core.exception.BizException;
 import com.funny.combo.extension.Extension;
+import com.funny.combo.extension.test.customer.app.extensionpoint.AddCustomerValidatorExtPt;
 import com.funny.combo.extension.test.customer.client.AddCustomerCmd;
 import com.funny.combo.extension.test.customer.client.Constants;
-import com.funny.combo.extension.test.customer.app.extensionpoint.AddCustomerValidatorExtPt;
 
 /**
  * AddCustomerBizTwoValidator

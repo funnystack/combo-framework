@@ -1,6 +1,6 @@
 package com.funny.combo.extension.test.customer.domain;
 
-import com.alibaba.cola.domain.Entity;
+import com.funny.combo.core.annotion.Entity;
 import com.funny.combo.extension.BizScenario;
 import com.funny.combo.extension.ExtensionExecutor;
 import com.funny.combo.extension.test.customer.domain.rule.CustomerRuleExtPt;

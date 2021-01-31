@@ -1,12 +1,12 @@
 package com.funny.combo.extension.test.customer.app;
 
-import com.alibaba.cola.dto.Response;
+import com.funny.combo.core.result.Response;
 import com.funny.combo.extension.ExtensionExecutor;
+import com.funny.combo.extension.test.customer.app.extensionpoint.AddCustomerValidatorExtPt;
 import com.funny.combo.extension.test.customer.app.extensionpoint.CustomerConvertorExtPt;
-import com.funny.combo.extension.test.customer.infrastructure.DomainEventPublisher;
 import com.funny.combo.extension.test.customer.client.AddCustomerCmd;
 import com.funny.combo.extension.test.customer.domain.CustomerEntity;
-import com.funny.combo.extension.test.customer.app.extensionpoint.AddCustomerValidatorExtPt;
+import com.funny.combo.extension.test.customer.infrastructure.DomainEventPublisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

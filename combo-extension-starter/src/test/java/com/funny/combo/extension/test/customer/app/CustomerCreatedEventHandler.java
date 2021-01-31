@@ -1,6 +1,6 @@
 package com.funny.combo.extension.test.customer.app;
 
-import com.alibaba.cola.dto.Response;
+import com.funny.combo.core.result.Response;
 import com.funny.combo.extension.test.customer.client.CustomerCreatedEvent;
 
 /**

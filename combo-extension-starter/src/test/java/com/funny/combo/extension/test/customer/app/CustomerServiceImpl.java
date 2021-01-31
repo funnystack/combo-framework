@@ -1,7 +1,7 @@
 package com.funny.combo.extension.test.customer.app;
 
-import com.alibaba.cola.dto.Response;
-import com.alibaba.cola.dto.SingleResponse;
+import com.funny.combo.core.result.Response;
+import com.funny.combo.core.result.SingleResponse;
 import com.funny.combo.extension.test.customer.client.AddCustomerCmd;
 import com.funny.combo.extension.test.customer.client.CustomerDTO;
 import com.funny.combo.extension.test.customer.client.CustomerServiceI;

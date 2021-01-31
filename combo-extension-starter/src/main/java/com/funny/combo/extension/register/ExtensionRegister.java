@@ -7,7 +7,6 @@
  */
 package com.funny.combo.extension.register;
 
-import com.alibaba.cola.extension.*;
 import com.funny.combo.extension.*;
 import org.springframework.stereotype.Component;
 
