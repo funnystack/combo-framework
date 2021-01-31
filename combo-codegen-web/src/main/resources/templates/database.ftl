@@ -39,7 +39,7 @@
                             <label class="col-sm-3 control-label">URL</label>
                             <div class="col-sm-8">
                                 <input type="text" id="url" name="url" placeholder="db url " class="form-control"
-                                       value="jdbc:mysql://127.0.0.1:3306/trade">
+                                       value="jdbc:mysql://127.0.0.1:3306/combo-admin">
                             </div>
                         </div>
 
@@ -63,7 +63,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">包名</label>
                             <div class="col-sm-8">
-                                <input type="text" id="package_name" name="packageName" value="com.funny.trade"
+                                <input type="text" id="package_name" name="packageName" value="com.funny.combo"
                                        class="form-control">
                             </div>
                         </div>

@@ -1,11 +1,18 @@
-package com.funny.combo.core.extension;
+/*
+ * Copyright 2017 Alibaba.com All right reserved. This software is the
+ * confidential and proprietary information of Alibaba.com ("Confidential
+ * Information"). You shall not disclose such Confidential Information and shall
+ * use it only in accordance with the terms of the license agreement you entered
+ * into with Alibaba.com.
+ */
+package com.funny.combo.extension;
 
 /**
  * Extension Coordinate(扩展坐标) is used to uniquely position an Extension
  * @author fulan.zjf 2017-11-05
  */
 public class ExtensionCoordinate {
-    
+
     private String extensionPointName;
     private String bizScenarioUniqueIdentity;
 
@@ -42,7 +49,7 @@ public class ExtensionCoordinate {
         this.extensionPointName = extensionPoint;
         this.bizScenarioUniqueIdentity = bizScenario;
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -70,5 +77,5 @@ public class ExtensionCoordinate {
     public String toString() {
         return "ExtensionCoordinate [extensionPointName=" + extensionPointName + ", bizScenarioUniqueIdentity=" + bizScenarioUniqueIdentity + "]";
     }
-    
+
 }

@@ -1,23 +1,29 @@
-package com.funny.combo.core.extension;
+/*
+ * Copyright 2017 Alibaba.com All right reserved. This software is the
+ * confidential and proprietary information of Alibaba.com ("Confidential
+ * Information"). You shall not disclose such Confidential Information and shall
+ * use it only in accordance with the terms of the license agreement you entered
+ * into with Alibaba.com.
+ */
+package com.funny.combo.extension;
 
-import com.funny.combo.core.boot.AbstractComponentExecutor;
-import com.funny.combo.core.exception.ColaException;
+import com.funny.combo.extension.register.AbstractComponentExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 /**
- * ExtensionExecutor 
+ * ExtensionExecutor
  * @author fulan.zjf 2017-11-05
  */
 @Component
 public class ExtensionExecutor extends AbstractComponentExecutor {
 
+    private Logger logger = LoggerFactory.getLogger(ExtensionExecutor.class);
 
-    private static Logger logger = LoggerFactory.getLogger(ExtensionExecutor.class);
-
-    @Autowired
+    @Resource
     private ExtensionRepository extensionRepository;
 
     @Override
@@ -62,7 +68,7 @@ public class ExtensionExecutor extends AbstractComponentExecutor {
             return extension;
         }
 
-        throw new ColaException("Can not find extension with ExtensionPoint: "+targetClz+" BizScenario:"+bizScenario.getUniqueIdentity());
+        throw new RuntimeException("Can not find extension with ExtensionPoint: "+targetClz+" BizScenario:"+bizScenario.getUniqueIdentity());
     }
 
     /**
@@ -103,7 +109,7 @@ public class ExtensionExecutor extends AbstractComponentExecutor {
 
     private void checkNull(BizScenario bizScenario){
         if(bizScenario == null){
-            throw new ColaException("BizScenario can not be null for extension");
+            throw new IllegalArgumentException("BizScenario can not be null for extension");
         }
     }
 

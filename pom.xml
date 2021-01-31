@@ -37,6 +37,8 @@
 		<module>combo-encrypt</module>
 		<module>combo-trace</module>
 		<module>combo-encrypt-starter</module>
+		<module>combo-extension-starter</module>
+		<module>combo-statemachine</module>
 	</modules>
 
 	<dependencyManagement>

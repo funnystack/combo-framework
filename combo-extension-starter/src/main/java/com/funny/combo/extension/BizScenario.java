@@ -1,4 +1,4 @@
-package com.funny.combo.core.extension;
+package com.funny.combo.extension;
 
 
 /**
