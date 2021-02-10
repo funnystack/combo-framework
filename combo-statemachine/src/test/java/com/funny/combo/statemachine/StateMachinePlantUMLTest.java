@@ -1,8 +1,5 @@
-package com.alibaba.cola.test;
+package com.funny.combo.statemachine;
 
-import com.funny.combo.statemachine.Action;
-import com.funny.combo.statemachine.Condition;
-import com.funny.combo.statemachine.StateMachine;
 import com.funny.combo.statemachine.builder.StateMachineBuilder;
 import com.funny.combo.statemachine.builder.StateMachineBuilderFactory;
 import com.funny.combo.statemachine.impl.Debugger;
@@ -11,8 +8,8 @@ import org.junit.Test;
 
 import java.util.stream.Stream;
 
-import static com.alibaba.cola.test.StateMachinePlantUMLTest.PriceAdjustmentTaskEventEnum.*;
-import static com.alibaba.cola.test.StateMachinePlantUMLTest.PriceAdjustmentTaskStatusEnum.*;
+import static com.funny.combo.statemachine.StateMachinePlantUMLTest.PriceAdjustmentTaskEventEnum.*;
+import static com.funny.combo.statemachine.StateMachinePlantUMLTest.PriceAdjustmentTaskStatusEnum.*;
 
 /**
  * StateMachinePlantUMLTest

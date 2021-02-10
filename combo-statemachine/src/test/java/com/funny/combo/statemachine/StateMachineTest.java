@@ -1,4 +1,4 @@
-package com.alibaba.cola.test;
+package com.funny.combo.statemachine;
 
 import com.funny.combo.statemachine.Action;
 import com.funny.combo.statemachine.Condition;

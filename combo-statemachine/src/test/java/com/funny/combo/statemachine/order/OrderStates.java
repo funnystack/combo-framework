@@ -1,4 +1,4 @@
-package com.alibaba.cola.test.order;
+package com.funny.combo.statemachine.order;
 
 public enum  OrderStates {
     WAIT_PAY(2,"待支付"),

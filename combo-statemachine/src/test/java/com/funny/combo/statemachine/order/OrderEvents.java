@@ -1,8 +1,10 @@
-package com.alibaba.cola.test.order;
+package com.funny.combo.statemachine.order;
 
 public enum  OrderEvents {
 
-    PAYED(1,"支付"),DELIVERY(2,"发货"),CONFIRM(3,"确认收货");
+    PAYED(1,"支付"),
+    DELIVERY(2,"发货"),
+    CONFIRM(3,"确认收货");
 
     private Integer event;
 

@@ -1,6 +1,5 @@
-package com.alibaba.cola.test.order;
+package com.funny.combo.statemachine.order;
 
-import com.alibaba.cola.test.StateMachineTest;
 import com.funny.combo.statemachine.Action;
 import com.funny.combo.statemachine.Condition;
 import com.funny.combo.statemachine.StateMachine;

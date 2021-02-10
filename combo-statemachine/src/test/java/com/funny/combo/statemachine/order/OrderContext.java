@@ -1,4 +1,4 @@
-package com.alibaba.cola.test.order;
+package com.funny.combo.statemachine.order;
 
 public class OrderContext {
     private String orderId;

@@ -1,8 +1,5 @@
-package com.alibaba.cola.test;
+package com.funny.combo.statemachine;
 
-import com.funny.combo.statemachine.Action;
-import com.funny.combo.statemachine.Condition;
-import com.funny.combo.statemachine.StateMachine;
 import com.funny.combo.statemachine.builder.StateMachineBuilder;
 import com.funny.combo.statemachine.builder.StateMachineBuilderFactory;
 import com.funny.combo.statemachine.impl.StateMachineException;
