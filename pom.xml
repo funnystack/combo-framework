@@ -198,4 +198,16 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<!-- 配置远程发布到私服，mvn deploy -->
+	<distributionManagement>
+		<repository>
+			<id>rdc-releases</id>
+			<url>https://packages.aliyun.com/maven/repository/2015788-release-XtEkJb</url>
+		</repository>
+		<snapshotRepository>
+			<id>rdc-snapshots</id>
+			<url>https://packages.aliyun.com/maven/repository/2015788-snapshot-V4uFmo/</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
