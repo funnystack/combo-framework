@@ -5,10 +5,12 @@
 
 主要包括以下模块：
 
+- 核心框架类(combo-core)
 - 数据库统一加解密组件(combo-encrypt)
 - dao层代码自动生成组件(combo-codegen)
+- oss工具包(combo-oss)
 - 分布式追踪统一生成traceId(combo-trace)
-- 业务身份识别+扩展点的编程框架（combo-core）
+- 业务身份识别+扩展点的编程框架（combo-extension-starter）
 - 业务流程编排组件(更新中)
 
 ## combo-encrypt
