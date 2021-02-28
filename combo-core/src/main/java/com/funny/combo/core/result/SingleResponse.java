@@ -25,11 +25,11 @@ public class SingleResponse<T> extends Response {
         this.data = data;
     }
 
-    public static SingleResponse buildFailure(String errCode, String errMessage) {
+    public static SingleResponse buildFailure(Integer errCode, String errMessage) {
         SingleResponse response = new SingleResponse();
         response.setSuccess(false);
-        response.setErrCode(errCode);
-        response.setErrMessage(errMessage);
+        response.setCode(errCode);
+        response.setMessage(errMessage);
         return response;
     }
 
@@ -38,5 +38,32 @@ public class SingleResponse<T> extends Response {
         response.setSuccess(true);
         return response;
     }
-    
+
+    public static SingleResponse fail(String message) {
+        SingleResponse commonResult = new SingleResponse();
+        commonResult.setCode(CODE_FAILURE);
+        commonResult.setMessage(message);
+        return commonResult;
+    }
+
+    public static <T> SingleResponse succ() {
+        SingleResponse commonResult = new SingleResponse();
+        commonResult.setCode(CODE_SUCCESS);
+        return commonResult;
+    }
+
+    public static <T> SingleResponse succ(T data) {
+        SingleResponse commonResult = succ();
+        commonResult.setData(data);
+        return commonResult;
+    }
+
+    public static <T> SingleResponse succ(T data, String msg) {
+        SingleResponse commonResult = succ();
+        commonResult.setData(data);
+        commonResult.setMessage(msg);
+        return commonResult;
+    }
+
+
 }

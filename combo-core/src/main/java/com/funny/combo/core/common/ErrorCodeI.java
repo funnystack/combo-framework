@@ -7,7 +7,7 @@ package com.funny.combo.core.common;
  */
 public interface ErrorCodeI {
 
-    String getErrCode();
+    Integer getErrCode();
 
     String getErrDesc();
 

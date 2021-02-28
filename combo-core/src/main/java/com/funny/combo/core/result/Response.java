@@ -11,52 +11,51 @@ public class Response extends AbstractDTO {
 
     private static final long serialVersionUID = 1L;
 
+    public static final int CODE_SUCCESS = 0;
+
+    public static final int CODE_FAILURE = -1;
+
     private boolean isSuccess;
+
+    private Integer code;
     
-    private String errCode;
-    
-    private String errMessage;
+    private String message;
     
     public boolean isSuccess() {
-        return isSuccess;
+        return code == 0;
     }
 
-    
+
     public void setSuccess(boolean isSuccess) {
         this.isSuccess = isSuccess;
     }
 
-    
-    public String getErrCode() {
-        return errCode;
+    public Integer getCode() {
+        return code;
     }
 
-    
-    public void setErrCode(String errCode) {
-        this.errCode = errCode;
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
-    
-    public String getErrMessage() {
-        return errMessage;
+    public String getMessage() {
+        return message;
     }
 
-    
-    public void setErrMessage(String errMessage) {
-        this.errMessage = errMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
-
 
     @Override
     public String toString() {
-        return "Response [isSuccess=" + isSuccess + ", errCode=" + errCode + ", errMessage=" + errMessage + "]";
+        return "Response [isSuccess=" + isSuccess + ", errCode=" + code + ", errMessage=" + message + "]";
     }
 
-    public static Response buildFailure(String errCode, String errMessage) {
+    public static Response buildFailure(Integer errCode, String errMessage) {
         Response response = new Response();
         response.setSuccess(false);
-        response.setErrCode(errCode);
-        response.setErrMessage(errMessage);
+        response.setCode(errCode);
+        response.setMessage(errMessage);
         return response;
     }
 
@@ -65,5 +64,5 @@ public class Response extends AbstractDTO {
         response.setSuccess(true);
         return response;
     }
-    
+
 }

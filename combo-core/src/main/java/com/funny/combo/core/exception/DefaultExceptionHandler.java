@@ -38,19 +38,19 @@ public class DefaultExceptionHandler implements ExceptionHandlerI {
 
     private String buildErrorMsg(AbstractCommand cmd, Response response) {
         return "Process [" + cmd + "] failed, errorCode: "
-                + response.getErrCode() + " errorMsg:"
-                + response.getErrMessage();
+                + response.getCode() + " errorMsg:"
+                + response.getMessage();
     }
 
     private void buildResponse(Response response, Exception exception) {
         if (exception instanceof BaseException) {
             ErrorCodeI errCode = ((BaseException) exception).getErrCode();
-            response.setErrCode(errCode.getErrCode());
+            response.setCode(errCode.getErrCode());
         }
         else {
-            response.setErrCode(BasicErrorCode.SYS_ERROR.getErrCode());
+            response.setCode(BasicErrorCode.SERVER_ERROR.getErrCode());
         }
-        response.setErrMessage(exception.getMessage());
+        response.setMessage(exception.getMessage());
         response.setSuccess(false);
     }
 }

@@ -93,12 +93,12 @@ public class EventBus implements EventBusI{
         }
         if (exception instanceof BaseException) {
             ErrorCodeI errCode = ((BaseException) exception).getErrCode();
-            response.setErrCode(errCode.getErrCode());
+            response.setCode(errCode.getErrCode());
         }
         else {
-            response.setErrCode(BasicErrorCode.SYS_ERROR.getErrCode());
+            response.setCode(BasicErrorCode.SERVER_ERROR.getErrCode());
         }
-        response.setErrMessage(exception.getMessage());
+        response.setMessage(exception.getMessage());
         return response;
     }
 }

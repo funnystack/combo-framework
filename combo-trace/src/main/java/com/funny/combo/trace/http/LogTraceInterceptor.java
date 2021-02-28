@@ -2,7 +2,6 @@ package com.funny.combo.trace.http;
 
 import com.funny.combo.trace.util.LogTraceUtil;
 import org.slf4j.MDC;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,10 +53,6 @@ public class LogTraceInterceptor extends HandlerInterceptorAdapter {
         }
     }
 
-
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
-            throws Exception {
-    }
 
     private void clearMDC() {
         MDC.remove(LogTraceUtil.LOG_SESSION_ID);

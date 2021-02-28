@@ -12,7 +12,7 @@ import com.funny.combo.codegen.service.CodegenServiceFactory;
 import com.funny.combo.codegen.util.ContextUtils;
 import com.funny.combo.codegen.util.FileUtils;
 import com.funny.combo.codegen.util.ZipUtil;
-import com.funny.combo.core.result.CommonResult;
+import com.funny.combo.core.result.SingleResponse;
 import com.google.common.collect.Maps;
 import org.mybatis.generator.api.GeneratedJavaFile;
 import org.mybatis.generator.api.GeneratedXmlFile;
@@ -43,22 +43,22 @@ public class CodeController {
     private ComboCodeConfig comboCodeConfig;
 
     @RequestMapping("/getTargetDatabaseTables")
-    public CommonResult getConnection(CodeURL codeURL) throws ClassNotFoundException, SQLException {
+    public SingleResponse getConnection(CodeURL codeURL) throws ClassNotFoundException, SQLException {
         if (codeURL.getUsr() == null || codeURL.getPas() == null) {
-            return CommonResult.fail("usr is null or pas is null");
+            return SingleResponse.fail("usr is null or pas is null");
         }
 
         if (!ContextUtils.checkDataBase(codeURL.getUrl())) {
-            return CommonResult.fail("目前只支持oracle和mysql数据库！");
+            return SingleResponse.fail("目前只支持oracle和mysql数据库！");
         }
         try {
             String databaseType = ContextUtils.getDatabaseType(codeURL.getUrl());
             AbstractQueryTable abstractQueryTable = codegenServiceFactory.getHandlerByType(databaseType);
             List<Table> tablelist = abstractQueryTable.getDatabaseTable(codeURL);
-            return CommonResult.succ(tablelist);
+            return SingleResponse.succ(tablelist);
         } catch (Exception e) {
             e.printStackTrace();
-            return CommonResult.fail(e.getMessage());
+            return SingleResponse.fail(e.getMessage());
         }
     }
 

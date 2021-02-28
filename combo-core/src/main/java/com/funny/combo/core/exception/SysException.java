@@ -13,9 +13,9 @@ public class SysException extends BaseException {
 
     private static final long serialVersionUID = 4355163994767354840L;
 
-    public SysException(String errMessage){
+    public SysException(String errMessage) {
         super(errMessage);
-        this.setErrCode(BasicErrorCode.SYS_ERROR);
+        this.setErrCode(BasicErrorCode.SERVER_ERROR);
     }
 
     public SysException(ErrorCodeI errCode, String errMessage) {
@@ -25,7 +25,7 @@ public class SysException extends BaseException {
 
     public SysException(String errMessage, Throwable e) {
         super(errMessage, e);
-        this.setErrCode(BasicErrorCode.SYS_ERROR);
+        this.setErrCode(BasicErrorCode.SERVER_ERROR);
     }
 
     public SysException(String errMessage, ErrorCodeI errorCode, Throwable e) {
