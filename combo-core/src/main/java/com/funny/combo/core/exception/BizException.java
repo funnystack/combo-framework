@@ -1,9 +1,6 @@
 package com.funny.combo.core.exception;
 
 
-import com.funny.combo.core.common.BasicErrorCode;
-import com.funny.combo.core.common.ErrorCodeI;
-
 /**
  * BizException is known Exception, no need retry
  */

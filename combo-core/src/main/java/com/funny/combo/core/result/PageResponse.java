@@ -31,12 +31,12 @@ public class PageResponse<T> extends Response {
         return of(data,0);
     }
 
-    
+
     public int getTotal() {
         return total;
     }
 
-    
+
     public void setTotal(int total) {
         this.total = total;
     }
@@ -45,7 +45,7 @@ public class PageResponse<T> extends Response {
         return null == data ? new ArrayList<>() : new ArrayList<>(data);
     }
 
-    
+
     public void setData(Collection<T> data) {
         this.data = data;
     }

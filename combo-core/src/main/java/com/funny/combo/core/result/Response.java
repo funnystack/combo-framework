@@ -4,7 +4,7 @@ import com.funny.combo.core.dto.AbstractDTO;
 
 /**
  * Response to caller
- * 
+ *
  * @author fulan.zjf 2017年10月21日 下午8:53:17
  */
 public class Response extends AbstractDTO {
@@ -18,9 +18,9 @@ public class Response extends AbstractDTO {
     private boolean isSuccess;
 
     private Integer code;
-    
+
     private String message;
-    
+
     public boolean isSuccess() {
         return code == 0;
     }

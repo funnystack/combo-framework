@@ -16,11 +16,11 @@ public class SingleResponse<T> extends Response {
         singleResponse.setData(data);
         return singleResponse;
     }
-    
+
     public T getData() {
         return data;
     }
-    
+
     public void setData(T data) {
         this.data = data;
     }

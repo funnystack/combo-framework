@@ -10,9 +10,9 @@ import java.util.Map;
  * @author fulan.zjf 2017-10-27 PM 12:19:15
  */
 public abstract class AbstractClient implements Serializable{
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * This is for extended values
      */

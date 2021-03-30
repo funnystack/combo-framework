@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * Command Hub holds all the important information about Command
- * 
+ *
  * @author fulan.zjf 2017-10-24
  */
 @Component
@@ -25,12 +25,12 @@ public class CommandHub{
      */
     private List<CommandInterceptorI> globalPostInterceptors = new ArrayList<>();
     private Map<Class/*CommandClz*/, CommandInvocation> commandRepository = new HashMap<>();
-    
+
     /**
      * This Repository is used for return right response type on exception scenarios
      */
     private Map<Class/*CommandClz*/, Class/*ResponseClz*/> responseRepository = new HashMap<>();
-    
+
     public CommandInvocation getCommandInvocation(Class cmdClass) {
         CommandInvocation commandInvocation = commandRepository.get(cmdClass);
         if (commandRepository.get(cmdClass) == null)

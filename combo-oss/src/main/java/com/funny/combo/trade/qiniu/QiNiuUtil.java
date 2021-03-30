@@ -1,8 +1,7 @@
-package com.funny.combo.oss.qiniu;
+package com.funny.combo.trade.qiniu;
 
 import com.alibaba.fastjson.JSON;
 import com.qiniu.common.QiniuException;
-import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.Region;

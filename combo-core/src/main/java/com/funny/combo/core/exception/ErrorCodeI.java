@@ -1,4 +1,4 @@
-package com.funny.combo.core.common;
+package com.funny.combo.core.exception;
 
 /**
  * Extends your error codes in your App by implements this Interface.

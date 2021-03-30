@@ -1,9 +1,6 @@
 package com.funny.combo.core.exception;
 
 
-import com.funny.combo.core.common.BasicErrorCode;
-import com.funny.combo.core.common.ErrorCodeI;
-
 /**
  * System Exception is unexpected Exception, retry might work again
  *

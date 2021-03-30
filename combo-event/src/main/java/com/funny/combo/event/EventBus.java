@@ -1,9 +1,9 @@
-package com.funny.combo.core.event;
+package com.funny.combo.event;
 
-import com.funny.combo.core.common.BasicErrorCode;
-import com.funny.combo.core.common.ErrorCodeI;
 import com.funny.combo.core.exception.BaseException;
+import com.funny.combo.core.exception.BasicErrorCode;
 import com.funny.combo.core.exception.ColaException;
+import com.funny.combo.core.exception.ErrorCodeI;
 import com.funny.combo.core.result.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * @date 2017/11/20
  */
 @Component
-public class EventBus implements EventBusI{
+public class EventBus implements EventBusI {
     Logger logger = LoggerFactory.getLogger(EventBus.class);
 
     /**

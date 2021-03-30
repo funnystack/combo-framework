@@ -1,5 +1,6 @@
 package com.funny.combo.core.common;
 
+import com.funny.combo.core.exception.BasicErrorCode;
 import com.funny.combo.core.exception.SysException;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

@@ -1,4 +1,4 @@
-package com.funny.combo.core.event;
+package com.funny.combo.event;
 
 /**
  * @author: caiqiang.w

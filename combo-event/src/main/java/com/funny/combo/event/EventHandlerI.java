@@ -1,4 +1,5 @@
-package com.funny.combo.core.event;
+package com.funny.combo.event;
+
 
 
 import com.funny.combo.core.result.Response;

@@ -1,4 +1,4 @@
-package com.funny.combo.core.event;
+package com.funny.combo.event;
 
 import com.funny.combo.core.exception.ColaException;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class EventHub {
 
     private HashMap<Class, List<EventHandlerI>> eventRepository = new HashMap<>();
-    
+
     private Map<Class, Class> responseRepository = new HashMap<>();
 
     public HashMap<Class, List<EventHandlerI>> getEventRepository() {

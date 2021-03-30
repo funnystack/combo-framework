@@ -1,7 +1,5 @@
 package com.funny.combo.core.exception;
 
-import com.funny.combo.core.common.BasicErrorCode;
-import com.funny.combo.core.common.ErrorCodeI;
 import com.funny.combo.core.dto.AbstractCommand;
 import com.funny.combo.core.result.Response;
 import org.slf4j.Logger;

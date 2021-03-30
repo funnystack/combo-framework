@@ -1,9 +1,5 @@
-package com.funny.combo.core.boot;
+package com.funny.combo.event;
 
-import com.funny.combo.core.common.ColaConstant;
-import com.funny.combo.core.event.EventHandlerI;
-import com.funny.combo.core.event.EventHub;
-import com.funny.combo.core.event.EventI;
 import com.funny.combo.core.exception.ColaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,7 +25,7 @@ public class EventRegister{
                 return checkAndGetEventParamType(method);
             }
         }
-        throw new ColaException("Event param in " + eventExecutorClz + " " + ColaConstant.EXE_METHOD
+        throw new ColaException("Event param in " + eventExecutorClz + " execute"
                                  + "() is not detected");
     }
 
@@ -39,7 +35,7 @@ public class EventRegister{
     }
 
     private boolean isExecuteMethod(Method method){
-        return ColaConstant.EXE_METHOD.equals(method.getName()) && !method.isBridge();
+        return "execute".equals(method.getName()) && !method.isBridge();
     }
 
     private Class checkAndGetEventParamType(Method method){

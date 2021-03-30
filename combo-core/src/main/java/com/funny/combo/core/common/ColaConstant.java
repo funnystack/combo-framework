@@ -8,7 +8,7 @@
 package com.funny.combo.core.common;
 
 /**
- * CoreConstant 
+ * CoreConstant
  * @author fulan.zjf 2017-11-04
  */
 public class ColaConstant {

@@ -1,4 +1,4 @@
-package com.funny.combo.core.event;
+package com.funny.combo.event;
 
 /**
  * Domain Event (领域事件）

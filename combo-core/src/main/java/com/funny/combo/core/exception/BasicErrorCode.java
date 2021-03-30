@@ -1,7 +1,5 @@
-package com.funny.combo.core.common;
+package com.funny.combo.core.exception;
 
-
-import com.funny.combo.core.common.ErrorCodeI;
 
 /**
  *

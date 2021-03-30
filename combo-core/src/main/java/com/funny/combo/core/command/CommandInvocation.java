@@ -29,9 +29,9 @@ public class CommandInvocation{
 
 
     public CommandInvocation() {
-        
+
     }
-    
+
     public CommandInvocation(CommandExecutorI commandExecutor, List<CommandInterceptorI> preInterceptors,
                              List<CommandInterceptorI> postInterceptors){
         this.commandExecutor = commandExecutor;
@@ -53,7 +53,7 @@ public class CommandInvocation{
         finally {
             //make sure post interceptors performs even though exception happens
             postIntercept(abstractCommand, response);
-        }          
+        }
         return response;
     }
 
