@@ -29,79 +29,70 @@
         <div class="ibox-title">
             <div class="row">
                 <form class="form-horizontal" id="codeform" method="post" action="/getCode">
-                    <div class="col-sm-4">
-                        <input type="hidden" id="c_url" name="jdbcURL">
-                        <input type="hidden" id="c_user" name="jdbcUserId">
-                        <input type="hidden" id="c_pass" name="jdbcPassword">
-                        <input type="hidden" id="c_table" name="tableNames">
+                    <input type="hidden" id="c_url" name="jdbcURL">
+                    <input type="hidden" id="c_user" name="jdbcUserId">
+                    <input type="hidden" id="c_pass" name="jdbcPassword">
+                    <input type="hidden" id="c_table" name="tableNames">
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">URL</label>
-                            <div class="col-sm-8">
-                                <input type="text" id="url" name="url" placeholder="db url " class="form-control"
-                                       value="jdbc:mysql://127.0.0.1:3306/combo-admin">
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-3 control-label">数据库</label>
+                            <div class="col-md-9">
+                                <select class="form-control" id="data_base_select">
+                                </select>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">username</label>
-                            <div class="col-sm-8">
-                                <input type="text" id="username" name="username" placeholder="db username" value="root"
-                                       class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">password</label>
-                            <div class="col-sm-8">
-                                <input type="text" id="password" name="password" placeholder="db password"
-                                       value="root"
-                                       class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">包名</label>
-                            <div class="col-sm-8">
+                        <div class="col-md-4 form-group">
+                            <label class="col-sm-2 control-label">包名</label>
+                            <div class="col-sm-10">
                                 <input type="text" id="package_name" name="packageName" value="com.funny.combo"
                                        class="form-control">
                             </div>
                         </div>
 
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">模块</label>
-                            <div class="col-sm-8">
+                        <div class="col-md-4 form-group">
+                            <label class="col-md-2 control-label">模块</label>
+                            <div class="col-md-10">
                                 <input type="text" id="module_name" name="moduleName" value="user"
                                        class="form-control">
                             </div>
                         </div>
-
                     </div>
 
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <a class="btn btn-primary" id="tableBtn">获取TABLE</a>
-                        </div>
-
-
-                        <div class="form-group">
-                            <a class="btn btn-info" id="codeBtn">生成代码</a>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Entity Class</label>
-                            <div class="col-sm-8">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="col-md-2 control-label">Entity</label>
+                            <div class="col-md-10">
                                 <input type="text" id="entityName" name="entityName" class="form-control" value="com.funny.trade.user.entity.XXXX">
                             </div>
                         </div>
+                        <div class="col-md-6 form-group">
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">Dao Class</label>
-                            <div class="col-sm-8">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label class="col-md-2 control-label">mapper</label>
+                            <div class="col-md-10">
                                 <input type="text" id="daoName" name="daoName" class="form-control" value="com.funny.trade.user.dao.XXXX">
                             </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-2">
+                            <a class="btn btn-primary" id="tableBtn">获取TABLE</a>
+                        </div>
+                        <div class="col-md-2">
+                            <a class="btn btn-info" id="codeBtn">生成代码</a>
                         </div>
                     </div>
                 </form>
@@ -144,10 +135,39 @@
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/js/jquery.validate-1.13.1.js"></script>
 <script type="text/javascript">
+    $(document).ready(function(){
+        $.ajax({
+                type: "get",
+                url: "/getDatabaseList",
+                dataType: "json",
+                success: function(data) {
+                    console.log(typeof (data.data));
+                    var options = '<option value="0">请选择数据库</option>';
+                    $.each(data.data,function(n,db) {
+                        options+='<option data-url="'+
+                                 db.url+'" data-username="'+
+                                 db.username+'" data-password="'+
+                                 db.password+'">'+ db.url +'</option>';
+
+                    });
+                    $("#data_base_select").append(options);
+                    $("#data_base_select").change(function(){
+                        var tpMaterial = $('#data_base_select').find("option:selected");
+                        $("#c_url").val($(tpMaterial).data('url'));
+                        $("#c_user").val($(tpMaterial).data('username'));
+                        $("#c_pass").val($(tpMaterial).data('password'));
+                    });
+                }
+        });
+
+    });
+
+
+
     $("#tableBtn").click(function () {
-        var url = $("#url").val();
-        var pas = $("#password").val();
-        var usr = $("#username").val();
+        var url = $("#c_url").val();
+        var pas = $("#c_pass").val();
+        var usr = $("#c_user").val();
         $.post('/getTargetDatabaseTables', {url: url, usr: usr, pas: pas}, function (data) {
             $("#label_table").html('<tr><td>序号</td><td class="width_140">表名</td><td>备注</td><td>主键</td></tr>');
             if (data.code == 0) {
@@ -181,9 +201,6 @@
             return false;
         }
         $("#c_table").val(tablename);
-        $("#c_url").val($("#url").val());
-        $("#c_user").val($("#username").val());
-        $("#c_pass").val($("#password").val());
         $("#codeform").submit();
     });
 

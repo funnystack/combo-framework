@@ -6,6 +6,7 @@ import com.funny.combo.codegen.core.config.AutoCodeHolder;
 import com.funny.combo.codegen.core.config.ComboCodeConfig;
 import com.funny.combo.codegen.core.config.GlobalConfig;
 import com.funny.combo.codegen.po.CodeURL;
+import com.funny.combo.codegen.po.DatabaseEnum;
 import com.funny.combo.codegen.po.Table;
 import com.funny.combo.codegen.service.AbstractQueryTable;
 import com.funny.combo.codegen.service.CodegenServiceFactory;
@@ -42,8 +43,14 @@ public class CodeController {
     @Resource
     private ComboCodeConfig comboCodeConfig;
 
+    @RequestMapping("/getDatabaseList")
+    public SingleResponse getDatabaseList() {
+        return SingleResponse.succ(DatabaseEnum.toJson());
+    }
+
+
     @RequestMapping("/getTargetDatabaseTables")
-    public SingleResponse getConnection(CodeURL codeURL) throws ClassNotFoundException, SQLException {
+    public SingleResponse getConnection(CodeURL codeURL) {
         if (codeURL.getUsr() == null || codeURL.getPas() == null) {
             return SingleResponse.fail("usr is null or pas is null");
         }
@@ -90,7 +97,7 @@ public class CodeController {
     public void getCode(HttpServletRequest request, HttpServletResponse response, GlobalConfig globalConfig) throws ClassNotFoundException,
             SQLException, IOException, XMLParserException, InterruptedException, InvalidConfigurationException {
 
-        File path = new File(System.getProperty("java.io.tmpdir")+ File.separator+ "code");
+        File path = new File(System.getProperty("java.io.tmpdir") + File.separator + "code");
         String targetpath = path.getAbsolutePath();
 
         Set<String> fullyqualifiedTables = AutoCodeConfigurationParser.getTables(globalConfig.getTableNames());
@@ -101,9 +108,9 @@ public class CodeController {
         globalConfig.setTargetDirectory(targetpath);
 
         String databaseType = ContextUtils.getDatabaseType(globalConfig.getJdbcURL());
-        if(GlobalConfig.DB_MYSQL.equalsIgnoreCase(databaseType)){
+        if (GlobalConfig.DB_MYSQL.equalsIgnoreCase(databaseType)) {
             globalConfig.setJdbcDriver(MYSQL_DRIVER_6);
-            globalConfig.setJdbcURL(globalConfig.getJdbcURL()+GlobalConfig.MYSQL_CONCAT_URL);
+            globalConfig.setJdbcURL(globalConfig.getJdbcURL() + GlobalConfig.MYSQL_CONCAT_URL);
         }
         globalConfig.setComboCodeConfig(comboCodeConfig);
         AutoCodeHolder.setConfig(globalConfig);
