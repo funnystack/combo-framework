@@ -4,14 +4,12 @@ import com.funny.combo.encrypt.domain.EncryptEntity;
 import com.funny.combo.encrypt.domain.EncryptParam;
 import com.funny.combo.encrypt.domain.EncryptResult;
 import com.funny.combo.encrypt.exception.EncryptException;
-import com.funny.combo.encrypt.utils.DESUtil;
+import com.funny.combo.encrypt.utils.AesHelper;
 import com.funny.combo.encrypt.utils.MD5Util;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.funny.combo.encrypt.domain.EncryptResult.CODE_FAILURE;
 
 public class LocalEncryptService extends AbstractEncryptService {
 
@@ -81,10 +79,10 @@ public class LocalEncryptService extends AbstractEncryptService {
     }
 
     private String getEncryptText(String appKey, String origin) throws Exception {
-        return DESUtil.encrypt(origin,appKey);
+        return AesHelper.encrypt2(origin,appKey);
     }
 
     private String getDecryptText(String appKey, String encryptText) throws Exception {
-        return DESUtil.decrypt(encryptText,appKey);
+        return AesHelper.decrypt2(encryptText,appKey);
     }
 }
