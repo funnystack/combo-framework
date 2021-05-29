@@ -1,17 +1,16 @@
 package com.funny.combo.core.annotion;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
- * 领域服务
+ * 领域能力，用来描述领域实体的行为
+ *
+ * @author funnystack
  */
+@Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD,ElementType.TYPE})
-public @interface DomainService {
-
+public @interface BaseAbility {
     /**
      * 当前域的唯一编码
      * @return
@@ -41,6 +40,4 @@ public @interface DomainService {
      * @return
      */
     String[] abilityCodes() default "";
-
-
 }
