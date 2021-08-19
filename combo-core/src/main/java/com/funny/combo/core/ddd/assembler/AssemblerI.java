@@ -5,15 +5,14 @@
  * use it only in accordance with the terms of the license agreement you entered
  * into with Alibaba.com.
  */
-package com.funny.combo.core.common;
+package com.funny.combo.core.ddd.assembler;
+
 
 /**
- * CoreConstant
+ * 适用于消息，查询，HSF等接口的参数装配
+ * Assembler Interface
+ *
+ * @author fulan.zjf 2017-11-07
  */
-public class ColaConstant {
-
-    public final static String DOT_SEPARATOR = ".";
-    public final static String EXTENSION_EXTPT_NAMING = "ExtPt";
-
-    public final static String EXE_METHOD = "execute";
+public interface AssemblerI{
 }
