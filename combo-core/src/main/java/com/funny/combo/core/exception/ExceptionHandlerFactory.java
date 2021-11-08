@@ -1,6 +1,6 @@
 package com.funny.combo.core.exception;
 
-import com.funny.combo.core.common.ApplicationContextHelper;
+import com.funny.combo.core.context.ApplicationContextHelper;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
 /**

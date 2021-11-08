@@ -1,6 +1,6 @@
 package com.funny.combo.core.filter;
 
-import com.funny.combo.core.common.ApplicationContextHelper;
+import com.funny.combo.core.context.ApplicationContextHelper;
 
 /**
  * 责任链模式工厂
