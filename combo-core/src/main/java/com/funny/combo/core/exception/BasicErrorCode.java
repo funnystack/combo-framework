@@ -3,12 +3,6 @@ package com.funny.combo.core.exception;
 
 /**
  *
- * There are only 3 basic ErrorCode:
- * COLA_ERROR
- * BIZ_ERROR
- * SYS_ERROR
- *
- * Created by fulan.zjf on 2017/12/18.
  */
 public enum BasicErrorCode implements ErrorCodeI {
 

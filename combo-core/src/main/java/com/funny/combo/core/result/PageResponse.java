@@ -21,7 +21,6 @@ public class PageResponse<T> extends Response {
 
     public static <T> PageResponse<T> of(Collection<T> data, int total) {
         PageResponse<T> pageResponse = new PageResponse<>();
-        pageResponse.setSuccess(true);
         pageResponse.setData(data);
         pageResponse.setTotal(total);
         return pageResponse;
@@ -83,7 +82,6 @@ public class PageResponse<T> extends Response {
 
     public static PageResponse buildFailure(Integer errCode, String errMessage) {
         PageResponse response = new PageResponse();
-        response.setSuccess(false);
         response.setCode(errCode);
         response.setMessage(errMessage);
         return response;
@@ -91,7 +89,6 @@ public class PageResponse<T> extends Response {
 
     public static PageResponse buildSuccess(){
         PageResponse response = new PageResponse();
-        response.setSuccess(true);
         return response;
     }
 

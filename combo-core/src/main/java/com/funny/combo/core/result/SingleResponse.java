@@ -12,7 +12,6 @@ public class SingleResponse<T> extends Response {
 
     public static <T> SingleResponse<T> of(T data) {
         SingleResponse<T> singleResponse = new SingleResponse<>();
-        singleResponse.setSuccess(true);
         singleResponse.setData(data);
         return singleResponse;
     }
@@ -27,7 +26,6 @@ public class SingleResponse<T> extends Response {
 
     public static SingleResponse buildFailure(Integer errCode, String errMessage) {
         SingleResponse response = new SingleResponse();
-        response.setSuccess(false);
         response.setCode(errCode);
         response.setMessage(errMessage);
         return response;
@@ -35,7 +33,6 @@ public class SingleResponse<T> extends Response {
 
     public static SingleResponse buildSuccess(){
         SingleResponse response = new SingleResponse();
-        response.setSuccess(true);
         return response;
     }
 

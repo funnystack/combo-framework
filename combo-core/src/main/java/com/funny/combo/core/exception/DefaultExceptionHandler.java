@@ -6,10 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * DefaultExceptionHandler
- *
- * @author Frank Zhang
- * @date 2019-01-08 9:51 AM
  */
 public class DefaultExceptionHandler implements ExceptionHandlerI {
 
@@ -49,6 +45,5 @@ public class DefaultExceptionHandler implements ExceptionHandlerI {
             response.setCode(BasicErrorCode.SERVER_ERROR.getErrCode());
         }
         response.setMessage(exception.getMessage());
-        response.setSuccess(false);
     }
 }

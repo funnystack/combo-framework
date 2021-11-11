@@ -3,9 +3,8 @@ package com.funny.combo.core.result;
 import com.funny.combo.core.dto.AbstractDTO;
 
 /**
- * Response to caller
  *
- * @author fulan.zjf 2017年10月21日 下午8:53:17
+ * @author fangli
  */
 public class Response extends AbstractDTO {
 
@@ -15,19 +14,12 @@ public class Response extends AbstractDTO {
 
     public static final int CODE_FAILURE = -1;
 
-    private boolean isSuccess;
-
     private Integer code;
 
     private String message;
 
     public boolean isSuccess() {
         return code == 0;
-    }
-
-
-    public void setSuccess(boolean isSuccess) {
-        this.isSuccess = isSuccess;
     }
 
     public Integer getCode() {
@@ -48,12 +40,11 @@ public class Response extends AbstractDTO {
 
     @Override
     public String toString() {
-        return "Response [isSuccess=" + isSuccess + ", errCode=" + code + ", errMessage=" + message + "]";
+        return "Response:" + "errCode=" + code + ", errMessage=" + message + "]";
     }
 
     public static Response buildFailure(Integer errCode, String errMessage) {
         Response response = new Response();
-        response.setSuccess(false);
         response.setCode(errCode);
         response.setMessage(errMessage);
         return response;
@@ -61,7 +52,6 @@ public class Response extends AbstractDTO {
 
     public static Response buildSuccess(){
         Response response = new Response();
-        response.setSuccess(true);
         return response;
     }
 

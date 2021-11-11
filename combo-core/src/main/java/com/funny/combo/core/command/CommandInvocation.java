@@ -47,7 +47,6 @@ public class CommandInvocation{
         }
         catch(Exception e){
             response = getResponseInstance(abstractCommand);
-            response.setSuccess(false);
             ExceptionHandlerFactory.getExceptionHandler().handleException(abstractCommand, response, e);
         }
         finally {
@@ -105,13 +104,5 @@ public class CommandInvocation{
 
     public void setPostInterceptors(Iterable<CommandInterceptorI> postInterceptors) {
         this.postInterceptors = postInterceptors;
-    }
-
-    public CommandHub getCommandHub() {
-        return commandHub;
-    }
-
-    public void setCommandHub(CommandHub commandHub) {
-        this.commandHub = commandHub;
     }
 }

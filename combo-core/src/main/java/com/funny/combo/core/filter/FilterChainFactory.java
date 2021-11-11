@@ -3,9 +3,6 @@ package com.funny.combo.core.filter;
 import com.funny.combo.core.context.ApplicationContextHelper;
 
 /**
- * 责任链模式工厂
- * @author shawnzhan.zxy
- * @date 2018/04/17
  */
 public class FilterChainFactory {
 
