@@ -7,7 +7,7 @@ import java.util.List;
  * 基础Service接口实现<br>
  * 处理公用的CRUD、分页等
  *
- * @author fangli 2014-7-28
+ * @author funnystack 2017/12/19
  */
 public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
 

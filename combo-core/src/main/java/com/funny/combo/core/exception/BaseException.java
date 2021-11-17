@@ -3,9 +3,8 @@ package com.funny.combo.core.exception;
 
 /**
  *
- * Base Exception is the parent of all exceptions
  *
- * @author fulan.zjf 2017年10月22日 上午12:00:39
+ * @author funnystack 2017/12/19
  */
 public abstract class BaseException extends RuntimeException{
 

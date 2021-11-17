@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author fangli
+ * @author funnystack 2017/12/19
  */
 public class BaseEntity implements Cloneable, Serializable {
     private static final long serialVersionUID = 1490769462545L;

@@ -2,9 +2,7 @@ package com.funny.combo.core.exception;
 
 
 /**
- * System Exception is unexpected Exception, retry might work again
- *
- * @author Danny.Lee 2018/1/27
+ * @author funnystack 2017/12/19
  */
 public class SysException extends BaseException {
 

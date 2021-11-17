@@ -1,11 +1,8 @@
 package com.funny.combo.core.result;
 
 /**
- * Response with single record to return
- * <p/>
- * Created by Danny.Lee on 2017/11/1.
+ * @author funnystack 2017/12/19
  */
-
 public class SingleResponse<T> extends Response {
 
     private T data;

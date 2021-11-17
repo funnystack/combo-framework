@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * 分页基础
  *
- * @author LiLong 2014-7-29
+ * @author funnystack 2017/12/19
  */
 public class BasePage implements Cloneable, Serializable {
 

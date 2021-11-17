@@ -3,9 +3,8 @@ package com.funny.combo.core.dto;
 import java.io.Serializable;
 
 /**
- * Order Description
  *
- * @author Danny.Lee 2017/12/19
+ * @author funnystack 2017/12/19
  */
 public class OrderDesc implements Serializable{
 

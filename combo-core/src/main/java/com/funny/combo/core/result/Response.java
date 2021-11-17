@@ -4,7 +4,7 @@ import com.funny.combo.core.dto.AbstractDTO;
 
 /**
  *
- * @author fangli
+ * @author funnystack 2017/12/19
  */
 public class Response extends AbstractDTO {
 

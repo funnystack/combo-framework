@@ -7,9 +7,28 @@
 		<artifactId>combo-framework</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>combo-core</artifactId>
+	<artifactId>combo-extension</artifactId>
 	<version>${combo.framework.version}</version>
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>com.funny.combo</groupId>
+			<artifactId>combo-core</artifactId>
+			<version>${combo.framework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>5.2.10.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+	</dependencies>
 
 </project>
