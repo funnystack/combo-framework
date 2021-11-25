@@ -25,6 +25,8 @@
 		<module>combo-extension</module>
 		<module>combo-trace</module>
 		<module>combo-oss</module>
+		<module>combo-utils</module>
+		<module>combo-lock</module>
 	</modules>
 
 
