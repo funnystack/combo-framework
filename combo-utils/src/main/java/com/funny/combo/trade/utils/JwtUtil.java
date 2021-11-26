@@ -5,11 +5,9 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import org.apache.commons.lang3.StringUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author: funnystack
@@ -17,25 +15,28 @@ import java.util.Date;
  **/
 public class JwtUtil {
 
+	private static final String USER_NAME = "username";
 	// Token过期时间30分钟（用户登录过期时间是此时间的两倍，以token在reids缓存时间为准）
 	public static final long EXPIRE_TIME = 30 * 60 * 1000;
+	private static final String secret = "secret";
 
 	/**
 	 * 校验token是否正确
 	 *
-	 * @param token  密钥
-	 * @param secret 用户的密码
+	 * @param token    令牌
+	 * @param username 用户名
 	 * @return 是否正确
 	 */
-	public static boolean verify(String token, String username, String secret) {
+	public static boolean verify(String token, String username) {
 		try {
 			// 根据密码生成JWT效验器
 			Algorithm algorithm = Algorithm.HMAC256(secret);
-			JWTVerifier verifier = JWT.require(algorithm).withClaim("username", username).build();
+			JWTVerifier verifier = JWT.require(algorithm).withClaim(USER_NAME, username).build();
 			// 效验TOKEN
 			DecodedJWT jwt = verifier.verify(token);
 			return true;
 		} catch (Exception exception) {
+			exception.printStackTrace();
 			return false;
 		}
 	}
@@ -48,65 +49,38 @@ public class JwtUtil {
 	public static String getUsername(String token) {
 		try {
 			DecodedJWT jwt = JWT.decode(token);
-			return jwt.getClaim("username").asString();
+			// 已过期
+			if (jwt.getExpiresAt() != null && jwt.getExpiresAt().before(new Date())) {
+				return null;
+			}
+			// 未生效
+			if (jwt.getIssuedAt() != null && jwt.getIssuedAt().after(new Date())) {
+				return null;
+			}
+			return jwt.getClaim(USER_NAME).asString();
 		} catch (JWTDecodeException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
 
 	/**
-	 * 生成签名,5min后过期
+	 * 生成签名,xxmin后过期
 	 *
 	 * @param username 用户名
-	 * @param secret   用户的密码
 	 * @return 加密的token
 	 */
-	public static String sign(String username, String secret) {
+	public static String sign(String username) {
 		Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
 		Algorithm algorithm = Algorithm.HMAC256(secret);
 		// 附带username信息
-		return JWT.create().withClaim("username", username).withExpiresAt(date).sign(algorithm);
+		return JWT.create().withClaim(USER_NAME, username)
+				.withJWTId(UUID.randomUUID().toString())//设置jti(JWT ID)：是JWT的唯一标识，根据业务需要，这个可以设置为一个不重复的值，主要用来作为一次性token,从而回避重放攻击。
+				.withExpiresAt(date) //设置过期时间
+				.withIssuedAt(new Date())//iat: jwt的签发时间
+				.withSubject(username)
+				.sign(algorithm);
 
-	}
-
-	/**
-	 * 根据request中的token获取用户账号
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public static String getUserNameByToken(HttpServletRequest request) throws RuntimeException {
-		String accessToken = request.getHeader("X-Access-Token");
-		String username = getUsername(accessToken);
-		if (StringUtils.isEmpty(username)) {
-			throw new RuntimeException("未获取到用户");
-		}
-		return username;
-	}
-	
-	/**
-	  *  从session中获取变量
-	 * @param key
-	 * @return
-	 */
-	public static String getSessionData(String key) {
-		//${myVar}%
-		//得到${} 后面的值
-		String moshi = "";
-		if(key.indexOf("}")!=-1){
-			 moshi = key.substring(key.indexOf("}")+1);
-		}
-		String returnValue = null;
-		if (key.contains("#{")) {
-			key = key.substring(2,key.indexOf("}"));
-		}
-		if (StringUtils.isNotEmpty(key)) {
-//			HttpSession session = SpringContextUtils.getHttpServletRequest().getSession();
-//			returnValue = (String) session.getAttribute(key);
-		}
-		//结果加上${} 后面的值
-		if(returnValue!=null){returnValue = returnValue + moshi;}
-		return returnValue;
 	}
 
 }
