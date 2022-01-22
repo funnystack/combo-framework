@@ -9,6 +9,15 @@
 /*.log
 
 
+combo-core/target
+combo-event/target
+combo-extension/target
+combo-lock/target
+combo-oss/target
+combo-trace/target
+combo-utils/target
+
+
 
 
 
