@@ -11,12 +11,12 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-/** 
+/**
  * @author  fangli
- * @date 创建时间：2017年7月27日 下午12:44:20 
+ * @date 创建时间：2017年7月27日 下午12:44:20
  */
 public class DateUtil extends DateUtils {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(DateUtil.class);
 	/** 毫秒 */
 	public final static long MS = 1;
@@ -38,11 +38,11 @@ public class DateUtil extends DateUtils {
 			Locale.US);
 	private static final String FORMAT_DATETIME_INFO = "yyyyMMddHHmmss";
 	/**
-	 * 
+	 *
 	 * 当前时间，格式 yyyy-MM-dd HH:mm:ss
-	 * 
+	 *
 	 * @return 当前时间的标准形式字符串
-	 * 
+	 *
 	 */
 	public static String now() {
 		return formatDateTime(new Date());
@@ -53,13 +53,13 @@ public class DateUtil extends DateUtils {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         return sdf.format(new Date());
     }
-    
+
 	/**
-	 * 
+	 *
 	 * 当前日期，格式 yyyy-MM-dd
-	 * 
+	 *
 	 * @return 当前日期的标准形式字符串
-	 * 
+	 *
 	 */
 	public static String today() {
 		return formatDate(new Date());
@@ -69,31 +69,31 @@ public class DateUtil extends DateUtils {
 	// ----------------------------------------------
 
 	/**
-	 * 
+	 *
 	 * 根据特定格式格式化日期
-	 * 
+	 *
 	 * @param date
 	 *            被格式化的日期
-	 * 
+	 *
 	 * @param format
 	 *            格式
-	 * 
+	 *
 	 * @return 格式化后的字符串
-	 * 
+	 *
 	 */
 	public static String format(Date date, String format) {
 		return new SimpleDateFormat(format).format(date);
 	}
 
 	/**
-	 * 
+	 *
 	 * 格式 yyyy-MM-dd HH:mm:ss
-	 * 
+	 *
 	 * @param date
 	 *            被格式化的日期
-	 * 
+	 *
 	 * @return 格式化后的日期
-	 * 
+	 *
 	 */
 	public static String formatDateTime(Date date) {
 		// return format(d, "yyyy-MM-dd HH:mm:ss");
@@ -108,14 +108,14 @@ public class DateUtil extends DateUtils {
         return calendar.getTime();
     }
 	/**
-	 * 
+	 *
 	 * 格式化为Http的标准日期格式
-	 * 
+	 *
 	 * @param date
 	 *            被格式化的日期
-	 * 
+	 *
 	 * @return HTTP标准形式日期字符串
-	 * 
+	 *
 	 */
 	public static String formatHttpDate(Date date) {
 		// return new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z",
@@ -125,14 +125,14 @@ public class DateUtil extends DateUtils {
 	}
 
 	/**
-	 * 
+	 *
 	 * 格式 yyyy-MM-dd
-	 * 
+	 *
 	 * @param date
 	 *            被格式化的日期
-	 * 
+	 *
 	 * @return 格式化后的字符串
-	 * 
+	 *
 	 */
 	public static String formatDate(Date date) {
 		// return format(d, "yyyy-MM-dd");
@@ -146,17 +146,17 @@ public class DateUtil extends DateUtils {
 	// ----------------------------------------------
 
 	/**
-	 * 
+	 *
 	 * 将特定格式的日期转换为Date对象
-	 * 
+	 *
 	 * @param dateString
 	 *            特定格式的日期
-	 * 
+	 *
 	 * @param format
 	 *            格式，例如yyyy-MM-dd
-	 * 
+	 *
 	 * @return 日期对象
-	 * 
+	 *
 	 */
 	public static Date parse(String dateString, String format) {
 		try {
@@ -168,14 +168,14 @@ public class DateUtil extends DateUtils {
 	}
 
 	/**
-	 * 
+	 *
 	 * 格式yyyy-MM-dd HH:mm:ss
-	 * 
+	 *
 	 * @param dateString
 	 *            标准形式的时间字符串
-	 * 
+	 *
 	 * @return 日期对象
-	 * 
+	 *
 	 */
 	public static Date parseDateTime(String dateString) {
 		// return parse(s, "yyyy-MM-dd HH:mm:ss");
@@ -189,14 +189,14 @@ public class DateUtil extends DateUtils {
 	}
 
 	/**
-	 * 
+	 *
 	 * 格式yyyy-MM-dd
-	 * 
+	 *
 	 * @param dateString
 	 *            标准形式的日期字符串
-	 * 
+	 *
 	 * @return 日期对象
-	 * 
+	 *
 	 */
 	public static Date parseDate(String dateString) {
 		// return parse(s, "yyyy-MM-dd");
@@ -212,20 +212,20 @@ public class DateUtil extends DateUtils {
 	// ----------------------------------------------
 
 	/**
-	 * 
+	 *
 	 * 获取指定日期偏移指定时间后的时间
-	 * 
+	 *
 	 * @param date
 	 *            基准日期
-	 * 
+	 *
 	 * @param calendarField
 	 *            偏移的粒度大小（小时、天、月等）使用Calendar中的常数
-	 * 
+	 *
 	 * @param offsite
 	 *            偏移量，正数为向后偏移，负数为向前偏移
-	 * 
+	 *
 	 * @return 偏移后的日期
-	 * 
+	 *
 	 */
 	public static Date getOffsiteDate(Date date, int calendarField, int offsite) {
 		Calendar cal = Calendar.getInstance();
@@ -235,26 +235,55 @@ public class DateUtil extends DateUtils {
 	}
 
 	/**
-	 * 
+	 *
 	 * 判断两个日期相差的时长<br/>
-	 * 
+	 *
 	 * 返回 minuend - subtrahend 的差
-	 * 
+	 *
 	 * @param subtrahend
 	 *            减数日期
-	 * 
+	 *
 	 * @param minuend
 	 *            被减数日期
-	 * 
+	 *
 	 * @param diffField
 	 *            相差的选项：相差的天、小时
-	 * 
+	 *
 	 * @return 日期差
-	 * 
+	 *
 	 */
 	public static long dateDiff(Date subtrahend, Date minuend, long diffField) {
 		long diff = minuend.getTime() - subtrahend.getTime();
 		return diff / diffField;
+	}
+
+	/**
+	 * 获取一天的开始时间
+	 * @param date
+	 * @return
+	 */
+	public static Date getDayStartTime(Date date) {
+		Calendar todayStart = Calendar.getInstance();
+		todayStart.setTime(date);
+		todayStart.set(Calendar.HOUR, 0);
+		todayStart.set(Calendar.MINUTE, 0);
+		todayStart.set(Calendar.SECOND, 0);
+		todayStart.set(Calendar.MILLISECOND, 0);
+		return todayStart.getTime();
+	}
+	/**
+	 * 获取一天的结束时间
+	 * @param date
+	 * @return
+	 */
+	public static Date getDayEndTime(Date date) {
+		Calendar todayEnd = Calendar.getInstance();
+		todayEnd.setTime(date);
+		todayEnd.set(Calendar.HOUR_OF_DAY, 23);
+		todayEnd.set(Calendar.MINUTE, 59);
+		todayEnd.set(Calendar.SECOND, 59);
+		todayEnd.set(Calendar.MILLISECOND, 999);
+		return todayEnd.getTime();
 	}
 }
 
