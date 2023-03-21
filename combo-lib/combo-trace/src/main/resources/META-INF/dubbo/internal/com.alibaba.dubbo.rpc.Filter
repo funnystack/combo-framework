@@ -1,0 +1,2 @@
+LogTraceAsfProviderFilter=com.auto.mall.logtrace.LogTraceAsfProviderFilter
+LogTraceAsfConsumerFilter=com.auto.mall.logtrace.LogTraceAsfConsumerFilter
