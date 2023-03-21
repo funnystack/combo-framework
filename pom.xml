@@ -5,7 +5,7 @@
 	<groupId>com.funny.combo</groupId>
 	<artifactId>combo-framework</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>2023.03.21.1515</version>
 	<name>${project.artifactId}</name>
 
 	<properties>
@@ -14,20 +14,16 @@
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<junit.version>4.13.1</junit.version>
-		<slf4j.version>1.7.22</slf4j.version>
-		<spring.version>5.3.13</spring.version>
+
 		<combo.framework.version>1.0.1-SNAPSHOT</combo.framework.version>
 	</properties>
 
 	<modules>
-		<module>combo-core</module>
-		<module>combo-event</module>
-		<module>combo-extension</module>
-		<module>combo-trace</module>
-		<module>combo-oss</module>
+		<module>combo-bom</module>
+		<module>combo-dependencies</module>
+		<module>combo-lib</module>
+		<module>combo-starter</module>
 		<module>combo-utils</module>
-		<module>combo-lock</module>
 	</modules>
 
 
