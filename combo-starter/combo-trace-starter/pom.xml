@@ -4,11 +4,11 @@
     <parent>
 		<groupId>com.funny.combo</groupId>
 		<artifactId>combo-starter</artifactId>
-		<version>2023.03.21.1515</version>
+		<version>1.0.1-RELEASE</version>
 	</parent>
 
 	<artifactId>combo-trace-starter</artifactId>
-	<version>2023.03.21.1515</version>
+	<version>1.0.1-RELEASE</version>
 	<name>${project.artifactId}</name>
 	<packaging>jar</packaging>
 
