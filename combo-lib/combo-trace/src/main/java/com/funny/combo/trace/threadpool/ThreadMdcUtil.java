@@ -6,12 +6,11 @@ import org.slf4j.MDC;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import static com.funny.combo.trace.util.LogTraceUtil.LOG_SESSION_ID;
 
 public class ThreadMdcUtil {
     public static void setTraceIdIfAbsent() {
-        if (MDC.get(LOG_SESSION_ID) == null) {
-            MDC.put(LOG_SESSION_ID, LogTraceUtil.getNewTraceId());
+        if (MDC.get(LogTraceUtil.LOG_TRACE_ID) == null) {
+            MDC.put(LogTraceUtil.LOG_TRACE_ID, LogTraceUtil.getNewTraceId());
         }
     }
 

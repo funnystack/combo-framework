@@ -28,7 +28,7 @@ public class LogTraceAspect {
     private void doBefore() {
         try {
             if (MDC.getMDCAdapter() != null) {
-                MDC.put(LogTraceUtil.LOG_SESSION_ID, LogTraceUtil.getNewTraceId());
+                MDC.put(LogTraceUtil.LOG_TRACE_ID, LogTraceUtil.getNewTraceId());
             }
         }catch (Exception e){
         }
@@ -41,7 +41,7 @@ public class LogTraceAspect {
     private void doAfter() {
         try {
             if (MDC.getMDCAdapter() != null) {
-                MDC.remove(LogTraceUtil.LOG_SESSION_ID);
+                MDC.remove(LogTraceUtil.LOG_TRACE_ID);
             }
         }catch (Exception e) {
         }
