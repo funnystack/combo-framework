@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.funny.combo</groupId>
         <artifactId>combo-framework</artifactId>
-        <version>2023.03.21.1515</version>
+        <version>1.0.1-RELEASE</version>
     </parent>
 
     <packaging>pom</packaging>
