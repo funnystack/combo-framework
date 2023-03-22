@@ -1,6 +1,5 @@
 package com.funny.combo.trace.util;
 
-import com.funny.combo.trace.util.LogTraceUtil;
 import org.slf4j.MDC;
 
 /**
@@ -14,7 +13,7 @@ public abstract class LogTraceThread  implements Runnable {
 
     public LogTraceThread() {
         if (MDC.getMDCAdapter() != null) {
-            traceId = MDC.get(LogTraceUtil.LOG_SESSION_ID);
+            traceId = MDC.get(LogTraceUtil.LOG_TRACE_ID);
             if (traceId == null || traceId.length() == 0) {
                 traceId = LogTraceUtil.getNewTraceId();
             }
@@ -29,7 +28,7 @@ public abstract class LogTraceThread  implements Runnable {
 
         System.out.println(Thread.currentThread().getName()+" run:"+traceId);
 
-        MDC.put(LogTraceUtil.LOG_SESSION_ID, traceId);
+        MDC.put(LogTraceUtil.LOG_TRACE_ID, traceId);
 
         try {
             // 执行任务
@@ -38,7 +37,7 @@ public abstract class LogTraceThread  implements Runnable {
             throw new IllegalStateException(e);
         }finally {
             if (MDC.getMDCAdapter() != null) {
-                MDC.remove(LogTraceUtil.LOG_SESSION_ID);
+                MDC.remove(LogTraceUtil.LOG_TRACE_ID);
             }
         }
     }

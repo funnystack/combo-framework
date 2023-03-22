@@ -8,19 +8,11 @@ import org.slf4j.MDC;
 public class LogTraceUtil {
 
     /**
-     * 日志会话session，用于log4j配置的关键字
+     * 日志跟踪Id，用于log4j配置的关键字
      * eg:
-     * <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c -%X{unique} %m \n"/>
+     * <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c -%X{traceId} %m \n"/>
      */
-    public static final String LOG_SESSION_ID = "unique";
-
-    /**
-     * 日志跟踪Id
-     */
-    public static final String traceIdKey = "mallTraceId";
-
-    public static final String EXT = "ext";
-
+    public static final String LOG_TRACE_ID = "traceId";
     /**
      * 生成新的日志跟踪Id
      * @return
@@ -29,13 +21,20 @@ public class LogTraceUtil {
         return java.util.UUID.randomUUID().toString().replaceAll("-", "");
     }
 
+    public static String getNowOrNewTraceId() {
+        return MDC.getMDCAdapter() == null || MDC.get(LogTraceUtil.LOG_TRACE_ID) == null ?
+                LogTraceUtil.getNewTraceId() : MDC.get(LogTraceUtil.LOG_TRACE_ID);
+    }
+
+
+
     /**
      * 添加MDC日志跟踪Id
      */
     public static void doBefore() {
         try {
             if(MDC.getMDCAdapter() != null) {
-                MDC.put(LogTraceUtil.LOG_SESSION_ID, LogTraceUtil.getNewTraceId());
+                MDC.put(LogTraceUtil.LOG_TRACE_ID, LogTraceUtil.getNewTraceId());
             }
         }catch (Exception e){
         }
@@ -47,7 +46,7 @@ public class LogTraceUtil {
     public static void doAfter() {
         try {
             if (MDC.getMDCAdapter() != null) {
-                MDC.remove(LogTraceUtil.LOG_SESSION_ID);
+                MDC.remove(LogTraceUtil.LOG_TRACE_ID);
             }
         }catch (Exception e) {
         }

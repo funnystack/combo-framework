@@ -22,11 +22,11 @@ public class LogTraceInterceptor extends HandlerInterceptorAdapter {
         try {
             if (MDC.getMDCAdapter() != null) {
                 clearMDC();
-                String traceId = request.getParameter(LogTraceUtil.traceIdKey);
+                String traceId = request.getHeader(LogTraceUtil.LOG_TRACE_ID);
                 if (traceId == null || traceId.length() == 0) {
                     traceId = LogTraceUtil.getNewTraceId();
                 }
-                MDC.put(LogTraceUtil.LOG_SESSION_ID, traceId);
+                MDC.put(LogTraceUtil.LOG_TRACE_ID, traceId);
             }
         } catch (Exception e) {
         }
@@ -36,6 +36,7 @@ public class LogTraceInterceptor extends HandlerInterceptorAdapter {
 
     /**
      * 请求被完全处理后执行
+     *
      * @param request
      * @param response
      * @param handler
@@ -55,7 +56,7 @@ public class LogTraceInterceptor extends HandlerInterceptorAdapter {
 
 
     private void clearMDC() {
-        MDC.remove(LogTraceUtil.LOG_SESSION_ID);
+        MDC.remove(LogTraceUtil.LOG_TRACE_ID);
     }
 
 }

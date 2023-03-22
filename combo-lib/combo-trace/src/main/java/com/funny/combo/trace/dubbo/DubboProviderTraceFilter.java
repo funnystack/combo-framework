@@ -22,11 +22,11 @@ public class DubboProviderTraceFilter implements Filter {
              * 获取客户端隐式传入的参数
              */
             if (MDC.getMDCAdapter() != null) {
-                String traceId = RpcContext.getContext().getAttachment(LogTraceUtil.traceIdKey);
+                String traceId = RpcContext.getContext().getAttachment(LogTraceUtil.LOG_TRACE_ID);
                 if (traceId == null || traceId.length() == 0) {
                     traceId = LogTraceUtil.getNewTraceId();
                 }
-                MDC.put(LogTraceUtil.LOG_SESSION_ID, traceId);
+                MDC.put(LogTraceUtil.LOG_TRACE_ID, traceId);
             }
         } catch (Exception e) {
         }
@@ -37,7 +37,7 @@ public class DubboProviderTraceFilter implements Filter {
         // 调用接口方法后
         try {
             if (MDC.getMDCAdapter() != null) {
-                MDC.remove(LogTraceUtil.LOG_SESSION_ID);
+                MDC.remove(LogTraceUtil.LOG_TRACE_ID);
             }
         } catch (Exception e) {
         }
