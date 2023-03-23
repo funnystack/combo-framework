@@ -1,9 +1,8 @@
 package com.funny.combo.trace.util;
 
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.RandomUtils;
-import org.openjdk.jmh.annotations.Benchmark;
 import org.slf4j.MDC;
+
+import java.util.Random;
 
 /**
  * Created by funnystack on 20/3/10.
@@ -16,6 +15,8 @@ public class LogTraceUtil {
      * <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c -%X{traceId} %m \n"/>
      */
     public static final String LOG_TRACE_ID = "traceId";
+    private static final String RANDOM_STRING = "0123456789";
+    private static Random random = new Random();
     /**
      * 生成新的日志跟踪Id
      * 32位自定义traceId：167953664816795367104327993efd18
@@ -26,11 +27,18 @@ public class LogTraceUtil {
      * 绑定实例 IP，有助于关联当前 Trace 流量入口所属的实例，在某些极端场景，当链路上的节点检索不到时，也能通过实例和时间两个要素来做溯源。
      * @return
      */
-    @Benchmark
     public static String getNewTraceId() {
-        return LocalHostUtils.getIpFromString(LocalHostUtils.getLocalIp()) + System.currentTimeMillis() + RandomStringUtils.randomNumeric(12);
+        return LocalHostUtils.getIpFromString(LocalHostUtils.getLocalIp()) + System.currentTimeMillis() + getRandomString(12);
     }
 
+    private static String getRandomString(int length) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            int number = random.nextInt(10);
+            sb.append(RANDOM_STRING.charAt(number));
+        }
+        return sb.toString();
+    }
 
     public static String getNowOrNewTraceId() {
         return MDC.getMDCAdapter() == null || MDC.get(LogTraceUtil.LOG_TRACE_ID) == null ?
