@@ -17,6 +17,8 @@ public class Response extends AbstractDTO {
     private Integer code;
 
     private String message;
+    private String traceId;
+
 
     public boolean isSuccess() {
         return code == 0;
@@ -36,6 +38,14 @@ public class Response extends AbstractDTO {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getTraceId() {
+        return traceId;
+    }
+
+    public void setTraceId(String traceId) {
+        this.traceId = traceId;
     }
 
     @Override

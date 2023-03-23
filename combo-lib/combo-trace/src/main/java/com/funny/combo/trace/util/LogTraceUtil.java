@@ -1,5 +1,8 @@
 package com.funny.combo.trace.util;
 
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.RandomUtils;
+import org.openjdk.jmh.annotations.Benchmark;
 import org.slf4j.MDC;
 
 /**
@@ -15,11 +18,19 @@ public class LogTraceUtil {
     public static final String LOG_TRACE_ID = "traceId";
     /**
      * 生成新的日志跟踪Id
+     * 32位自定义traceId：167953664816795367104327993efd18
+     * 1679536648  1679536710   4327993efd18
+     *    |         |             |
+     * 高10位(IP) 中10位(Timestmap) 低12位(Random)
+     * 通过 TraceID 反向解析时间戳，锁定时间范围，有助于提高存储库 Clickhouse 的检索效率，此外也能帮助决定当前的 Trace 应该查询热库还是冷库。
+     * 绑定实例 IP，有助于关联当前 Trace 流量入口所属的实例，在某些极端场景，当链路上的节点检索不到时，也能通过实例和时间两个要素来做溯源。
      * @return
      */
+    @Benchmark
     public static String getNewTraceId() {
-        return java.util.UUID.randomUUID().toString().replaceAll("-", "");
+        return LocalHostUtils.getIpFromString(LocalHostUtils.getLocalIp()) + System.currentTimeMillis() + RandomStringUtils.randomNumeric(12);
     }
+
 
     public static String getNowOrNewTraceId() {
         return MDC.getMDCAdapter() == null || MDC.get(LogTraceUtil.LOG_TRACE_ID) == null ?

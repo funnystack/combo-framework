@@ -27,6 +27,7 @@ public class LogTraceInterceptor extends HandlerInterceptorAdapter {
                     traceId = LogTraceUtil.getNewTraceId();
                 }
                 MDC.put(LogTraceUtil.LOG_TRACE_ID, traceId);
+                response.addHeader(LogTraceUtil.LOG_TRACE_ID, traceId);
             }
         } catch (Exception e) {
         }
