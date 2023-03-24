@@ -15,7 +15,7 @@ public class LogTraceUtil {
      * <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c -%X{traceId} %m \n"/>
      */
     public static final String LOG_TRACE_ID = "traceId";
-    private static final String RANDOM_STRING = "0123456789";
+    private static final String RANDOM_STRING = "abcdefghijklmnopqrstuvwxyz0123456789";
     private static Random random = new Random();
     /**
      * 生成新的日志跟踪Id
@@ -28,16 +28,14 @@ public class LogTraceUtil {
      * @return
      */
     public static String getNewTraceId() {
-        return LocalHostUtils.getIpFromString(LocalHostUtils.getLocalIp()) + System.currentTimeMillis() + getRandomString(12);
-    }
-
-    private static String getRandomString(int length) {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < length; i++) {
-            int number = random.nextInt(10);
-            sb.append(RANDOM_STRING.charAt(number));
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append(LocalHostUtils.getIpFromString(LocalHostUtils.getLocalIp()));
+        stringBuffer.append(System.currentTimeMillis());
+        for (int i = 0; i < 10; i++) {
+            int number = random.nextInt(36);
+            stringBuffer.append(RANDOM_STRING.charAt(number));
         }
-        return sb.toString();
+        return stringBuffer.toString();
     }
 
     public static String getNowOrNewTraceId() {
@@ -70,4 +68,5 @@ public class LogTraceUtil {
         }catch (Exception e) {
         }
     }
+
 }
