@@ -1,7 +1,7 @@
 package com.funny.combo.event;
 
 
-import com.funny.combo.core.result.Response;
+import com.funny.combo.core.result.BaseResult;
 
 /**
  * EventBus interface
@@ -14,15 +14,15 @@ public interface EventBusI {
      * Send event to EventBus
      *
      * @param event
-     * @return Response
+     * @return BaseResult
      */
-     Response fire(EventI event);
+     BaseResult fire(EventI event);
 
     /**
      * fire all handlers which registed the event
      *
      * @param event
-     * @return Response
+     * @return BaseResult
      */
      void fireAll(EventI event);
 

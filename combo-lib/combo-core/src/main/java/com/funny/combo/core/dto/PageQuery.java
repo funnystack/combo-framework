@@ -10,17 +10,21 @@ import java.util.List;
  */
 public abstract class PageQuery extends Query {
 
-    private int pageNum = 1;
+    private int pageNo = 1;
     private int pageSize = 10;
     private boolean needTotalCount = true;
     private List<OrderDesc> orderDescs;
 
-    public int getPageNum() {
-        return pageNum;
+    public int getPageNo() {
+        return pageNo;
     }
 
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public void setOrderDescs(List<OrderDesc> orderDescs) {
+        this.orderDescs = orderDescs;
     }
 
     public int getPageSize() {
@@ -51,6 +55,6 @@ public abstract class PageQuery extends Query {
     }
 
     public int getOffset() {
-        return pageNum > 0 ? (pageNum - 1) * pageSize : 0;
+        return pageNo > 0 ? (pageNo - 1) * pageSize : 0;
     }
 }

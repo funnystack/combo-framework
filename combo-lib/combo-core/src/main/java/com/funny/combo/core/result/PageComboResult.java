@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author funnystack 2017/12/19
  */
-public class PageResponse<T> extends Response {
+public class PageComboResult<T> extends BaseResult {
     private Integer pageIndex;
     private Integer pageCount;
     private Integer pageSize;
@@ -16,14 +16,14 @@ public class PageResponse<T> extends Response {
 
     private Collection<T> data;
 
-    public static <T> PageResponse<T> of(Collection<T> data, int total) {
-        PageResponse<T> pageResponse = new PageResponse<>();
+    public static <T> PageComboResult<T> of(Collection<T> data, int total) {
+        PageComboResult<T> pageResponse = new PageComboResult<>();
         pageResponse.setData(data);
         pageResponse.setTotal(total);
         return pageResponse;
     }
 
-    public static <T> PageResponse<T> ofWithoutTotal(Collection<T> data) {
+    public static <T> PageComboResult<T> ofWithoutTotal(Collection<T> data) {
         return of(data,0);
     }
 
@@ -77,20 +77,20 @@ public class PageResponse<T> extends Response {
         this.count = count;
     }
 
-    public static PageResponse buildFailure(Integer errCode, String errMessage) {
-        PageResponse response = new PageResponse();
+    public static PageComboResult buildFailure(Integer errCode, String errMessage) {
+        PageComboResult response = new PageComboResult();
         response.setCode(errCode);
-        response.setMessage(errMessage);
+        response.setMsg(errMessage);
         return response;
     }
 
-    public static PageResponse build(){
-        PageResponse response = new PageResponse();
+    public static PageComboResult build(){
+        PageComboResult response = new PageComboResult();
         return response;
     }
 
-    public static PageResponse success(){
-        PageResponse response = new PageResponse();
+    public static PageComboResult success(){
+        PageComboResult response = new PageComboResult();
         return response;
     }
 

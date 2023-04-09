@@ -10,12 +10,12 @@ import java.util.function.Function;
 public abstract class AbstractComponentExecutor {
 
     /**
-     * Execute extension with Response
+     * Execute extension with BaseResult
      *
      * @param targetClz
      * @param bizScenario
      * @param exeFunction
-     * @param <R> Response Type
+     * @param <R> BaseResult Type
      * @param <T> Parameter Type
      * @return
      */
@@ -29,7 +29,7 @@ public abstract class AbstractComponentExecutor {
     }
 
     /**
-     * Execute extension without Response
+     * Execute extension without BaseResult
      *
      * @param targetClz
      * @param context

@@ -4,7 +4,7 @@ import com.funny.combo.core.exception.BaseException;
 import com.funny.combo.core.exception.BasicErrorCode;
 import com.funny.combo.core.exception.ErrorCodeI;
 import com.funny.combo.core.exception.SysException;
-import com.funny.combo.core.result.Response;
+import com.funny.combo.core.result.BaseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +40,8 @@ public class EventBus implements EventBusI {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Response fire(EventI event) {
-        Response response = null;
+    public BaseResult fire(EventI event) {
+        BaseResult response = null;
         EventHandlerI eventHandlerI = null;
         try {
             eventHandlerI = eventHub.getEventHandler(event.getClass()).get(0);
@@ -55,7 +55,7 @@ public class EventBus implements EventBusI {
     @Override
     public void fireAll(EventI event){
         eventHub.getEventHandler(event.getClass()).stream().map(p->{
-            Response response = null;
+            BaseResult response = null;
             try {
                 response = p.execute(event);
             }catch (Exception exception) {
@@ -68,7 +68,7 @@ public class EventBus implements EventBusI {
     @Override
     public void asyncFire(EventI event){
         eventHub.getEventHandler(event.getClass()).parallelStream().map(p->{
-            Response response = null;
+            BaseResult response = null;
             try {
                 if(null != p.getExecutor()){
                     p.getExecutor().submit(()->p.execute(event));
@@ -82,11 +82,11 @@ public class EventBus implements EventBusI {
         }).collect(Collectors.toList());
     }
 
-    private Response handleException(EventHandlerI handler, Response response, Exception exception) {
+    private BaseResult handleException(EventHandlerI handler, BaseResult response, Exception exception) {
         logger.error(exception.getMessage(), exception);
         Class responseClz = eventHub.getResponseRepository().get(handler.getClass());
         try {
-            response = (Response) responseClz.newInstance();
+            response = (BaseResult) responseClz.newInstance();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw new SysException(e.getMessage());
